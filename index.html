@@ -3,467 +3,909 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeeva DesignErr — Visual &amp; Motion Designer</title>
+<title>Jeeva DesignErr — Senior Visual & Motion Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080808;--bg2:#0f0f0f;--gold:#e8921a;--gold2:#f5ac3e;--gdim:rgba(232,146,26,0.08);--gline:rgba(232,146,26,0.18);--white:#f0ece4;--gray:#888880;--dim:#2a2a2a}
+/* ═══ TOKENS ══════════════════════════════════════════════ */
+:root{
+  --bg:#080808; --bg2:#0f0f0f; --bg3:#141414;
+  --gold:#E8941A; --gold2:#F5AE3E;
+  --gdim:rgba(232,148,26,.07); --gline:rgba(232,148,26,.18);
+  --white:#F0EDE4; --gray:#7C7870; --dim:#242424;
+  --ff:'Bebas Neue',sans-serif;
+  --fb:'DM Sans',sans-serif;
+}
+
+/* ═══ RESET ═══════════════════════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9997;opacity:0.4;mix-blend-mode:overlay}
-.cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;top:0;left:0}
-.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;opacity:.5;top:0;left:0;transition:width .3s,height .3s,opacity .3s}
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:28px 60px}
-nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.97),transparent);z-index:-1}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold);text-decoration:none}
-.nav-logo .dim{opacity:.35}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s}
+body{background:var(--bg);color:var(--white);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none;line-height:1}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9997;opacity:.4;mix-blend-mode:overlay}
+
+/* ═══ CURSOR ══════════════════════════════════════════════ */
+.cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;top:0;left:0}
+.cring{position:fixed;width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;opacity:.45;top:0;left:0;transition:width .25s,height .25s,opacity .25s}
+
+/* ═══ NAV ═════════════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:26px 64px}
+nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.97) 55%,transparent);z-index:-1}
+.nav-logo{font-family:var(--ff);font-size:20px;letter-spacing:3px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo .dim{opacity:.3}
+.jde-slot{width:28px;height:28px;background:var(--gdim);border:1px solid var(--gline);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;flex-shrink:0}
+.jde-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.jde-slot .fb2{font-family:var(--ff);font-size:9px;letter-spacing:1px;color:var(--gold);opacity:.65;position:absolute}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-family:var(--fb);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--gold)}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 80px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 40%,rgba(232,146,26,.08) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 20% 70%,rgba(255,77,28,.04) 0%,transparent 50%),var(--bg)}
-.hero-vl{position:absolute;top:0;right:200px;width:1px;height:100%;background:linear-gradient(to bottom,transparent,var(--dim) 30%,var(--dim) 70%,transparent);opacity:.4}
-.hero-counter{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gray);margin-bottom:24px;opacity:0;animation:fadeUp .8s .3s forwards}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,12vw,170px);line-height:.9;letter-spacing:-2px;opacity:0;animation:fadeUp .9s .5s forwards}
-.hero-title .gold{color:var(--gold);display:block}
-.hero-title .dim{opacity:.35}
-.hero-sub{display:flex;align-items:flex-end;justify-content:space-between;margin-top:32px;opacity:0;animation:fadeUp .9s .8s forwards}
-.hero-tagline{font-size:15px;color:var(--gray);font-style:italic;max-width:360px;line-height:1.7}
-.hero-stats{display:flex;gap:48px;text-align:right}
-.snum{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);display:block;line-height:1}
-.slabel{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gray);text-transform:uppercase}
-.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn 1s 1.5s forwards}
-.scroll-hint span{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gray);text-transform:uppercase}
-.sline{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sPulse 2s infinite}
-.marquee-wrap{border-top:1px solid var(--dim);border-bottom:1px solid var(--dim);padding:17px 0;overflow:hidden;background:var(--bg2)}
-.marquee-track{display:flex;animation:marquee 26s linear infinite;white-space:nowrap}
-.mi{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:var(--gray);padding:0 40px;flex-shrink:0}
+
+/* ═══ HERO ════════════════════════════════════════════════ */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 64px 80px;position:relative;overflow:hidden;gap:56px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 78% 32%,rgba(232,148,26,.08) 0%,transparent 60%),radial-gradient(ellipse 38% 48% at 12% 80%,rgba(232,148,26,.04) 0%,transparent 55%),var(--bg);pointer-events:none}
+.hero-vl{position:absolute;top:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent 5%,var(--dim) 28%,var(--dim) 72%,transparent 95%);opacity:.6}
+
+/* LEFT */
+.hero-left{display:flex;flex-direction:column;position:relative;z-index:2}
+.hero-title-wrap{opacity:0;animation:fadeUp .9s .3s forwards}
+.hero-title{font-family:var(--ff);line-height:.9;letter-spacing:-1.5px}
+/* both JEEVA and DESIGNERR exactly the same size */
+.hero-title .line1,.hero-title .line2{display:block;font-size:clamp(62px,8.8vw,136px);line-height:.92}
+.hero-title .line2{color:var(--gold)}
+.hero-title .dim-t{opacity:.26}
+.hero-subtitle{font-family:var(--fb);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:16px;opacity:0;animation:fadeUp .7s .55s forwards;display:inline-flex;align-items:center;gap:10px;padding:5px 12px;background:var(--gdim);border-left:2px solid var(--gold)}
+.yt-gate{color:inherit;text-decoration:none;cursor:none;position:relative}
+.yt-gate:hover{color:var(--gold2)}
+.yt-gate::after{content:'▶ YT SOON';font-family:var(--fb);font-size:7px;letter-spacing:.12em;position:absolute;top:-13px;left:0;color:var(--gold);opacity:0;transition:opacity .2s;white-space:nowrap}
+.yt-gate:hover::after{opacity:1}
+.hero-desc{font-family:var(--fb);font-size:14px;line-height:1.82;color:var(--gray);max-width:400px;margin-top:28px;opacity:0;animation:fadeUp .85s .7s forwards}
+.hero-desc strong{color:var(--white);font-weight:400}
+/* sig pills — no outer rectangle, just dividers */
+.hero-sigs{display:flex;gap:0;margin-top:32px;opacity:0;animation:fadeUp .85s .88s forwards}
+.sig-pill{display:flex;flex-direction:column;padding:10px 22px;border-right:1px solid var(--dim)}
+.sig-pill:first-child{padding-left:0}
+.sig-pill:last-child{border-right:none}
+.sig-word{font-family:var(--ff);font-size:20px;color:var(--gold);line-height:1}
+.sig-lbl{font-family:var(--fb);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-top:3px}
+
+/* RIGHT */
+.hero-right{display:flex;flex-direction:column;align-items:flex-end;z-index:2}
+.pfp-wrap{width:100%;max-width:305px;aspect-ratio:3/4;background:var(--bg2);border:1px solid var(--dim);overflow:hidden;position:relative;opacity:0;animation:fadeUp .9s .5s forwards}
+.pfp-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.pfp-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse 70% 60% at 50% 38%,rgba(232,148,26,.06) 0%,transparent 70%)}
+.pfp-ph svg{opacity:.18}
+.pfp-highlights{width:100%;max-width:305px;display:flex;flex-direction:column;gap:1px;margin-top:2px;opacity:0;animation:fadeUp .85s .72s forwards}
+.ph-strip{display:flex;align-items:center;gap:9px;padding:9px 13px;background:var(--bg2);border-left:2px solid var(--gold);border-top:none;border-right:1px solid var(--dim);border-bottom:1px solid var(--dim);transition:background .2s}
+.ph-strip:hover{background:var(--bg3)}
+.ph-icon{font-size:12px;flex-shrink:0}
+.ph-text{font-family:var(--fb);font-size:11px;color:var(--white);line-height:1.3}
+.ph-text small{display:block;font-size:9px;letter-spacing:.07em;color:var(--gray);margin-top:1px}
+
+/* cert and award links — no underline, just colour shift on hover */
+.ei-name a{color:inherit;text-decoration:none;transition:color .2s}
+.ei-name a:hover{color:var(--gold)}
+/* Scroll hint */
+.scroll-hint{position:absolute;bottom:34px;left:64px;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeIn 1s 1.8s forwards}
+.scroll-hint span{font-family:var(--fb);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.sline{width:36px;height:1px;background:linear-gradient(to right,var(--gold),transparent);animation:sAnim 2s infinite}
+@keyframes sAnim{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ═══ MARQUEE ═════════════════════════════════════════════ */
+.marquee-wrap{padding:14px 0;overflow:hidden;position:relative;background:var(--bg2);border-top:1px solid var(--dim);border-bottom:1px solid var(--dim)}
+.marquee-track{display:flex;animation:mq 30s linear infinite;white-space:nowrap}
+.mi{font-family:var(--ff);font-size:13px;letter-spacing:.3em;color:var(--gray);padding:0 32px;flex-shrink:0}
 .mi.g{color:var(--gold)}
-.sec-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:14px}
-.sec-label::before{content:'';width:28px;height:1px;background:var(--gold)}
-.sec-rule{border:none;border-top:1px solid var(--dim);margin:0}
-.r{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+
+/* ═══ SECTION HELPERS ═════════════════════════════════════ */
+.sec-label{font-family:var(--fb);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sec-label::before{content:'';width:22px;height:1px;background:var(--gold)}
+.sec-pad{padding:88px 64px;border-top:1px solid var(--dim)}
+.r{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
 .r.on{opacity:1;transform:none}
-.r1{transition-delay:.12s}.r2{transition-delay:.22s}
-/* WIP */
-.wip{padding:90px 60px 80px;border-top:1px solid var(--dim)}
-.wip-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px}
-.wip-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,90px);line-height:.9}
-.wip-title span{color:var(--gold)}
-.live-dot{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
-.live-dot::before{content:'';width:7px;height:7px;background:var(--gold);border-radius:50%;animation:lp 1.6s ease-in-out infinite}
-@keyframes lp{0%,100%{opacity:1}50%{opacity:.25}}
-.wip-card{display:grid;grid-template-columns:340px 1fr;background:var(--bg2);border:1px solid var(--dim);overflow:hidden}
-.wip-vis{position:relative;min-height:480px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#1a0d00,#080500);overflow:hidden}
-.wip-vis::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(232,146,26,.18) 0%,transparent 65%)}
+.r1{transition-delay:.12s}.r2{transition-delay:.24s}
+
+/* ═══ WIP CAROUSEL ════════════════════════════════════════ */
+.wip-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px}
+.wip-h{font-family:var(--ff);font-size:clamp(46px,7.5vw,92px);line-height:.9}
+.wip-h span{color:var(--gold)}
+.live-pip{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.live-pip::before{content:'';width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pip 1.8s ease-in-out infinite;flex-shrink:0}
+@keyframes pip{0%,100%{opacity:1}50%{opacity:.2}}
+
+.wip-shell{border:1px solid var(--dim)}
+/* toolbar */
+.wip-toolbar{background:var(--bg2);border-bottom:1px solid var(--dim);padding:7px 16px;display:flex;align-items:center;gap:12px}
+.wip-toolbar-dots{display:flex;gap:5px}
+.wtd{width:9px;height:9px;border-radius:50%}
+.wip-toolbar-label{font-family:var(--fb);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.wip-toolbar-hint{margin-left:auto;font-family:var(--fb);font-size:9px;letter-spacing:.08em;color:var(--gold);opacity:.6}
+
+.wip-outer{overflow:hidden;touch-action:pan-y}
+.wip-track{display:flex;transition:transform .5s cubic-bezier(.77,0,.175,1)}
+.wip-slide{flex:0 0 100%}
+
+/* card — horizontal: portrait vis LEFT, info RIGHT */
+.wip-card{display:grid;grid-template-columns:240px 1fr;background:var(--bg2);min-height:360px}
+.wip-vis{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.wv1{background:linear-gradient(155deg,#1c0d00,#080400)}
+.wv2{background:linear-gradient(155deg,#001c10,#000d06)}
+.wv3{background:linear-gradient(155deg,#0e0010,#050008)}
+.wip-glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.6}
+.wv1 .wip-glow{width:280px;height:280px;background:radial-gradient(circle,rgba(232,148,26,.5) 0%,transparent 60%)}
+.wv2 .wip-glow{width:280px;height:280px;background:radial-gradient(circle,rgba(28,195,120,.4) 0%,transparent 60%)}
+.wv3 .wip-glow{width:280px;height:280px;background:radial-gradient(circle,rgba(140,114,255,.4) 0%,transparent 60%)}
 .wip-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.wr{position:absolute;border-radius:50%;border:1px solid rgba(232,146,26,.15);animation:wr 3.5s ease-in-out infinite}
-.wr:nth-child(1){width:120px;height:120px}
-.wr:nth-child(2){width:200px;height:200px;animation-delay:.9s}
-.wr:nth-child(3){width:290px;height:290px;animation-delay:1.8s}
-.wr:nth-child(4){width:390px;height:390px;animation-delay:2.6s}
-@keyframes wr{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.5;transform:scale(1.03)}}
-.wip-icon{position:relative;z-index:2;text-align:center}
-.wip-icon svg{width:64px;height:64px;opacity:.7}
-.film-name{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:4px;color:var(--gold);margin-top:12px;line-height:1.2}
-.film-sub{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--gray);text-transform:uppercase;margin-top:4px}
-.wip-badge{position:absolute;top:18px;left:18px;z-index:3;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:var(--bg);padding:4px 10px;font-weight:700}
-.prog-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--dim)}
-.prog-fill{height:100%;width:28%;background:linear-gradient(to right,var(--gold),var(--gold2))}
-.wip-info{padding:34px 38px;display:flex;flex-direction:column}
-.wip-meta{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
-.wip-name{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;margin-bottom:8px}
-.wip-desc{font-size:13px;color:var(--gray);line-height:1.75;margin-bottom:24px;max-width:440px}
-.phases-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gray);text-transform:uppercase;margin-bottom:10px}
-.ph-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.ph-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--dim);flex-shrink:0}
-.ph-dot.done{background:var(--gold);border-color:var(--gold)}
-.ph-dot.now{border-color:var(--gold);animation:ap 2s ease-in-out infinite}
-@keyframes ap{0%,100%{box-shadow:0 0 0 3px rgba(232,146,26,.15)}50%{box-shadow:0 0 0 6px rgba(232,146,26,.06)}}
-.ph-lbl{font-size:12px;color:var(--white);flex:1}
+.wr{position:absolute;border-radius:50%;animation:wr 4s ease-in-out infinite}
+.wr:nth-child(1){width:80px;height:80px}
+.wr:nth-child(2){width:145px;height:145px;animation-delay:1s}
+.wr:nth-child(3){width:220px;height:220px;animation-delay:2s}
+@keyframes wr{0%,100%{opacity:.14;transform:scale(1)}50%{opacity:.44;transform:scale(1.05)}}
+.wip-badge{position:absolute;top:14px;left:14px;z-index:3;font-family:var(--fb);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;font-weight:500}
+.wb-gold{background:var(--gold);color:var(--bg)}.wb-green{background:#1CC37A;color:#001A0D}.wb-purple{background:#8C72FF;color:#fff}
+.wip-icon{position:relative;z-index:2;text-align:center;padding:16px}
+.wip-icon svg{width:50px;height:50px}
+.wip-filmname{font-family:var(--ff);font-size:15px;letter-spacing:.26em;margin-top:9px;line-height:1.3}
+.wip-filmtype{font-family:var(--fb);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-top:4px}
+.wip-prog{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--dim)}
+.wip-fill{height:100%}
+.wf-g{background:linear-gradient(to right,var(--gold),var(--gold2))}.wf-gr{background:linear-gradient(to right,#1CC37A,#60F0AA)}.wf-p{background:linear-gradient(to right,#8C72FF,#C4BBFF)}
+
+.wip-info{padding:28px 30px;display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--dim)}
+.wip-meta{font-family:var(--fb);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+.wip-name{font-family:var(--ff);font-size:26px;line-height:1;margin-bottom:8px}
+.wip-desc{font-family:var(--fb);font-size:13px;line-height:1.72;color:var(--gray);margin-bottom:16px}
+.ph-list{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.ph-row{display:flex;align-items:center;gap:9px}
+.ph-dot{width:7px;height:7px;border-radius:50%;border:1px solid var(--dim);flex-shrink:0}
+.ph-dot.done{background:var(--gold);border-color:var(--gold)}.ph-dot.done-g{background:#1CC37A;border-color:#1CC37A}.ph-dot.done-p{background:#8C72FF;border-color:#8C72FF}
+.ph-dot.now{border-color:var(--gold);animation:pnow 2s ease-in-out infinite}
+.ph-dot.now-g{border-color:#1CC37A;animation:pnow-g 2s ease-in-out infinite}
+.ph-dot.now-p{border-color:#8C72FF;animation:pnow-p 2s ease-in-out infinite}
+@keyframes pnow{0%,100%{box-shadow:0 0 0 3px rgba(232,148,26,.14)}50%{box-shadow:0 0 0 6px rgba(232,148,26,.05)}}
+@keyframes pnow-g{0%,100%{box-shadow:0 0 0 3px rgba(28,195,120,.14)}50%{box-shadow:0 0 0 6px rgba(28,195,120,.05)}}
+@keyframes pnow-p{0%,100%{box-shadow:0 0 0 3px rgba(140,114,255,.14)}50%{box-shadow:0 0 0 6px rgba(140,114,255,.05)}}
+.ph-lbl{font-family:var(--fb);font-size:12px;color:var(--white)}
 .ph-lbl.m{color:var(--gray)}
-.ph-pct{font-family:'Space Mono',monospace;font-size:9px;color:var(--gold)}
-.ph-pct.m{color:var(--gray)}
-.log-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gray);text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--dim);margin-top:20px}
-.log-row{display:grid;grid-template-columns:68px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--dim)}
-.log-row:last-child{border-bottom:none}
-.log-date{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;color:var(--gold);padding-top:2px}
-.log-txt{font-size:12px;color:var(--white);line-height:1.5}
-.ltag{display:inline-block;margin-left:5px;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1px;color:var(--gold);background:var(--gdim);padding:1px 5px;vertical-align:middle}
-.wip-foot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid var(--dim)}
-.wip-pct{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gray);text-transform:uppercase}
-.wip-pct strong{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:0}
-.wip-link{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gline);padding-bottom:2px}
-/* WORK */
-.work{padding:90px 60px 100px;border-top:1px solid var(--dim)}
-.work-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px}
-.work-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,110px);line-height:.9}
+.wip-foot{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--dim);margin-top:auto}
+.wip-pct{font-family:var(--fb);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
+.wip-pct strong{font-family:var(--ff);font-size:20px;letter-spacing:0;display:block;line-height:1}
+.wip-link{font-family:var(--fb);font-size:10px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid;padding-bottom:2px;transition:opacity .2s}
+.wip-link:hover{opacity:.65}
+
+/* controls — inside toolbar strip */
+.wip-controls{background:var(--bg2);border-top:1px solid var(--dim);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:16px}
+.wip-arr{width:38px;height:38px;border:1px solid var(--dim);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--gray);cursor:none;font-size:15px;transition:border-color .2s,color .2s}
+.wip-arr:hover{border-color:var(--gold);color:var(--gold)}
+.wip-dots{display:flex;gap:8px;align-items:center}
+.wdot{width:7px;height:7px;border-radius:50%;border:1px solid var(--dim);background:transparent;cursor:none;padding:0;transition:all .2s}
+.wdot.on{background:var(--gold);border-color:var(--gold)}
+.wip-count{font-family:var(--fb);font-size:10px;letter-spacing:.1em;color:var(--gray)}
+.wip-count strong{color:var(--gold);font-weight:400}
+
+/* ═══ WORKS ═══════════════════════════════════════════════ */
+.work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px}
+.work-h{font-family:var(--ff);font-size:clamp(50px,8vw,108px);line-height:.9}
 .work-h span{color:var(--gold)}
-.work-intro{max-width:280px;font-size:13px;color:var(--gray);line-height:1.7;text-align:right}
-.tabs{display:flex;gap:0;margin-bottom:32px;border-bottom:1px solid var(--dim);overflow-x:auto}
-.tab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:13px 20px;border:none;background:transparent;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;white-space:nowrap}
-.tab:hover{color:var(--white)}
-.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.work-sub{font-family:var(--fb);font-size:13px;color:var(--gray);line-height:1.7;max-width:240px;text-align:right}
+.wtabs{display:flex;border-bottom:1px solid var(--dim);margin-bottom:26px;overflow-x:auto;scrollbar-width:none}
+.wtabs::-webkit-scrollbar{display:none}
+.wtab{font-family:var(--fb);font-size:10px;letter-spacing:.13em;text-transform:uppercase;padding:11px 16px;border:none;background:transparent;color:var(--gray);cursor:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;white-space:nowrap}
+.wtab:hover{color:var(--white)}
+.wtab.on{color:var(--gold);border-bottom-color:var(--gold)}
 .pgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}
-.pc{position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--dim);display:block}
+.pc{position:relative;overflow:hidden;background:var(--bg2);border:1px solid var(--dim);display:block;text-decoration:none;color:inherit}
 .pc.hide{display:none}
 .pc[data-s="lg"]{grid-column:span 7}
-.pc[data-s="lg"] .pi{min-height:420px}
+.pc[data-s="lg"] .pi{min-height:400px}
 .pc[data-s="md"]{grid-column:span 5}
 .pc[data-s="sm"]{grid-column:span 4}
-.pc[data-s="full"]{grid-column:span 12}
-.pc[data-s="full"] .pi{min-height:190px;flex-direction:row;justify-content:space-between;align-items:flex-end}
-.pi{min-height:290px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;overflow:hidden}
-.pbg{position:absolute;inset:0;transition:transform .6s cubic-bezier(.25,.46,.45,.94),opacity .4s}
+.pi{min-height:275px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;overflow:hidden}
+.pbg{position:absolute;inset:0;transition:transform .65s cubic-bezier(.25,.46,.45,.94),opacity .4s}
 .pc:hover .pbg{transform:scale(1.05);opacity:.7}
-.pshape{position:absolute;border-radius:50%;opacity:.15;transition:transform .6s ease,opacity .4s}
-.pc:hover .pshape{transform:scale(1.2);opacity:.25}
-.pnum{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gray);position:absolute;top:20px;right:20px;z-index:2}
-.pcat{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:7px;position:relative;z-index:2}
-.pname{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.8vw,44px);line-height:1;position:relative;z-index:2}
-.pc[data-s="full"] .pname{font-size:clamp(28px,4vw,62px)}
-.pdesc{font-size:12px;color:var(--gray);margin-top:7px;line-height:1.6;position:relative;z-index:2;max-width:360px;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.pshape{position:absolute;border-radius:50%;opacity:.11;transition:transform .6s,opacity .4s}
+.pc:hover .pshape{transform:scale(1.25);opacity:.2}
+.pnum{font-family:var(--fb);font-size:10px;letter-spacing:.2em;color:var(--gray);position:absolute;top:18px;right:18px;z-index:2}
+.pcat{font-family:var(--fb);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;position:relative;z-index:2}
+.pname{font-family:var(--ff);font-size:clamp(21px,2.6vw,42px);line-height:1;position:relative;z-index:2;transition:color .22s}
+.pc:hover .pname{color:var(--gold)}
+.pdesc{font-family:var(--fb);font-size:12px;color:var(--gray);margin-top:7px;line-height:1.6;position:relative;z-index:2;max-width:340px;opacity:0;transform:translateY(8px);transition:opacity .32s,transform .32s}
 .pc:hover .pdesc{opacity:1;transform:none}
-.parr{position:absolute;bottom:22px;right:22px;width:40px;height:40px;border:1px solid var(--dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--gray);z-index:2;text-decoration:none;transition:border-color .3s,color .3s,transform .3s,background .3s}
-.pc:hover .parr{border-color:var(--gold);color:var(--gold);transform:rotate(-45deg);background:rgba(232,146,26,.1)}
-.pc[data-s="full"] .parr{position:relative;bottom:auto;right:auto;flex-shrink:0}
-.wip-inline-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;background:rgba(232,146,26,.12);color:var(--gold);border:1px solid rgba(232,146,26,.25);padding:2px 7px;margin-left:8px;vertical-align:middle}
-/* VISION */
-.vision{padding:90px 60px;border-top:1px solid var(--dim);position:relative;overflow:hidden}
-.vision::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(232,146,26,.04) 0%,transparent 70%);pointer-events:none}
-.vision-super{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:16px}
-.vision-super::before{content:'';width:28px;height:1px;background:var(--gold)}
-.vision-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,86px);line-height:.92;letter-spacing:-1px;margin-bottom:44px}
-.vision-h span{color:var(--gold)}
-.vc{background:var(--bg2);border:1px solid var(--dim);padding:44px 40px;position:relative;overflow:hidden;transition:border-color .3s}
-.vc:hover{border-color:var(--gline)}
-.vc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);opacity:0;transition:opacity .3s}
-.vc:hover::before{opacity:1}
-.vc-step{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:18px;position:relative}
-.vc-step-n{font-family:'Bebas Neue',sans-serif;font-size:58px;color:rgba(232,146,26,.06);position:absolute;top:-10px;right:0;line-height:1}
-.vc-icon{width:46px;height:46px;margin-bottom:20px;background:var(--gdim);border:1px solid var(--gline);display:flex;align-items:center;justify-content:center}
-.vc-icon svg{width:20px;height:20px}
-.vc-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:10px}
-.vc-title span{color:var(--gold)}
-.vc-desc{font-size:13px;color:var(--gray);line-height:1.8;margin-bottom:16px}
-.vc-desc strong{color:var(--white);font-weight:500}
-.vtags{display:flex;flex-wrap:wrap;gap:5px}
-.vtag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;color:var(--gold);border:1px solid var(--gline);padding:4px 9px;background:var(--gdim)}
-.roadmap{background:var(--bg2);border:1px solid var(--dim);padding:26px 36px;display:flex;align-items:center;margin-top:3px;overflow-x:auto}
-.rn{flex:1;min-width:140px}
-.rn:first-child{padding-right:28px;border-right:1px solid var(--dim)}
-.rn:last-child{padding-left:28px}
-.rarr{padding:0 18px;color:var(--gold);font-size:18px;flex-shrink:0}
-.rnow{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
-.rlabel{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px}
-.rsub{font-size:11px;color:var(--gray);margin-top:2px}
-/* ABOUT */
-.about{padding:90px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--dim)}
-.about-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,76px);line-height:1;margin-bottom:24px}
-.about-h em{font-style:italic;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.55em;display:block;font-weight:300;margin-bottom:4px}
-.about-p{font-size:15px;line-height:1.8;color:var(--gray);margin-bottom:16px}
-.about-p strong{color:var(--white);font-weight:500}
-.hi{display:inline-flex;align-items:center;gap:8px;background:var(--gdim);border:1px solid var(--gline);padding:6px 14px;margin-top:4px;font-size:13px;color:var(--gold)}
-.hi svg{width:13px;height:13px;flex-shrink:0}
-.skills{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:20px}
-.sk{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--gray);padding:11px 14px;border:1px solid var(--dim);transition:border-color .3s,color .3s}
-.sk:hover{border-color:var(--gold);color:var(--gold)}
-.acard{background:var(--bg2);border:1px solid var(--dim);padding:40px;position:relative;overflow:hidden}
-.acard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent)}
-.acard-t{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:4px;color:var(--gray);margin-bottom:24px}
-.ci{padding:13px 0;border-bottom:1px solid var(--dim);display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.parr{position:absolute;bottom:20px;right:20px;width:38px;height:38px;border:1px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gray);z-index:2;transition:all .22s}
+.pc:hover .parr{border-color:var(--gold);color:var(--gold);transform:rotate(-45deg)}
+.work-cta{text-align:center;margin-top:32px}
+.btn-line{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--dim);color:var(--white);padding:14px 40px;font-family:var(--fb);font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:border-color .22s,color .22s,transform .2s}
+.btn-line:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* ═══ ABOUT — RESUME ══════════════════════════════════════ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;align-items:start}
+.about-left{padding-right:50px}
+.about-h{font-family:var(--ff);font-size:clamp(42px,6vw,74px);line-height:.93;margin-bottom:20px}
+.about-h em{font-style:italic;color:var(--gold);font-family:var(--fb);font-size:.52em;display:block;font-weight:300;margin-bottom:5px;letter-spacing:.02em}
+.about-p{font-family:var(--fb);font-size:13px;line-height:1.82;color:var(--gray);margin-bottom:12px}
+.about-p strong{color:var(--white);font-weight:400}
+.exp-lbl{font-family:var(--fb);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding-bottom:9px;border-bottom:1px solid var(--dim);margin-top:26px;margin-bottom:0}
+.ci{padding:13px 0;border-bottom:1px solid var(--dim);display:grid;grid-template-columns:1fr auto;gap:8px}
 .ci:last-child{border-bottom:none}
-.ci-name{font-size:13px;color:var(--white);line-height:1.4}
-.ci-org{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--gold);margin-top:3px}
-.ci-yr{font-family:'Space Mono',monospace;font-size:10px;color:var(--gray);flex-shrink:0}
-/* SERVICES */
-.services{padding:90px 60px;border-top:1px solid var(--dim)}
-.svgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:44px}
-.sv{background:var(--bg2);border:1px solid var(--dim);padding:38px 34px;transition:border-color .3s}
-.sv:hover{border-color:var(--gline)}
-.sv-n{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:20px}
-.sv-t{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:12px;transition:color .3s}
-.sv:hover .sv-t{color:var(--gold)}
-.sv-d{font-size:13px;color:var(--gray);line-height:1.75}
-/* CONTACT */
-.contact{padding:100px 60px;border-top:1px solid var(--dim);text-align:center}
-.contact .sec-label{justify-content:center}
-.contact-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,10vw,126px);line-height:.9;margin-bottom:18px}
+.ci-role{font-family:var(--fb);font-size:13px;color:var(--white);font-weight:400;line-height:1.3}
+.ci-org{font-family:var(--fb);font-size:10px;color:var(--gold);margin-top:2px;letter-spacing:.04em}
+.ci-sub{font-family:var(--fb);font-size:11px;color:var(--gray);line-height:1.55;margin-top:4px}
+.ci-yr{font-family:var(--fb);font-size:10px;color:var(--gray);white-space:nowrap;text-align:right;padding-top:2px}
+.about-right{background:var(--bg2);border:1px solid var(--dim);padding:36px 32px;position:sticky;top:96px;overflow:hidden}
+.ar-inner{display:flex;flex-direction:column;gap:26px}
+.cred-lbl{font-family:var(--fb);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding-bottom:9px;border-bottom:1px solid var(--dim);margin-bottom:2px}
+.ei{padding:8px 0;border-bottom:1px solid var(--dim);display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ei:last-child{border-bottom:none}
+.ei-name{font-family:var(--fb);font-size:12px;color:var(--white);font-weight:400;line-height:1.35}
+.ei-org{font-family:var(--fb);font-size:9px;color:var(--gray);margin-top:2px}
+.ei-yr{font-family:var(--fb);font-size:9px;color:var(--gold);flex-shrink:0;padding-top:1px}
+.ei.win{padding-left:8px;border-left:2px solid var(--gold)}
+.ei.win .ei-name{color:var(--gold)}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.sk{font-family:var(--fb);font-size:10px;letter-spacing:.06em;color:var(--gray);padding:9px 12px;border:1px solid var(--dim);background:var(--bg);transition:border-color .2s,color .2s}
+.sk:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ═══ FEEDBACK — animated ticker ═════════════════════════ */
+.fb-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px}
+.fb-h{font-family:var(--ff);font-size:clamp(42px,6.5vw,74px);line-height:.93}
+.fb-h span{color:var(--gold)}
+/* Ticker */
+.fb-ticker-wrap{overflow:hidden;position:relative;padding:2px 0}
+.fb-ticker-wrap::before,.fb-ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
+.fb-ticker-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.fb-ticker-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.fb-ticker{display:flex;gap:3px;animation:fbTk 38s linear infinite;width:max-content}
+.fb-ticker:hover{animation-play-state:paused}
+@keyframes fbTk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tcard{flex:0 0 320px;background:var(--bg2);border:1px solid var(--dim);padding:22px 20px;position:relative;overflow:hidden;transition:border-color .2s}
+.tcard:hover{border-color:var(--gline)}
+.tcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent)}
+.tcard-quote{font-family:var(--fb);font-size:32px;color:var(--gold);line-height:.7;opacity:.18;position:absolute;top:12px;right:14px}
+.tcard-text{font-family:var(--fb);font-size:13px;color:var(--white);line-height:1.72;margin-bottom:16px}
+.tcard-name{font-family:var(--fb);font-size:11px;color:var(--gold);font-weight:400}
+.tcard-brand{font-family:var(--fb);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--gray);margin-top:2px}
+.tcard-stars{font-size:11px;color:var(--gold);letter-spacing:3px;margin-top:6px}
+
+/* ═══ CONTACT ═════════════════════════════════════════════ */
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:end}
+.contact-h{font-family:var(--ff);font-size:clamp(54px,9vw,118px);line-height:.9;margin-bottom:24px}
 .contact-h span{color:var(--gold)}
-.contact-sub{font-size:15px;color:var(--gray);margin-bottom:48px;font-style:italic}
-.cbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-p{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--bg);padding:17px 38px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-weight:700;transition:background .3s,transform .2s}
-.btn-p:hover{background:var(--gold2);transform:translateY(-2px)}
-.btn-s{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--dim);color:var(--white);padding:17px 38px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:border-color .3s,color .3s,transform .2s}
-.btn-s:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
-.cinfo{margin-top:56px;display:flex;justify-content:center;gap:52px;flex-wrap:wrap}
-.citem{text-align:center}
-.ckey{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gray);text-transform:uppercase;margin-bottom:7px}
-.cval{font-size:14px;color:var(--white)}
+.contact-sub{font-family:var(--fb);font-size:14px;color:var(--gray);line-height:1.8;max-width:380px;margin-bottom:28px}
+.contact-cats{font-family:var(--ff);font-size:13px;letter-spacing:.2em;color:var(--gray);margin-bottom:32px}
+.contact-cats span{color:var(--gold)}
+.btn-solid{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--bg);padding:14px 34px;font-family:var(--fb);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:background .22s,transform .2s}
+.btn-solid:hover{background:var(--gold2);transform:translateY(-2px)}
+.contact-right{padding-left:60px;border-left:1px solid var(--dim)}
+.citem{padding:13px 0;border-bottom:1px solid var(--dim);display:flex;justify-content:space-between;align-items:center}
+.citem:first-child{border-top:1px solid var(--dim)}
+.ckey{font-family:var(--fb);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray)}
+.cval{font-family:var(--fb);font-size:13px;color:var(--white)}
 .cval a{color:var(--gold);text-decoration:none}
 .cval a:hover{text-decoration:underline}
-footer{border-top:1px solid var(--dim);padding:26px 60px;display:flex;justify-content:space-between;align-items:center}
-.flogo{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--gold)}
-.flogo .dim{opacity:.35}
-.fcopy{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gray)}
-.flinks{display:flex;gap:22px}
-.flinks a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--gray);text-decoration:none;transition:color .3s}
+.contact-thanks{font-family:var(--ff);font-size:22px;letter-spacing:.12em;color:var(--gray);margin-top:44px;padding-top:24px;border-top:1px solid var(--dim);text-align:center;grid-column:1/-1}
+.contact-thanks span{color:var(--gold)}
+
+/* ═══ FOOTER ══════════════════════════════════════════════ */
+footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-content:space-between;align-items:center}
+.flogo{font-family:var(--ff);font-size:17px;letter-spacing:.16em;color:var(--gold)}
+.flogo .dim{opacity:.28}
+.fcopy{font-family:var(--fb);font-size:10px;letter-spacing:.1em;color:var(--gray)}
+.flinks{display:flex;gap:20px}
+.flinks a{font-family:var(--fb);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s}
 .flinks a:hover{color:var(--gold)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* ═══ KEYFRAMES ═══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes sPulse{0%,100%{opacity:.3}50%{opacity:1}}
-@media(max-width:768px){
-  nav{padding:20px 24px}.nav-links{display:none}
-  .hero{padding:0 24px 56px}
-  .hero-sub{flex-direction:column;align-items:flex-start;gap:20px}
-  .hero-stats{text-align:left;gap:24px}
-  .wip{padding:56px 24px}
-  .wip-card{grid-template-columns:1fr}
-  .wip-vis{min-height:200px}
-  .work{padding:56px 24px}
-  .work-hdr{flex-direction:column;align-items:flex-start;gap:16px}
-  .pgrid{grid-template-columns:1fr}
-  .pc[data-s]{grid-column:span 1}
-  .pc[data-s="full"] .pi{flex-direction:column;align-items:flex-start}
-  .vision{padding:56px 24px}
-  .about{grid-template-columns:1fr;padding:56px 24px;gap:36px}
-  .services{padding:56px 24px}.svgrid{grid-template-columns:1fr}
-  .contact{padding:56px 24px}
-  footer{flex-direction:column;gap:12px;text-align:center;padding:22px}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══ RESPONSIVE ══════════════════════════════════════════ */
+@media(max-width:960px){
+  nav{padding:20px 24px}
+  .hero{grid-template-columns:1fr;padding:96px 24px 52px;gap:28px}
+  .hero-right{align-items:flex-start}
+  .pfp-wrap,.pfp-highlights{max-width:220px}
+  .sec-pad{padding:60px 24px}
+  .wip-card{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .wip-vis{min-height:220px}
+  .wip-info{border-left:none;border-top:1px solid var(--dim)}
+  .pgrid{display:flex;flex-direction:column}
+  .pc[data-s]{grid-column:auto}
+  .about-grid{grid-template-columns:1fr;gap:28px}
+  .about-left{padding-right:0}
+  .about-right{position:static}
+  .contact-inner{grid-template-columns:1fr;gap:36px}
+  .contact-right{padding-left:0;border-left:none;border-top:1px solid var(--dim);padding-top:28px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:20px}
 }
 </style>
 </head>
 <body>
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="ring"></div>
 
+<div class="cur" id="cur"></div>
+<div class="cring" id="cring"></div>
+
+<!-- ════════════════════ NAV ════════════════════ -->
 <nav>
-  <a href="#" class="nav-logo">JEEVA <span class="dim">DESIGNERR</span></a>
+  <a href="#" class="nav-logo">
+    <span class="jde-slot">
+      <!-- Swap for your AE gif: <img src="jde.gif" alt="JDE"> -->
+      <span class="fb2">JDE</span>
+    </span>
+    JEEVA <span class="dim">DESIGNERR</span>
+  </a>
   <ul class="nav-links">
-    <li><a href="#wip">In Progress</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#vision">Vision</a></li>
+    <li><a href="works.html">Works</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="journal.html">Journal</a></li>
   </ul>
 </nav>
 
-<section class="hero">
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero" id="top">
   <div class="hero-bg"></div>
   <div class="hero-vl"></div>
-  <div class="hero-counter">Senior Visual &amp; Motion Designer &nbsp;/&nbsp; Bengaluru, India &nbsp;/&nbsp; Open to Work</div>
-  <h1 class="hero-title">JEEVA<span class="gold">DESIGN<span class="dim">ERR</span></span></h1>
-  <div class="hero-sub">
-    <p class="hero-tagline">Brand identity, motion design &amp; 3D — built with mathematical precision and cinematic instinct.</p>
-    <div class="hero-stats">
-      <div><span class="snum">10K+</span><span class="slabel">Assets Delivered</span></div>
-      <div><span class="snum">3+</span><span class="slabel">Years Experience</span></div>
-      <div><span class="snum">6+</span><span class="slabel">Design Disciplines</span></div>
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-title-wrap">
+      <h1 class="hero-title">
+        <span class="line1">JEEVA</span>
+        <span class="line2">DESIGN<a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="yt-gate"><span class="dim-t">ERR</span></a></span>
+      </h1>
+    </div>
+    <p class="hero-subtitle">Senior Visual &amp; Motion Designer</p>
+
+    <p class="hero-desc">
+      Building visual systems that speak before the words do — through
+      <strong>brand identity</strong>, <strong>motion design</strong>,
+      and <strong>3D storytelling</strong> grounded in mathematical thinking.
+    </p>
+
+    <div class="hero-sigs">
+      <div class="sig-pill"><span class="sig-word">Brand</span><div class="sig-lbl">Identity</div></div>
+      <div class="sig-pill"><span class="sig-word">Motion</span><div class="sig-lbl">& 3D</div></div>
+      <div class="sig-pill"><span class="sig-word">Design</span><div class="sig-lbl">Systems</div></div>
     </div>
   </div>
+
+  <!-- RIGHT — profile photo + highlights, nothing else -->
+  <div class="hero-right">
+    <div class="pfp-wrap">
+      <!-- Replace with your photo or AE gif -->
+      <img src="profile.jpg" alt="Jeeva A" onerror="this.style.display='none'">
+      <div class="pfp-ph">
+        <svg width="88" height="108" viewBox="0 0 88 108" fill="none">
+          <circle cx="44" cy="33" r="23" stroke="rgba(232,148,26,.9)" stroke-width="1.2"/>
+          <path d="M4 106c0-22.091 17.909-40 40-40s40 17.909 40 40" stroke="rgba(232,148,26,.9)" stroke-width="1.2" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="pfp-highlights">
+      <div class="ph-strip"><span class="ph-icon">🏆</span><div class="ph-text">1st Prize — Communication Design<small>Designer Tomorrow! · DOT School</small></div></div>
+      <div class="ph-strip"><span class="ph-icon">📐</span><div class="ph-text">Brand Specialist<small>3+ yrs · Tirupur · Self-learning by doing</small></div></div>
+      <div class="ph-strip"><span class="ph-icon">⭐</span><div class="ph-text">Best Employee / Top Performer<small>Flatworld Solutions · 2025</small></div></div>
+    </div>
+  </div>
+
   <div class="scroll-hint"><span>Scroll</span><div class="sline"></div></div>
 </section>
 
+<!-- ════════════════════ MARQUEE — SERVICES ════════════════════ -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="mi">Brand Identity</span><span class="mi g">✦</span><span class="mi">Motion Design</span><span class="mi g">✦</span><span class="mi">3D Animation</span><span class="mi g">✦</span><span class="mi">Video Editing</span><span class="mi g">✦</span><span class="mi">Print &amp; Collateral</span><span class="mi g">✦</span><span class="mi">Digital Design</span><span class="mi g">✦</span><span class="mi">Environmental UX</span><span class="mi g">✦</span><span class="mi">Blender</span><span class="mi g">✦</span><span class="mi">After Effects</span><span class="mi g">✦</span><span class="mi">Brand Identity</span><span class="mi g">✦</span><span class="mi">Motion Design</span><span class="mi g">✦</span><span class="mi">3D Animation</span><span class="mi g">✦</span><span class="mi">Video Editing</span><span class="mi g">✦</span><span class="mi">Print &amp; Collateral</span><span class="mi g">✦</span><span class="mi">Digital Design</span><span class="mi g">✦</span><span class="mi">Environmental UX</span><span class="mi g">✦</span><span class="mi">Blender</span><span class="mi g">✦</span><span class="mi">After Effects</span><span class="mi g">✦</span>
+    <span class="mi">Print Collaterals</span><span class="mi g">✦</span>
+    <span class="mi">Social Media Posts</span><span class="mi g">✦</span>
+    <span class="mi">Reels Editing</span><span class="mi g">✦</span>
+    <span class="mi">Campaign Banners</span><span class="mi g">✦</span>
+    <span class="mi">Logo Animations</span><span class="mi g">✦</span>
+    <span class="mi">3D Product Animations</span><span class="mi g">✦</span>
+    <span class="mi">SaaS Animations</span><span class="mi g">✦</span>
+    <span class="mi">Brand Presentations</span><span class="mi g">✦</span>
+    <span class="mi">Logo Creation</span><span class="mi g">✦</span>
+    <span class="mi">Brand Identity</span><span class="mi g">✦</span>
+    <span class="mi">Posters</span><span class="mi g">✦</span>
+    <span class="mi">Brochures</span><span class="mi g">✦</span>
+    <span class="mi">Menu Design</span><span class="mi g">✦</span>
+    <span class="mi">Packaging Design</span><span class="mi g">✦</span>
+    <span class="mi">Environmental UX</span><span class="mi g">✦</span>
+    <span class="mi">Mascot Design</span><span class="mi g">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="mi">Print Collaterals</span><span class="mi g">✦</span>
+    <span class="mi">Social Media Posts</span><span class="mi g">✦</span>
+    <span class="mi">Reels Editing</span><span class="mi g">✦</span>
+    <span class="mi">Campaign Banners</span><span class="mi g">✦</span>
+    <span class="mi">Logo Animations</span><span class="mi g">✦</span>
+    <span class="mi">3D Product Animations</span><span class="mi g">✦</span>
+    <span class="mi">SaaS Animations</span><span class="mi g">✦</span>
+    <span class="mi">Brand Presentations</span><span class="mi g">✦</span>
+    <span class="mi">Logo Creation</span><span class="mi g">✦</span>
+    <span class="mi">Brand Identity</span><span class="mi g">✦</span>
+    <span class="mi">Posters</span><span class="mi g">✦</span>
+    <span class="mi">Brochures</span><span class="mi g">✦</span>
+    <span class="mi">Menu Design</span><span class="mi g">✦</span>
+    <span class="mi">Packaging Design</span><span class="mi g">✦</span>
+    <span class="mi">Environmental UX</span><span class="mi g">✦</span>
+    <span class="mi">Mascot Design</span><span class="mi g">✦</span>
   </div>
 </div>
 
-<section class="wip" id="wip">
-  <div class="wip-hdr r">
+<!-- ════════════════════ WIP ════════════════════ -->
+<section class="sec-pad" id="wip">
+  <div class="wip-head r">
     <div>
-      <div class="sec-label" style="margin-bottom:12px">Currently Building</div>
-      <h2 class="wip-title">PROJECT<br><span>UPDATES</span></h2>
+      <div class="sec-label">Currently Building</div>
+      <h2 class="wip-h">PROJECT<br><span>UPDATES</span></h2>
     </div>
-    <div class="live-dot">Live Progress</div>
+    <div class="live-pip">Live Progress</div>
   </div>
-  <div class="wip-card r">
-    <div class="wip-vis">
-      <div class="wip-rings"><div class="wr"></div><div class="wr"></div><div class="wr"></div><div class="wr"></div></div>
-      <div class="wip-badge">🎬 In Production</div>
-      <div class="wip-icon">
-        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="40" cy="40" r="28" stroke="#e8921a" stroke-width="1.5" opacity="0.5"/>
-          <circle cx="40" cy="40" r="12" fill="rgba(232,146,26,0.15)" stroke="#e8921a" stroke-width="1"/>
-          <path d="M24 34 L56 34 L40 62 Z" stroke="#e8921a" stroke-width="1.2" fill="none" opacity="0.4"/>
-          <line x1="40" y1="12" x2="40" y2="28" stroke="#e8921a" stroke-width="1.5" opacity="0.6"/>
-          <line x1="58" y1="22" x2="48" y2="30" stroke="#e8921a" stroke-width="1.5" opacity="0.6"/>
-          <line x1="22" y1="22" x2="32" y2="30" stroke="#e8921a" stroke-width="1.5" opacity="0.6"/>
-        </svg>
-        <div class="film-name">HEED ME<br>IN MIST</div>
-        <div class="film-sub">Feature Film · Blender 3D</div>
+
+  <div class="wip-shell r">
+    <div class="wip-toolbar">
+      <div class="wip-toolbar-dots">
+        <div class="wtd" style="background:rgba(255,80,80,.5)"></div>
+        <div class="wtd" style="background:rgba(255,180,0,.5)"></div>
+        <div class="wtd" style="background:rgba(80,200,80,.5)"></div>
       </div>
-      <div class="prog-bar"><div class="prog-fill"></div></div>
+      <span class="wip-toolbar-label">Project Updates — 4 slides</span>
+      <span class="wip-toolbar-hint">⟵ Drag or arrow to navigate ⟶</span>
     </div>
-    <div class="wip-info">
-      <div class="wip-meta">3D Animated Feature Film · Solo Direction · Mythical Romance</div>
-      <h3 class="wip-name">Heed Me in Mist</h3>
-      <p class="wip-desc">A stylised mythical romantic film — self-directed entirely in Blender. Cinematic lighting, character animation, and narrative motion design at feature scale.</p>
-      <div class="phases-lbl">Production Phases</div>
-      <div class="ph-row"><div class="ph-dot done"></div><span class="ph-lbl">Concept Art &amp; Production Design</span><span class="ph-pct">100%</span></div>
-      <div class="ph-row"><div class="ph-dot done"></div><span class="ph-lbl">Storyboard &amp; Animatic</span><span class="ph-pct">80%</span></div>
-      <div class="ph-row"><div class="ph-dot done"></div><span class="ph-lbl">Environment Modelling — Scene 01</span><span class="ph-pct">100%</span></div>
-      <div class="ph-row"><div class="ph-dot now"></div><span class="ph-lbl">Character Rigging &amp; Animation</span><span class="ph-pct">35%</span></div>
-      <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Lighting &amp; Rendering</span><span class="ph-pct m">—</span></div>
-      <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Compositing &amp; Sound</span><span class="ph-pct m">—</span></div>
-      <div class="log-lbl">Latest Updates</div>
-      <div class="log-row"><span class="log-date">Mar 2026</span><span class="log-txt">Scene 01 establishing shots &amp; environment modelling complete <span class="ltag">Scene 01</span></span></div>
-      <div class="log-row"><span class="log-date">Feb 2026</span><span class="log-txt">Character rigging pass 1 — body mechanics done <span class="ltag">Rigging</span></span></div>
-      <div class="log-row"><span class="log-date">Jan 2026</span><span class="log-txt">Storyboard &amp; animatic 80% locked <span class="ltag">Pre-Pro</span></span></div>
-      <div class="log-row"><span class="log-date">Dec 2025</span><span class="log-txt">Concept art &amp; production design finalised <span class="ltag">Done</span></span></div>
-      <div class="wip-foot">
-        <div class="wip-pct">Overall: <strong>28%</strong> complete</div>
-        <a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="wip-link">Follow on Behance →</a>
+
+    <div class="wip-outer" id="wipOuter">
+      <div class="wip-track" id="wipTrack">
+
+        <!-- SLIDE 1 — HEED ME IN MIST -->
+        <div class="wip-slide">
+          <div class="wip-card">
+            <div class="wip-vis wv1">
+              <div class="wip-glow"></div>
+              <div class="wip-rings">
+                <div class="wr" style="border-color:rgba(232,148,26,.2)"></div>
+                <div class="wr" style="border-color:rgba(232,148,26,.12)"></div>
+                <div class="wr" style="border-color:rgba(232,148,26,.07)"></div>
+              </div>
+              <span class="wip-badge wb-gold">🎬 In Production</span>
+              <div class="wip-icon">
+                <svg viewBox="0 0 80 80" fill="none">
+                  <circle cx="40" cy="40" r="28" stroke="#E8941A" stroke-width="1.5" opacity=".5"/>
+                  <circle cx="40" cy="40" r="12" fill="rgba(232,148,26,.12)" stroke="#E8941A" stroke-width="1"/>
+                  <path d="M24 34L56 34L40 62Z" stroke="#E8941A" stroke-width="1.2" fill="none" opacity=".4"/>
+                  <line x1="40" y1="12" x2="40" y2="28" stroke="#E8941A" stroke-width="1.5" opacity=".6"/>
+                  <line x1="58" y1="22" x2="48" y2="30" stroke="#E8941A" stroke-width="1.5" opacity=".6"/>
+                  <line x1="22" y1="22" x2="32" y2="30" stroke="#E8941A" stroke-width="1.5" opacity=".6"/>
+                </svg>
+                <div class="wip-filmname" style="color:var(--gold)">HEED ME<br>IN MIST</div>
+                <div class="wip-filmtype">Feature Film · Blender 3D</div>
+              </div>
+              <div class="wip-prog"><div class="wip-fill wf-g" style="width:10%"></div></div>
+            </div>
+            <div class="wip-info">
+              <div>
+                <div class="wip-meta" style="color:var(--gold)">3D Animated Feature Film · Solo Direction · Blender</div>
+                <div class="wip-name">HEED ME IN MIST</div>
+                <div class="wip-desc">A stylised mythical romantic 3D animated feature — self-directed in Blender. Cinematic lighting, character animation, and narrative motion design at feature scale.</div>
+                <div class="ph-list">
+                  <div class="ph-row"><div class="ph-dot done"></div><span class="ph-lbl">Storyboard &amp; script — done</span></div>
+                  <div class="ph-row"><div class="ph-dot now"></div><span class="ph-lbl" style="color:var(--gold)">Character design &amp; concept art</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">3D modelling &amp; rigging</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Animation &amp; lighting passes</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Compositing &amp; final render</span></div>
+                </div>
+              </div>
+              <div class="wip-foot">
+                <div class="wip-pct"><strong style="color:var(--gold)">10%</strong>complete</div>
+                <a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="wip-link" style="color:var(--gold);border-bottom-color:rgba(232,148,26,.3)">View Updates →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 — MOTION 3D SAAS -->
+        <div class="wip-slide">
+          <div class="wip-card">
+            <div class="wip-vis wv2">
+              <div class="wip-glow"></div>
+              <div class="wip-rings">
+                <div class="wr" style="border-color:rgba(28,195,120,.2)"></div>
+                <div class="wr" style="border-color:rgba(28,195,120,.12)"></div>
+                <div class="wr" style="border-color:rgba(28,195,120,.07)"></div>
+              </div>
+              <span class="wip-badge wb-green">⚡ Animating</span>
+              <div class="wip-icon">
+                <svg viewBox="0 0 80 80" fill="none">
+                  <rect x="14" y="22" width="52" height="36" rx="5" stroke="#1CC37A" stroke-width="1.5" opacity=".5"/>
+                  <rect x="22" y="30" width="20" height="14" rx="3" fill="rgba(28,195,122,.12)" stroke="#1CC37A" stroke-width="1"/>
+                  <circle cx="54" cy="37" r="7" fill="rgba(28,195,122,.1)" stroke="#1CC37A" stroke-width="1"/>
+                  <line x1="40" y1="58" x2="40" y2="68" stroke="#1CC37A" stroke-width="1.5" opacity=".6"/>
+                </svg>
+                <div class="wip-filmname" style="color:#1CC37A">MOTION<br>3D SAAS</div>
+                <div class="wip-filmtype">Microsoft · Product Animation</div>
+              </div>
+              <div class="wip-prog"><div class="wip-fill wf-gr" style="width:75%"></div></div>
+            </div>
+            <div class="wip-info">
+              <div>
+                <div class="wip-meta" style="color:#1CC37A">Motion Design · Blender + After Effects · Microsoft</div>
+                <div class="wip-name">MOTION 3D SAAS — MICROSOFT</div>
+                <div class="wip-desc">High-end 3D product animation for a Microsoft SaaS platform — Blender renders composited in After Effects. Heavy production pipeline with multiple completed phases.</div>
+                <div class="ph-list">
+                  <div class="ph-row"><div class="ph-dot done-g"></div><span class="ph-lbl">Modelling &amp; layout — done</span></div>
+                  <div class="ph-row"><div class="ph-dot done-g"></div><span class="ph-lbl">Camera setup, rigging &amp; shading — done</span></div>
+                  <div class="ph-row"><div class="ph-dot done-g"></div><span class="ph-lbl">Compositing — done</span></div>
+                  <div class="ph-row"><div class="ph-dot now-g"></div><span class="ph-lbl" style="color:#1CC37A">Animation — ongoing</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Final render &amp; delivery</span></div>
+                </div>
+              </div>
+              <div class="wip-foot">
+                <div class="wip-pct"><strong style="color:#1CC37A">75%</strong>complete</div>
+                <a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="wip-link" style="color:#1CC37A;border-bottom-color:rgba(28,195,120,.3)">View Updates →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 — STORE ENTRANCE ILLUSTRATION -->
+        <div class="wip-slide">
+          <div class="wip-card">
+            <div class="wip-vis wv3">
+              <div class="wip-glow"></div>
+              <div class="wip-rings">
+                <div class="wr" style="border-color:rgba(140,114,255,.2)"></div>
+                <div class="wr" style="border-color:rgba(140,114,255,.12)"></div>
+                <div class="wr" style="border-color:rgba(140,114,255,.07)"></div>
+              </div>
+              <span class="wip-badge wb-purple">✏ Illustrating</span>
+              <div class="wip-icon">
+                <svg viewBox="0 0 80 80" fill="none">
+                  <path d="M20 62Q40 18 60 62" stroke="#8C72FF" stroke-width="1.5" fill="none" opacity=".5"/>
+                  <circle cx="40" cy="38" r="10" fill="rgba(140,114,255,.12)" stroke="#8C72FF" stroke-width="1"/>
+                  <path d="M30 72L40 56L50 72" stroke="#8C72FF" stroke-width="1.2" fill="none" opacity=".4"/>
+                </svg>
+                <div class="wip-filmname" style="color:#8C72FF">STORE<br>ENTRANCE</div>
+                <div class="wip-filmtype">Environmental Illustration</div>
+              </div>
+              <div class="wip-prog"><div class="wip-fill wf-p" style="width:20%"></div></div>
+            </div>
+            <div class="wip-info">
+              <div>
+                <div class="wip-meta" style="color:#8C72FF">Environmental Illustration · Client Approved</div>
+                <div class="wip-name">STORE ENTRANCE ILLUSTRATION</div>
+                <div class="wip-desc">Large-format entrance illustration for a retail space — translating brand values into an immersive physical experience. Client brief received and concept approved.</div>
+                <div class="ph-list">
+                  <div class="ph-row"><div class="ph-dot done-p"></div><span class="ph-lbl">Rough sketches &amp; ideation</span></div>
+                  <div class="ph-row"><div class="ph-dot done-p"></div><span class="ph-lbl">Client approval — received</span></div>
+                  <div class="ph-row"><div class="ph-dot now-p"></div><span class="ph-lbl" style="color:#8C72FF">Final illustration — in progress</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Print-ready file preparation</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Handoff &amp; installation</span></div>
+                </div>
+              </div>
+              <div class="wip-foot">
+                <div class="wip-pct"><strong style="color:#8C72FF">20%</strong>complete</div>
+                <a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="wip-link" style="color:#8C72FF;border-bottom-color:rgba(140,114,255,.3)">View Updates →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE 4 — GRE-O APP CREATION -->
+        <div class="wip-slide">
+          <div class="wip-card">
+            <div class="wip-vis" style="background:linear-gradient(155deg,#001a0a,#000d06)">
+              <div class="wip-glow" style="background:radial-gradient(circle,rgba(28,195,80,.45) 0%,transparent 60%)"></div>
+              <div class="wip-rings">
+                <div class="wr" style="border-color:rgba(28,195,80,.2)"></div>
+                <div class="wr" style="border-color:rgba(28,195,80,.12)"></div>
+                <div class="wr" style="border-color:rgba(28,195,80,.07)"></div>
+              </div>
+              <span class="wip-badge wb-green">🚀 In Development</span>
+              <div class="wip-icon">
+                <svg viewBox="0 0 80 80" fill="none">
+                  <circle cx="40" cy="40" r="24" stroke="#1CC37A" stroke-width="1.5" opacity=".5"/>
+                  <rect x="28" y="28" width="24" height="24" rx="6" fill="rgba(28,195,80,.15)" stroke="#1CC37A" stroke-width="1"/>
+                  <circle cx="40" cy="40" r="7" fill="#1CC37A" opacity=".5"/>
+                  <line x1="40" y1="16" x2="40" y2="28" stroke="#1CC37A" stroke-width="1.5" opacity=".6"/>
+                  <line x1="52" y1="28" x2="64" y2="16" stroke="#1CC37A" stroke-width="1.5" opacity=".4"/>
+                </svg>
+                <div class="wip-filmname" style="color:#1CC37A">GRE-O</div>
+                <div class="wip-filmtype">App Creation · Agri-Gaming</div>
+              </div>
+              <div class="wip-prog"><div class="wip-fill" style="width:35%;background:linear-gradient(to right,#1CC37A,#60F0AA)"></div></div>
+            </div>
+            <div class="wip-info">
+              <div>
+                <div class="wip-meta" style="color:#1CC37A">Communication Design · DOT School · 🏆 1st Prize Won</div>
+                <div class="wip-name">GRE-O — APP CREATION</div>
+                <div class="wip-desc">An AI-driven interface bridging digital screens and physical soil — won 1st Prize at Designer Tomorrow! by DOT School. Now moving from presentation into real app development with external programmers.</div>
+                <div class="ph-list">
+                  <div class="ph-row"><div class="ph-dot done-g"></div><span class="ph-lbl">Brand identity &amp; UI design — done</span></div>
+                  <div class="ph-row"><div class="ph-dot done-g"></div><span class="ph-lbl">Presentation — won 🏆</span></div>
+                  <div class="ph-row"><div class="ph-dot now-g"></div><span class="ph-lbl" style="color:#1CC37A">App prototype creation</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Testing &amp; programming (collab)</span></div>
+                  <div class="ph-row"><div class="ph-dot"></div><span class="ph-lbl m">Launch</span></div>
+                </div>
+              </div>
+              <div class="wip-foot">
+                <div class="wip-pct"><strong style="color:#1CC37A">35%</strong>complete</div>
+                <a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="wip-link" style="color:#1CC37A;border-bottom-color:rgba(28,195,80,.3)">View Updates →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="wip-controls">
+      <button class="wip-arr" id="wipPrev">&#8592;</button>
+      <div class="wip-dots">
+        <button class="wdot on" onclick="goWip(0)"></button>
+        <button class="wdot"    onclick="goWip(1)"></button>
+        <button class="wdot"    onclick="goWip(2)"></button>
+        <button class="wdot"    onclick="goWip(3)"></button>
+      </div>
+      <button class="wip-arr" id="wipNext">&#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ HIGHLIGHT WORKS ════════════════════ -->
+<section class="sec-pad" id="work">
+  <div class="work-head r">
+    <div>
+      <div class="sec-label">Highlight Works</div>
+      <h2 class="work-h">BRAND<br><span>MOTION</span><br>PRINT</h2>
+    </div>
+    <p class="work-sub" style="display:none">Selected projects — each one a system, not just a deliverable.</p>
+  </div>
+  <div class="wtabs">
+    <button class="wtab on" data-cat="all">All</button>
+    <button class="wtab" data-cat="brand">Brand</button>
+    <button class="wtab" data-cat="motion">Motion & 3D</button>
+    <button class="wtab" data-cat="print">Print & Digital</button>
+  </div>
+  <div class="pgrid r">
+    <a href="works/hoppit.html" class="pc" data-s="lg" data-cat="brand">
+      <div class="pi">
+        <div class="pbg" style="background:linear-gradient(140deg,#1c0900,#2e1600)"></div>
+        <div class="pshape" style="width:320px;height:320px;background:rgba(232,148,26,.10);top:-80px;right:-80px"></div>
+        <div class="pnum">01</div>
+        <div class="pcat">Brand Identity · Freelance · Tirupur</div>
+        <div class="pname">HOPPIT ACTIVEWEAR</div>
+        <div class="pdesc">Complete visual ecosystem — custom typography, mascot, and brand guidelines built from zero.</div>
+      </div>
+      <div class="parr">↗</div>
+    </a>
+    <a href="works/greo.html" class="pc" data-s="md" data-cat="brand">
+      <div class="pi">
+        <div class="pbg" style="background:linear-gradient(140deg,#001c0a,#032400)"></div>
+        <div class="pnum">02</div>
+        <div class="pcat" style="color:#1CC37A">Communication Design · 🏆 1st Prize</div>
+        <div class="pname">GRE-O</div>
+        <div class="pdesc">Winner — Designer Tomorrow! by DOT School. AI-agri-gaming brand system.</div>
+      </div>
+      <div class="parr" style="color:#1CC37A;border-color:rgba(28,195,80,.25)">↗</div>
+    </a>
+    <a href="works/film.html" class="pc" data-s="sm" data-cat="motion">
+      <div class="pi">
+        <div class="pbg" style="background:linear-gradient(140deg,#0e0900,#1c1200)"></div>
+        <div class="pnum">03</div>
+        <div class="pcat">3D Feature Film · WIP</div>
+        <div class="pname">HEED ME<br>IN MIST</div>
+        <div class="pdesc">Self-directed animated feature in Blender — mythical, romantic, cinematic.</div>
+      </div>
+      <div class="parr">↗</div>
+    </a>
+    <a href="works/nobroker.html" class="pc" data-s="sm" data-cat="print">
+      <div class="pi">
+        <div class="pbg" style="background:linear-gradient(140deg,#160006,#23000a)"></div>
+        <div class="pnum">04</div>
+        <div class="pcat">Packaging · Freelance</div>
+        <div class="pname">NO BROKER HOOD</div>
+        <div class="pdesc">Festive packaging with Blender 3D product mockups.</div>
+      </div>
+      <div class="parr">↗</div>
+    </a>
+    <a href="works/muscle-up.html" class="pc" data-s="sm" data-cat="brand">
+      <div class="pi">
+        <div class="pbg" style="background:linear-gradient(140deg,#001008,#001c12)"></div>
+        <div class="pnum">05</div>
+        <div class="pcat">Environmental UX · Client</div>
+        <div class="pname">MUSCLE UP INDIA</div>
+        <div class="pdesc">Storefront UX report + glass door design using Golden Ratio.</div>
+      </div>
+      <div class="parr">↗</div>
+    </a>
+    <a href="works/motion.html" class="pc" data-s="md" data-cat="motion">
+      <div class="pi">
+        <div class="pbg" style="background:linear-gradient(140deg,#060010,#0c0020)"></div>
+        <div class="pshape" style="width:250px;height:250px;background:rgba(140,114,255,.08);bottom:-70px;right:-50px"></div>
+        <div class="pnum">06</div>
+        <div class="pcat">Motion Graphics · Personal</div>
+        <div class="pname">MOTION REEL</div>
+        <div class="pdesc">Kinetic typography, brand reveals, and dynamic storytelling in After Effects.</div>
+      </div>
+      <div class="parr">↗</div>
+    </a>
+  </div>
+  <div class="work-cta r">
+    <a href="works.html" class="btn-line">View All Projects &nbsp;↗</a>
+  </div>
+</section>
+
+<!-- ════════════════════ ABOUT ════════════════════ -->
+<section class="sec-pad" id="about">
+  <div class="about-grid">
+    <div class="about-left r">
+      <div class="sec-label">About Me</div>
+      <h2 class="about-h">
+        <em>Designer with a</em>
+        Maths<br>Foundation
+      </h2>
+      <p class="about-p">Likewise mathematics — I've studied design by making <strong>mistakes (errors)</strong> myself. So I wouldn't mind calling myself <strong>"DesignErr"</strong> — because every human learns through errors, not around them.</p>
+      <p class="about-p">My B.Sc. Mathematics background gives me a <strong>systematic, logic-driven approach</strong> — grids are geometry, colour is psychology mapped with precision.</p>
+      <div class="exp-lbl">Experience</div>
+      <div class="ci">
+        <div><div class="ci-role">Senior Visual Designer &amp; Project Lead</div><div class="ci-org">Flatworld Solutions</div><div class="ci-sub">QC leadership · 10,000+ assets · Adobe scripting &amp; automation. Awarded Top Performer for cross-team impact.</div></div>
+        <div class="ci-yr">Dec 2024<br>Present</div>
+      </div>
+      <div class="ci">
+        <div><div class="ci-role">Graphic Design Intern</div><div class="ci-org">First Contact</div><div class="ci-sub">Designed social awareness posters and event promotion graphics. Selected works featured in professional portfolio.</div></div>
+        <div class="ci-yr">Oct–Nov<br>2024</div>
+      </div>
+      <div class="ci">
+        <div><div class="ci-role">Design Mentor (Contract)</div><div class="ci-org">Academy of Media and Design</div><div class="ci-sub">Trained 250+ college students under TN Govt Naan Mudhalvan Scheme. Designed curriculum and hands-on exercises.</div></div>
+        <div class="ci-yr">Jul–Sep<br>2024</div>
+      </div>
+      <div class="ci">
+        <div><div class="ci-role">Independent Visual Designer</div><div class="ci-org">DNDC — Freelance</div><div class="ci-sub">Brand identity, motion, print and environmental UX for clients across F&amp;B, fitness, luxury, and events.</div></div>
+        <div class="ci-yr">2023–<br>Present</div>
+      </div>
+    </div>
+
+    <div class="about-right r r1">
+      <div class="ar-inner">
+        <div>
+          <div class="cred-lbl">Education</div>
+          <div class="ei"><div><div class="ei-name">B.Sc. Mathematics</div><div class="ei-org">G. Venkataswamy Naidu College</div></div><div class="ei-yr">2024</div></div>
+        </div>
+        <div>
+          <div class="cred-lbl">Certifications</div>
+          <div class="ei"><div><div class="ei-name"><a href="https://drive.google.com/file/d/YOUR_SONY_CERT_ID/view?usp=sharing" target="_blank">This is Animation — Yellow Brick</a></div><div class="ei-org">Sony Pictures Animation (SPAI)</div></div><div class="ei-yr">2025</div></div>
+          <div class="ei"><div><div class="ei-name"><a href="https://drive.google.com/file/d/YOUR_COPILOT_CERT_ID/view?usp=sharing" target="_blank">Microsoft Copilot Masterclass — Expert</a></div><div class="ei-org">Skill Nation</div></div><div class="ei-yr">2024</div></div>
+          <div class="ei"><div><div class="ei-name"><a href="https://drive.google.com/file/d/YOUR_UX_CERT_ID/view?usp=sharing" target="_blank">Foundations of UX Design</a></div><div class="ei-org">Google / Coursera</div></div><div class="ei-yr">2024</div></div>
+          <div class="ei"><div><div class="ei-name"><a href="https://drive.google.com/file/d/YOUR_CHATGPT_CERT_ID/view?usp=sharing" target="_blank">ChatGPT for Everyone</a></div><div class="ei-org">GUVI</div></div><div class="ei-yr">2024</div></div>
+        </div>
+        <div>
+          <div class="cred-lbl">Awards</div>
+          <div class="ei win"><div><div class="ei-name"><a href="https://drive.google.com/file/d/YOUR_GREO_AWARD_ID/view?usp=sharing" target="_blank">🏆 1st Prize — Communication Design</a></div><div class="ei-org">Designer Tomorrow! · DOT School · Gre-O</div></div><div class="ei-yr">2026</div></div>
+          <div class="ei win"><div><div class="ei-name"><a href="https://drive.google.com/file/d/YOUR_TOPPERFORMER_ID/view?usp=sharing" target="_blank">⭐ Top Performer / Best Employee</a></div><div class="ei-org">Flatworld Solutions</div></div><div class="ei-yr">2025</div></div>
+        </div>
+        <div>
+          <div class="cred-lbl">Skills</div>
+          <div class="skills-grid">
+            <div class="sk">Photoshop</div><div class="sk">Illustrator</div>
+            <div class="sk">After Effects</div><div class="sk">Premiere Pro</div>
+            <div class="sk">Blender 3D</div><div class="sk">Figma</div>
+            <div class="sk">Brand Identity</div><div class="sk">Motion Design</div>
+            <div class="sk">User Research</div><div class="sk">Generative AI</div>
+            <div class="sk">Storytelling</div><div class="sk">Visual Flow</div>
+            <div class="sk">Web Design</div><div class="sk">Video Editing</div>
+            <div class="sk">Photography</div><div class="sk">Project Mgmt</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="sec-rule">
-
-<section class="work" id="work">
-  <div class="work-hdr r">
-    <h2 class="work-h">SELECTED<br><span>WORK</span></h2>
-    <p class="work-intro">Brand, motion, print, and digital projects — each built with a clear brief and a bolder vision.</p>
-  </div>
-  <div class="tabs r">
-    <button class="tab on" data-cat="all">All</button>
-    <button class="tab" data-cat="branding">Branding</button>
-    <button class="tab" data-cat="motion">Motion</button>
-    <button class="tab" data-cat="video">Video Editing</button>
-    <button class="tab" data-cat="print">Print</button>
-    <button class="tab" data-cat="digital">Digital</button>
-  </div>
-  <div class="pgrid">
-    <div class="pc" data-cat="branding" data-s="lg"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1654 40%,#0d0d0d 100%)"></div><div class="pshape" style="width:300px;height:300px;background:#7b2fff;top:-50px;right:-50px"></div><span class="pnum">01</span><p class="pcat">Brand Identity · Freelance</p><h3 class="pname">HOPPIT ACTIVEWEAR</h3><p class="pdesc">Complete visual ecosystem for a sport-based Gen-Z activewear brand — custom typography, mascot design, and brand guidelines from zero.</p><a href="https://www.behance.net/gallery/220491525/HoppIt" target="_blank" class="parr">↗</a></div></div>
-
-    <div class="pc" data-cat="branding" data-s="md"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#0a1a2a 0%,#001a3d 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:220px;height:220px;background:#0088ff;bottom:-40px;right:-40px"></div><span class="pnum">02</span><p class="pcat">Environmental UX · Client</p><h3 class="pname">MUSCLE UP INDIA</h3><p class="pdesc">Storefront glass door design backed by a full UX report — Golden Ratio composition and real-world installation.</p><a href="https://www.behance.net/gallery/242858085/Glass-sticker-design" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="branding" data-s="sm"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#1a0028 0%,#2a003a 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:180px;height:180px;background:#cc44ff;top:-20px;left:-20px"></div><span class="pnum">03</span><p class="pcat">Mascot Design · National Competition</p><h3 class="pname">BAAKU</h3><p class="pdesc">National mascot entry for UIDAI's Aadhaar identity programme.</p><a href="https://drive.google.com/drive/folders/1xFBeYTSqAO70mSASdC3O8LxCuQ6fxCnE?usp=sharing" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="branding" data-s="sm"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#001a0d 0%,#003d1a 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:180px;height:180px;background:#00ff88;top:20px;left:20px;border-radius:0;transform:rotate(45deg)"></div><span class="pnum">04</span><p class="pcat">F&amp;B Branding · Client</p><h3 class="pname">BOWLS &amp; BREWS</h3><p class="pdesc">Print collateral and brand system for a health-food restaurant targeting Bengaluru's fitness community.</p><a href="https://www.behance.net/gallery/229826879/Bowls-and-Brews-2" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="branding" data-s="sm"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#1a0a00 0%,#3d2500 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:200px;height:200px;background:#e8921a;bottom:-30px;right:-30px"></div><span class="pnum">05</span><p class="pcat">Event Branding · Interview Task</p><h3 class="pname">SEA FOOD FESTIVAL</h3><p class="pdesc">Full event visual identity — poster, menu, and social media templates.</p><a href="https://www.behance.net/gallery/YOUR_SEA_ID" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="motion" data-s="full"><div class="pi"><div class="pbg" style="background:linear-gradient(90deg,#0d0d0d 0%,#001a12 60%,#001a08 100%)"></div><div class="pshape" style="width:420px;height:420px;background:#00ff88;top:-200px;right:-100px"></div><span class="pnum">06</span><div><p class="pcat">Motion Graphics · Personal</p><h3 class="pname">MOTION REEL</h3><p class="pdesc" style="opacity:1;transform:none;max-width:560px">After Effects animation — kinetic typography, visual storytelling, and dynamic brand reveals.</p></div><a href="https://www.behance.net/gallery/217094187/Motion-Graphics" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="motion" data-s="full"><div class="pi"><div class="pbg" style="background:linear-gradient(90deg,#0d0800 0%,#1a1000 60%,#241400 100%)"></div><div class="pshape" style="width:420px;height:420px;background:#e8921a;top:-200px;right:-80px;opacity:0.1"></div><span class="pnum">07</span><div><p class="pcat">3D Animation · Feature Film · Solo Direction <span class="wip-inline-tag">In Production</span></p><h3 class="pname">HEED ME IN MIST</h3><p class="pdesc" style="opacity:1;transform:none;max-width:560px">A stylised mythical romantic 3D animated feature — self-directed in Blender. Cinematic lighting and character animation at feature scale.</p></div><a href="https://www.behance.net/gallery/222606443/Blender-3D" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="print" data-s="md"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#1a0a00 0%,#3d1800 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:200px;height:200px;background:#e8921a;bottom:-30px;right:-30px"></div><span class="pnum">08</span><p class="pcat">Menu Design · Client</p><h3 class="pname">BB MENU</h3><p class="pdesc">Premium menu design — editorial layout with appetite-driven photography direction.</p><a href="https://www.behance.net/gallery/245630577/BB-Menu" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="print" data-s="lg"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#0d0d1a 0%,#1a1a30 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:280px;height:280px;background:#8888ff;top:-60px;right:-40px"></div><span class="pnum">09</span><p class="pcat">Print Design · Sample Work</p><h3 class="pname">TECH PRODUCT CATALOGUE</h3><p class="pdesc">VR headset &amp; controller catalogue — editorial grid, photography direction, and spec layouts.</p><a href="https://www.behance.net/gallery/YOUR_CAT_ID" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="print" data-s="full"><div class="pi"><div class="pbg" style="background:linear-gradient(90deg,#0d0d0d 0%,#001a0a 60%,#001400 100%)"></div><div class="pshape" style="width:380px;height:380px;background:#00ff88;top:-180px;right:-80px;opacity:0.1"></div><span class="pnum">10</span><div><p class="pcat">Event Branding · College Event — G.V.N. College</p><h3 class="pname">READERS FEST</h3><p class="pdesc" style="opacity:1;transform:none;max-width:520px">Full print collateral — branding, brochures, and certificates for the annual college literary festival.</p></div><a href="https://www.behance.net/gallery/217091735/READERS-FEST" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="digital" data-s="lg"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#001a1a 0%,#002a22 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:280px;height:280px;background:#00ffcc;top:-50px;right:-50px"></div><span class="pnum">11</span><p class="pcat">Social Media · Freelance</p><h3 class="pname">SOCIAL MEDIA DESIGN</h3><p class="pdesc">High-volume social media asset production — posts, stories, and carousel templates across multiple clients.</p><a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="digital" data-s="md"><div class="pi"><div class="pbg" style="background:linear-gradient(135deg,#1a0000 0%,#3d1200 50%,#0d0d0d 100%)"></div><div class="pshape" style="width:220px;height:220px;background:#ff4d1c;top:-40px;left:50%"></div><span class="pnum">12</span><p class="pcat">Digital Art · Personal</p><h3 class="pname">DIGITAL ILLUSTRATIONS</h3><p class="pdesc">Awareness posters, digital art, and campaign visuals built for digital-first distribution.</p><a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="parr">↗</a></div></div>
-    <div class="pc" data-cat="video" data-s="full"><div class="pi"><div class="pbg" style="background:linear-gradient(90deg,#0d0d0d 0%,#100010 50%,#180018 100%)"></div><div class="pshape" style="width:400px;height:400px;background:#cc44ff;top:-200px;right:-80px;opacity:0.1"></div><span class="pnum">13</span><div><p class="pcat">Video Editing · Coming Soon — DesignErr YouTube</p><h3 class="pname">DESIGNERR VLOGS</h3><p class="pdesc" style="opacity:1;transform:none;max-width:520px">Video content documenting the real design process — from brief to delivery. Launching on the DesignErr YouTube channel.</p></div><a href="#vision" class="parr">→</a></div></div>
-  </div>
-</section>
-
-<hr class="sec-rule">
-
-<section class="vision" id="vision">
-  <div class="r">
-    <div class="vision-super">What's Coming Next</div>
-    <h2 class="vision-h">THE<br><span>DESIGNERR</span><br>CHANNEL.</h2>
-  </div>
-  <div class="vc r">
-    <div class="vc-step">Phase 01 — Launching Soon<div class="vc-step-n">01</div></div>
-    <div class="vc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#e8921a" stroke-width="1.5"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M17 2l-5 5-5-5"/><polygon points="10,11 16,14.5 10,18" fill="#e8921a" stroke="none"/></svg></div>
-    <h3 class="vc-title"><span>DesignErr</span> — YouTube Channel</h3>
-    <p class="vc-desc">A vlog of the <strong>real design journey</strong> — daily tasks, client briefs, creative process, tools, mistakes, and wins. Not a tutorial channel. A raw, honest look at what it actually takes to build a design career from Bengaluru.</p>
-    <p class="vc-desc">Covering <strong>brand identity, motion design, 3D animation</strong>, and the business of being a creative. Every project in this portfolio will have a behind-the-scenes episode.</p>
-    <div class="vtags"><span class="vtag">Design Vlogs</span><span class="vtag">Process Videos</span><span class="vtag">Client Work BTS</span><span class="vtag">Tools &amp; Workflow</span><span class="vtag">Career Journey</span><span class="vtag">Bengaluru</span></div>
-  </div>
-  <div class="roadmap r">
-    <div class="rn"><div class="rnow">Now</div><div class="rlabel">Freelance + Film</div><div class="rsub">Portfolio growth &amp; Heed Me in Mist</div></div>
-    <div class="rarr">→</div>
-    <div class="rn"><div class="rnow">Next</div><div class="rlabel">YouTube Launch</div><div class="rsub">DesignErr — design journey vlogs</div></div>
-  </div>
-</section>
-
-<hr class="sec-rule">
-
-<section class="about" id="about">
-  <div class="r">
-    <div class="sec-label">About Me</div>
-    <h2 class="about-h"><em>designer &amp; mathematician</em>BUILT DIFFERENT.</h2>
-    <p class="about-p">I'm <strong>Jeeva A</strong>, a Senior Visual &amp; Motion Designer from <strong>Bengaluru</strong> with a B.Sc. in Mathematics. My background in logic and structure directly shapes how I approach design — <strong>systems thinking meets aesthetic instinct.</strong></p>
-    <p class="about-p">I've delivered <strong>10,000+ assets</strong> across wood, glass, acrylic, and metal — engraved, printed, and installed in the real world. Currently directing a <strong>stylised 3D animated feature film in Blender</strong> and building <strong>DesignErr</strong>, a YouTube channel documenting the real design journey.</p>
-    <div class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Best Employee Award — Flatworld Solutions, 2025</div>
-    <div class="hi" style="margin-top:6px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Sony Pictures Animation — Yellow Brick Program, 2025</div>
-    <div class="skills">
-      <div class="sk">Adobe Illustrator</div><div class="sk">After Effects</div>
-      <div class="sk">Blender 3D</div><div class="sk">Figma</div>
-      <div class="sk">Photoshop</div><div class="sk">Premiere Pro</div>
-      <div class="sk">Brand Strategy</div><div class="sk">Motion Design</div>
-      <div class="sk">UX Research</div><div class="sk">AI / Generative</div>
+<!-- ════════════════════ FEEDBACK ════════════════════ -->
+<section class="sec-pad" id="feedback">
+  <div class="fb-head r">
+    <div>
+      <div class="sec-label">Feedback</div>
+      <h2 class="fb-h">WHAT PEOPLE<br><span>SAY</span></h2>
     </div>
   </div>
-  <div class="r r1">
-    <div class="acard">
-      <div class="acard-t">Credentials &amp; Education</div>
-      <div class="ci"><div><div class="ci-name">B.Sc. Mathematics</div><div class="ci-org">G. Venkataswamy Naidu College</div></div><div class="ci-yr">2024</div></div>
-      <div class="ci"><div><div class="ci-name">This is Animation — Yellow Brick Program</div><div class="ci-org">Sony Pictures Animation (SPAI)</div></div><div class="ci-yr">2025</div></div>
-      <div class="ci"><div><div class="ci-name">Microsoft Copilot Masterclass</div><div class="ci-org">Skill Nation — Certified Expert</div></div><div class="ci-yr">2025</div></div>
-      <div class="ci"><div><div class="ci-name">Foundations of UX Design</div><div class="ci-org">Google / Coursera</div></div><div class="ci-yr">2024</div></div>
-      <div class="ci"><div><div class="ci-name">Best Employee Certificate</div><div class="ci-org">Flatworld Solutions — Workflow Innovation</div></div><div class="ci-yr">2025</div></div>
+
+  <div class="fb-ticker-wrap r">
+    <div class="fb-ticker">
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva delivered our entire brand system in one week — mascot, type, palette, and guidelines. The precision and speed were unreal. HoppIt looks like a funded brand now.</div><div class="tcard-name">Client — HoppIt Activewear</div><div class="tcard-brand">Brand Identity · Tirupur</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Gre-O presentation won 1st prize. The judges specifically called out the identity system and visual language as the strongest in the cohort.</div><div class="tcard-name">DOT School — Designer Tomorrow!</div><div class="tcard-brand">Communication Design · 2026</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva mentored 250+ students with clarity and patience. They came away able to actually produce work — not just understand theory.</div><div class="tcard-name">Academy of Media and Design</div><div class="tcard-brand">Design Mentorship · Tamil Nadu</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Sea Food Festival branding was everything we wanted — bold, fresh, and on-brand. We got so many compliments on the menu design at the event.</div><div class="tcard-name">Client — Sea Food Festival</div><div class="tcard-brand">Event Branding · Freelance</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Awarded Best Employee certificate for consistency, workflow innovation, and positive impact on the entire design team's output quality.</div><div class="tcard-name">Flatworld Solutions</div><div class="tcard-brand">Senior Visual Designer · Bengaluru</div><div class="tcard-stars">★★★★★</div></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva delivered our entire brand system in one week — mascot, type, palette, and guidelines. The precision and speed were unreal. HoppIt looks like a funded brand now.</div><div class="tcard-name">Client — HoppIt Activewear</div><div class="tcard-brand">Brand Identity · Tirupur</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Gre-O presentation won 1st prize. The judges specifically called out the identity system and visual language as the strongest in the cohort.</div><div class="tcard-name">DOT School — Designer Tomorrow!</div><div class="tcard-brand">Communication Design · 2026</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva mentored 250+ students with clarity and patience. They came away able to actually produce work — not just understand theory.</div><div class="tcard-name">Academy of Media and Design</div><div class="tcard-brand">Design Mentorship · Tamil Nadu</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Sea Food Festival branding was everything we wanted — bold, fresh, and on-brand. We got so many compliments on the menu design at the event.</div><div class="tcard-name">Client — Sea Food Festival</div><div class="tcard-brand">Event Branding · Freelance</div><div class="tcard-stars">★★★★★</div></div>
+      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Awarded Best Employee certificate for consistency, workflow innovation, and positive impact on the entire design team's output quality.</div><div class="tcard-name">Flatworld Solutions</div><div class="tcard-brand">Senior Visual Designer · Bengaluru</div><div class="tcard-stars">★★★★★</div></div>
     </div>
   </div>
 </section>
 
-<hr class="sec-rule">
-
-<section class="services" id="services">
-  <div class="sec-label r">What I Do</div>
-  <div class="svgrid">
-    <div class="sv r"><div class="sv-n">01</div><h3 class="sv-t">Brand Identity</h3><p class="sv-d">Full visual identity systems — logo, typography, colour, mascot, and brand guidelines. Built to last and scale across print and digital.</p></div>
-    <div class="sv r r1"><div class="sv-n">02</div><h3 class="sv-t">Motion &amp; 3D</h3><p class="sv-d">After Effects animation, kinetic typography, Blender 3D renders, and motion graphics that bring your brand to life in movement.</p></div>
-    <div class="sv r r2"><div class="sv-n">03</div><h3 class="sv-t">Print &amp; Digital</h3><p class="sv-d">Menus, catalogues, signage, social media assets — high-volume production with technical precision for real-world and digital environments.</p></div>
+<!-- ════════════════════ CONTACT ════════════════════ -->
+<section class="sec-pad" id="contact">
+  <div class="contact-inner">
+    <div class="r">
+      <div class="sec-label">Get in Touch</div>
+      <h2 class="contact-h">LET'S<br><span>BUILD</span><br>SOMETHING.</h2>
+      <p class="contact-sub">Open to freelance projects, full-time opportunities, and creative collaborations.</p>
+      <div class="contact-cats">Brand <span>·</span> Motion &amp; 3D <span>·</span> Print &amp; Digital</div>
+      <a href="contact.html" class="btn-solid">Start a Project &nbsp;→</a>
+    </div>
+    <div class="contact-right r r1">
+      <div class="citem"><span class="ckey">Email</span>    <span class="cval"><a href="mailto:designsbyjeeva@gmail.com">designsbyjeeva@gmail.com</a></span></div>
+      <div class="citem"><span class="ckey">Location</span> <span class="cval">Bengaluru, India</span></div>
+      <div class="citem"><span class="ckey">Behance</span>  <span class="cval"><a href="https://www.behance.net/Jeeva-portfolio" target="_blank">behance.net/Jeeva-portfolio</a></span></div>
+      <div class="citem"><span class="ckey">LinkedIn</span> <span class="cval"><a href="https://linkedin.com/in/YOUR" target="_blank">linkedin.com/in/jeeva</a></span></div>
+      <div class="citem"><span class="ckey">YouTube</span>  <span class="cval"><a href="https://youtube.com/@YOUR" target="_blank">Coming soon</a></span></div>
+      <div class="citem"><span class="ckey">Instagram</span><span class="cval"><a href="https://instagram.com/YOUR" target="_blank">@jeevadesignerr</a></span></div>
+      <div class="citem"><span class="ckey">Journal</span>  <span class="cval"><a href="journal.html">Design Process Journal</a></span></div>
+    </div>
+    <div class="contact-thanks r">Thanks for <span>scrolling</span></div>
   </div>
 </section>
 
-<hr class="sec-rule">
-
-<section class="contact" id="contact">
-  <div class="sec-label r">Let's Work Together</div>
-  <h2 class="contact-h r">GOT A<br><span>PROJECT?</span></h2>
-  <p class="contact-sub r">Open for freelance and full-time roles — from Bengaluru and beyond.</p>
-  <div class="cbtns r">
-    <a href="mailto:designsbyjeeva@gmail.com" class="btn-p">✉ Email Me</a>
-    <a href="https://www.behance.net/Jeeva-portfolio" target="_blank" class="btn-s">↗ View Behance</a>
-  </div>
-  <div class="cinfo r">
-    <div class="citem"><div class="ckey">Email</div><div class="cval"><a href="mailto:designsbyjeeva@gmail.com">designsbyjeeva@gmail.com</a></div></div>
-    <div class="citem"><div class="ckey">Phone</div><div class="cval">+91 87543 55710</div></div>
-    <div class="citem"><div class="ckey">Location</div><div class="cval">Bengaluru, India</div></div>
-    <div class="citem"><div class="ckey">Availability</div><div class="cval" style="color:var(--gold)">Open to Work ✦</div></div>
-  </div>
-</section>
-
+<!-- ════════════════════ FOOTER ════════════════════ -->
 <footer>
   <div class="flogo">JEEVA <span class="dim">DESIGNERR</span></div>
   <div class="fcopy">© 2026 — Senior Visual &amp; Motion Designer, Bengaluru</div>
   <div class="flinks">
     <a href="https://www.behance.net/Jeeva-portfolio" target="_blank">Behance</a>
+    <a href="https://linkedin.com/in/YOUR" target="_blank">LinkedIn</a>
+    <a href="https://youtube.com/@YOUR" target="_blank">YouTube</a>
     <a href="mailto:designsbyjeeva@gmail.com">Email</a>
+    <a href="journal.html">Journal</a>
   </div>
 </footer>
 
+<!-- ════════════════════ SCRIPTS ════════════════════ -->
 <script>
-const cur = document.getElementById('cur');
-const ring = document.getElementById('ring');
+/* Cursor */
+const cur=document.getElementById('cur'),cring=document.getElementById('cring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px'});
-(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=(rx-18)+'px';ring.style.top=(ry-18)+'px';requestAnimationFrame(a)})();
-document.querySelectorAll('a,button,.pc,.vc').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='58px';ring.style.height='58px';ring.style.opacity='0.8'});
-  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.5'});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-5}px,${my-5}px)`});
+(function tick(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.transform=`translate(${rx-17}px,${ry-17}px)`;requestAnimationFrame(tick)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cring.style.width='52px';cring.style.height='52px';cring.style.opacity='.75'});
+  el.addEventListener('mouseleave',()=>{cring.style.width='34px';cring.style.height='34px';cring.style.opacity='.45'});
 });
-function revealCheck(){document.querySelectorAll('.r').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight-30)el.classList.add('on')})}
-window.addEventListener('scroll',revealCheck,{passive:true});
-revealCheck();
-const tabEls=document.querySelectorAll('.tab'),cardEls=document.querySelectorAll('.pc');
-tabEls.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    tabEls.forEach(t=>t.classList.remove('on'));tab.classList.add('on');
-    const cat=tab.dataset.cat;
-    cardEls.forEach(card=>{card.classList.toggle('hide',cat!=='all'&&card.dataset.cat!==cat)});
+
+/* Scroll reveal */
+const reveal=()=>document.querySelectorAll('.r:not(.on)').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight-50)el.classList.add('on')});
+window.addEventListener('scroll',reveal,{passive:true});reveal();
+
+/* WIP carousel */
+let idx=0;const T=4;
+const track=document.getElementById('wipTrack');
+const dots=document.querySelectorAll('.wdot');
+function goWip(i){
+  idx=(i+T)%T;
+  track.style.transform=`translateX(-${idx*100}%)`;
+  dots.forEach((d,j)=>d.classList.toggle('on',j===idx));
+}
+document.getElementById('wipPrev').addEventListener('click',()=>goWip(idx-1));
+document.getElementById('wipNext').addEventListener('click',()=>goWip(idx+1));
+document.addEventListener('keydown',e=>{
+  const r=document.getElementById('wip').getBoundingClientRect();
+  if(r.top<window.innerHeight&&r.bottom>0){if(e.key==='ArrowRight')goWip(idx+1);if(e.key==='ArrowLeft')goWip(idx-1)}
+});
+const outer=document.getElementById('wipOuter');
+let tx=0,drag=false,mdx=0;
+outer.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+outer.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>48)goWip(dx<0?idx+1:idx-1)},{passive:true});
+outer.addEventListener('mousedown',e=>{mdx=e.clientX;drag=true;e.preventDefault()});
+document.addEventListener('mouseup',e=>{if(!drag)return;drag=false;const dx=e.clientX-mdx;if(Math.abs(dx)>56)goWip(dx<0?idx+1:idx-1)});
+
+/* Work filter */
+document.querySelectorAll('.wtab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.wtab').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    const cat=btn.dataset.cat;
+    document.querySelectorAll('.pc').forEach(c=>c.classList.toggle('hide',cat!=='all'&&!c.dataset.cat.includes(cat)));
   });
 });
 </script>
