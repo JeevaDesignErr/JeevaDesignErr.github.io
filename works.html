@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Works — Jeeva DesignErr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--bg2:#0f0f0f;--bg3:#141414;
+  --gold:#E8941A;--gold2:#F5AE3E;
+  --gdim:rgba(232,148,26,.07);--gline:rgba(232,148,26,.18);
+  --white:#F0EDE4;--gray:#7C7870;--dim:#242424;
+  --ff:'Bebas Neue',sans-serif;--fb:'DM Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none;line-height:1}
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9997;opacity:.4;mix-blend-mode:overlay}
+
+/* cursor */
+.cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;top:0;left:0}
+.cring{position:fixed;width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;opacity:.45;top:0;left:0;transition:width .25s,height .25s,opacity .25s}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:26px 64px}
+nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.97) 55%,transparent);z-index:-1}
+.nav-logo{font-family:var(--ff);font-size:20px;letter-spacing:3px;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo .dim{opacity:.3}
+.jde-slot{width:28px;height:28px;background:var(--gdim);border:1px solid var(--gline);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;flex-shrink:0}
+.jde-slot .fb2{font-family:var(--ff);font-size:9px;letter-spacing:1px;color:var(--gold);opacity:.65;position:absolute}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-family:var(--fb);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+
+/* page hero */
+.pg-hero{padding:140px 64px 72px;border-bottom:1px solid var(--dim);position:relative;overflow:hidden}
+.pg-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 78% 48%,rgba(232,148,26,.08) 0%,transparent 60%),var(--bg)}
+.sec-label{font-family:var(--fb);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:12px;opacity:0;animation:fadeUp .7s .2s forwards}
+.sec-label::before{content:'';width:22px;height:1px;background:var(--gold)}
+.pg-title{font-family:var(--ff);font-size:clamp(64px,10vw,130px);line-height:.9;letter-spacing:-2px;opacity:0;animation:fadeUp .8s .4s forwards}
+.pg-title span{color:var(--gold)}
+.pg-sub{font-family:var(--fb);font-size:14px;color:var(--gray);line-height:1.75;max-width:480px;margin-top:22px;font-style:italic;opacity:0;animation:fadeUp .8s .6s forwards}
+
+/* STICKY FILTER BAR */
+.filter-bar{position:sticky;top:78px;z-index:100;background:rgba(8,8,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--dim);padding:0 64px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.filter-bar::-webkit-scrollbar{display:none}
+.ftab{font-family:var(--fb);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:15px 18px;border:none;background:transparent;color:var(--gray);cursor:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;white-space:nowrap;flex-shrink:0}
+.ftab:hover{color:var(--white)}
+.ftab.on{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* PROJECT LIST — large card rows */
+.proj-section{padding:0 64px 80px}
+
+/* section divider */
+.proj-divider{padding:56px 0 28px;display:flex;align-items:center;gap:20px}
+.proj-divider-label{font-family:var(--fb);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+.proj-divider-line{flex:1;height:1px;background:var(--dim)}
+.proj-divider-note{font-family:var(--fb);font-size:11px;color:var(--gray);white-space:nowrap;font-style:italic}
+
+/* card */
+.pcard{display:grid;grid-template-columns:380px 1fr;border-bottom:1px solid var(--dim);text-decoration:none;color:inherit;cursor:none;transition:background .2s}
+.pcard:hover{background:rgba(232,148,26,.025)}
+.pcard.hide{display:none}
+
+/* visual thumbnail */
+.pcard-vis{height:280px;position:relative;overflow:hidden;flex-shrink:0}
+.pcard-vis-inner{position:absolute;inset:0;transition:transform .55s cubic-bezier(.25,.46,.45,.94)}
+.pcard:hover .pcard-vis-inner{transform:scale(1.04)}
+.pcard-glow{position:absolute;inset:0}
+.pcard-num{position:absolute;bottom:14px;right:14px;font-family:var(--fb);font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.25);z-index:2}
+/* badge */
+.pbadge{position:absolute;top:14px;left:14px;z-index:3;font-family:var(--fb);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
+.pb-gold{background:var(--gold);color:var(--bg)}
+.pb-green{background:#1CC37A;color:#001A0D}
+.pb-gray{border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5)}
+.pb-purple{background:#8C72FF;color:#fff}
+.pb-win{background:rgba(245,230,66,.12);border:1px solid rgba(245,230,66,.4);color:#f5e642}
+/* svg icon in vis */
+.pcard-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}
+.pcard-icon svg{width:56px;height:56px;opacity:.35}
+
+/* info panel */
+.pcard-info{padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--dim)}
+.pcard-top{}
+.pcard-cat{font-family:var(--fb);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pcard-cat.c-green{color:#1CC37A}
+.pcard-cat.c-purple{color:#8C72FF}
+.pcard-name{font-family:var(--ff);font-size:clamp(28px,3.5vw,52px);line-height:1;margin-bottom:12px;transition:color .2s}
+.pcard:hover .pcard-name{color:var(--gold)}
+.pcard-desc{font-family:var(--fb);font-size:13px;color:var(--gray);line-height:1.75;max-width:500px;margin-bottom:20px}
+/* tags */
+.pcard-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.ptag{font-family:var(--fb);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);border:1px solid var(--dim);padding:4px 10px;background:var(--gdim)}
+/* bottom row */
+.pcard-foot{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--dim);margin-top:auto}
+.pcard-link-lbl{font-family:var(--fb);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.pcard-arr{width:40px;height:40px;border:1px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--gray);flex-shrink:0;transition:all .22s}
+.pcard:hover .pcard-arr{border-color:var(--gold);color:var(--gold);transform:rotate(-45deg)}
+.pcard-arr.green:hover{border-color:#1CC37A;color:#1CC37A}
+
+/* WIP inline tag */
+.wip-tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--fb);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--gdim);border:1px solid var(--gline);padding:3px 10px;margin-bottom:10px}
+.wip-tag::before{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pip 1.8s ease-in-out infinite}
+@keyframes pip{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-content:space-between;align-items:center}
+.flogo{font-family:var(--ff);font-size:17px;letter-spacing:.16em;color:var(--gold)}
+.flogo .dim{opacity:.28}
+.fcopy{font-family:var(--fb);font-size:10px;letter-spacing:.1em;color:var(--gray)}
+.flinks{display:flex;gap:20px}
+.flinks a{font-family:var(--fb);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--gold)}
+
+/* reveal */
+.r{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.r.on{opacity:1;transform:none}
+.r1{transition-delay:.08s}.r2{transition-delay:.16s}.r3{transition-delay:.24s}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+@media(max-width:900px){
+  nav{padding:20px 24px}.nav-links{display:none}
+  .pg-hero{padding:100px 24px 48px}
+  .filter-bar{padding:0 24px}
+  .proj-section{padding:0 24px 60px}
+  .pcard{grid-template-columns:1fr}
+  .pcard-vis{height:220px}
+  .pcard-info{border-left:none;border-top:1px solid var(--dim);padding:24px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="jde-slot"><span class="fb2">JDE</span></span>
+    JEEVA <span class="dim">DESIGNERR</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="works.html" class="active">Works</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="journal.html">Journal</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="pg-hero">
+  <div class="pg-hero-bg"></div>
+  <div class="sec-label">Selected Work</div>
+  <h1 class="pg-title">ALL<br><span>WORKS</span></h1>
+  <p class="pg-sub">Every project is a brief, a build, and a bolder vision — from brand identities to animated films.</p>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" id="filterBar">
+  <button class="ftab on" data-cat="all">All</button>
+  <button class="ftab" data-cat="brand">Brand</button>
+  <button class="ftab" data-cat="motion">Motion & 3D</button>
+  <button class="ftab" data-cat="print">Print</button>
+  <button class="ftab" data-cat="digital">Digital</button>
+  <button class="ftab" data-cat="competition">Competition</button>
+  <button class="ftab" data-cat="college">College & Early</button>
+</div>
+
+<!-- PROJECT LIST -->
+<div class="proj-section" id="projList">
+
+  <!-- ── PROFESSIONAL WORK DIVIDER ── -->
+  <div class="proj-divider" id="div-pro">
+    <span class="proj-divider-label">Professional Work</span>
+    <div class="proj-divider-line"></div>
+    <span class="proj-divider-note">Client · Freelance · Personal</span>
+  </div>
+
+  <!-- 01 — HOPPIT ACTIVEWEAR -->
+  <a href="HoppIt.html" target="_self"
+     class="pcard r" data-cat="brand" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#1c0900,#2e1600)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 70% 30%,rgba(232,148,26,.18) 0%,transparent 60%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="30" stroke="#E8941A" stroke-width="1"/><circle cx="40" cy="40" r="16" stroke="#E8941A" stroke-width="1" fill="rgba(232,148,26,.08)"/><text x="40" y="45" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="12" fill="#E8941A" letter-spacing="2" opacity=".5">HoppIt</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gold">Freelance · Tirupur</span>
+      <div class="pcard-num">01</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Brand Identity</div>
+        <div class="pcard-name">HOPPIT ACTIVEWEAR</div>
+        <div class="pcard-desc">Complete visual ecosystem built from zero — custom typography system, mascot character design, and full brand guidelines for a Gen-Z activewear brand targeting urban athletes in Tirupur.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Logo & Identity</span>
+          <span class="ptag">Mascot Design</span>
+          <span class="ptag">Typography System</span>
+          <span class="ptag">Brand Guidelines</span>
+          <span class="ptag">Activewear</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 02 — GRE-O -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r1" data-cat="brand competition" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#001c0a,#032400)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 35%,rgba(28,195,80,.18) 0%,transparent 60%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="#1CC37A" stroke-width="1.5" opacity=".5"/><rect x="28" y="28" width="24" height="24" rx="6" fill="rgba(28,195,80,.15)" stroke="#1CC37A" stroke-width="1"/><circle cx="40" cy="40" r="7" fill="#1CC37A" opacity=".5"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-win">🏆 1st Prize — DOT School</span>
+      <div class="pcard-num">02</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="wip-tag">In Development</div>
+        <div class="pcard-cat c-green">Communication Design · Competition Winner</div>
+        <div class="pcard-name">GRE-O</div>
+        <div class="pcard-desc">Winner of Designer Tomorrow! by DOT School of Design — 1st Prize in Communication Design. An AI-driven interface bridging digital screens and physical soil, transforming agricultural data into a gamified high-stakes experience. Now moving into app prototype development.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Brand Identity</span>
+          <span class="ptag">App Design</span>
+          <span class="ptag">UI/UX</span>
+          <span class="ptag">Communication Design</span>
+          <span class="ptag">Agri-Tech</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View Case Study</span>
+        <div class="pcard-arr" style="border-color:rgba(28,195,80,.3);color:#1CC37A">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 03 — HEED ME IN MIST -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r2" data-cat="motion" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#0e0900,#1c1200)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 35%,rgba(232,148,26,.15) 0%,transparent 60%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="28" stroke="#E8941A" stroke-width="1.5" opacity=".4"/><circle cx="40" cy="40" r="12" fill="rgba(232,148,26,.12)" stroke="#E8941A" stroke-width="1"/><path d="M27 36L53 36L40 58Z" stroke="#E8941A" stroke-width="1.2" fill="none" opacity=".4"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gold">In Production · 10%</span>
+      <div class="pcard-num">03</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="wip-tag">Work in Progress</div>
+        <div class="pcard-cat">3D Animated Feature Film · Solo Direction</div>
+        <div class="pcard-name">HEED ME IN MIST</div>
+        <div class="pcard-desc">A stylised mythical romantic 3D animated feature film — entirely self-directed in Blender. Storyboard and script completed. Character design, modelling, rigging, animation, and cinematic lighting all ahead. A long-form storytelling project at feature scale.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Blender 3D</span>
+          <span class="ptag">Character Animation</span>
+          <span class="ptag">Cinematic Lighting</span>
+          <span class="ptag">Feature Film</span>
+          <span class="ptag">Storytelling</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">Follow Progress</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 04 — MOTION 3D SAAS / MICROSOFT -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r" data-cat="motion" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#001c10,#000d06)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 35%,rgba(28,195,120,.15) 0%,transparent 60%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="14" y="24" width="52" height="32" rx="5" stroke="#1CC37A" stroke-width="1.5" opacity=".5"/><rect x="22" y="32" width="18" height="12" rx="3" fill="rgba(28,195,122,.12)" stroke="#1CC37A" stroke-width="1"/><circle cx="54" cy="38" r="6" fill="rgba(28,195,122,.1)" stroke="#1CC37A" stroke-width="1"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-green">Animating · 75%</span>
+      <div class="pcard-num">04</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="wip-tag" style="color:#1CC37A;background:rgba(28,195,120,.07);border-color:rgba(28,195,120,.2)">In Progress</div>
+        <div class="pcard-cat c-green">Motion Design · Blender + After Effects · Microsoft</div>
+        <div class="pcard-name">MOTION 3D SAAS</div>
+        <div class="pcard-desc">High-end 3D product animation for a Microsoft SaaS platform — Blender renders composited in After Effects. Modelling, layout, camera setup, rigging, shading, and compositing all complete. Animation currently in progress.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Blender 3D</span>
+          <span class="ptag">After Effects</span>
+          <span class="ptag">Product Animation</span>
+          <span class="ptag">SaaS</span>
+          <span class="ptag">Microsoft</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View Updates</span>
+        <div class="pcard-arr" style="border-color:rgba(28,195,80,.25);color:#1CC37A">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 05 — MUSCLE UP INDIA — UX -->
+  <a href="https://www.behance.net/gallery/242858085/Glass-sticker-design" target="_blank"
+     class="pcard r r1" data-cat="brand digital" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#001008,#001c12)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(28,195,120,.12) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="18" y="18" width="44" height="44" rx="4" stroke="#1D9E75" stroke-width="1.5" fill="none"/><line x1="18" y1="40" x2="62" y2="40" stroke="#1D9E75" stroke-width="1"/><line x1="40" y1="18" x2="40" y2="62" stroke="#1D9E75" stroke-width="1"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Client Work</span>
+      <div class="pcard-num">05</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Environmental UX · Client — Fitness</div>
+        <div class="pcard-name">MUSCLE UP INDIA — UX</div>
+        <div class="pcard-desc">Storefront glass door design backed by a full environmental UX report. Used Golden Ratio composition, competitor storefront research, and design interventions for improved walk-in engagement and brand experience.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Environmental UX</span>
+          <span class="ptag">UX Report</span>
+          <span class="ptag">Signage</span>
+          <span class="ptag">Golden Ratio</span>
+          <span class="ptag">Fitness Brand</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 06 — MUSCLE UP INDIA — SOCIAL -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r2" data-cat="digital" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#0a1400,#121e00)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(80,200,60,.10) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="12" y="20" width="24" height="24" rx="3" fill="rgba(80,200,60,.12)" stroke="rgba(80,200,60,.5)" stroke-width="1"/><rect x="44" y="20" width="24" height="24" rx="3" fill="rgba(80,200,60,.08)" stroke="rgba(80,200,60,.35)" stroke-width="1"/><rect x="12" y="52" width="24" height="12" rx="3" fill="rgba(80,200,60,.08)" stroke="rgba(80,200,60,.3)" stroke-width="1"/><rect x="44" y="52" width="24" height="12" rx="3" fill="rgba(80,200,60,.08)" stroke="rgba(80,200,60,.3)" stroke-width="1"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Client Work</span>
+      <div class="pcard-num">06</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Social Media Design · Client — Fitness</div>
+        <div class="pcard-name">MUSCLE UP INDIA — SOCIAL</div>
+        <div class="pcard-desc">Social media content system for MUI fitness brand — festive posts, product features, Independence Day, Ganesh Chaturthi, and Krishna Janmashtami promotions. Consistent brand voice across Instagram.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Instagram</span>
+          <span class="ptag">Social Media</span>
+          <span class="ptag">Festive Design</span>
+          <span class="ptag">Fitness</span>
+          <span class="ptag">Brand Posts</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 07 — NO BROKER HOOD -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r" data-cat="print brand" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#160006,#23000a)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(200,40,100,.14) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="22" y="30" width="36" height="40" rx="4" stroke="rgba(232,148,26,.5)" stroke-width="1.5"/><path d="M28 30 Q40 14 52 30" stroke="rgba(232,148,26,.5)" stroke-width="1.5" fill="none"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gold">Freelance</span>
+      <div class="pcard-num">07</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Packaging Design · Freelance</div>
+        <div class="pcard-name">NO BROKER HOOD</div>
+        <div class="pcard-desc">Festive packaging design featuring custom pattern work — drawstring pouch and gift box with Blender 3D product mockups. Published with client permission.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Packaging</span>
+          <span class="ptag">Pattern Design</span>
+          <span class="ptag">Blender 3D Mockups</span>
+          <span class="ptag">Print</span>
+          <span class="ptag">Festive</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 08 — SEA FOOD FESTIVAL -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r1" data-cat="print brand" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#001828,#002035)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(30,120,220,.14) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><path d="M16 46 Q40 18 64 46" stroke="rgba(80,160,255,.5)" stroke-width="1.5" fill="none"/><circle cx="40" cy="32" r="8" stroke="rgba(80,160,255,.4)" stroke-width="1"/><text x="40" y="66" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="9" fill="rgba(80,160,255,.35)" letter-spacing="3">MENU</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Freelance</span>
+      <div class="pcard-num">08</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Event Branding · Freelance</div>
+        <div class="pcard-name">SEA FOOD FESTIVAL</div>
+        <div class="pcard-desc">Complete seasonal event identity — poster design, standing menu, menu booklet, and social media assets. Communicates freshness and a premium coastal dining experience.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Event Branding</span>
+          <span class="ptag">Poster Design</span>
+          <span class="ptag">Menu Design</span>
+          <span class="ptag">Print</span>
+          <span class="ptag">F&B</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 09 — BB MENU -->
+  <a href="https://www.behance.net/gallery/245630577/BB-Menu" target="_blank"
+     class="pcard r r2" data-cat="print" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#181008,#221800)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 35%,rgba(232,148,26,.12) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="24" y="16" width="32" height="48" rx="2" stroke="rgba(232,148,26,.4)" stroke-width="1.5"/><line x1="30" y1="28" x2="50" y2="28" stroke="rgba(232,148,26,.3)" stroke-width="1"/><line x1="30" y1="35" x2="50" y2="35" stroke="rgba(232,148,26,.2)" stroke-width="1"/><line x1="30" y1="42" x2="44" y2="42" stroke="rgba(232,148,26,.2)" stroke-width="1"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Client</span>
+      <div class="pcard-num">09</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Menu Design · Client — F&B</div>
+        <div class="pcard-name">BB MENU</div>
+        <div class="pcard-desc">Premium restaurant menu with editorial layout — earthy colour palette, appetite-driven photography direction, and premium print finishing specifications for a Bengaluru health-food brand.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Menu Design</span>
+          <span class="ptag">Print</span>
+          <span class="ptag">Editorial Layout</span>
+          <span class="ptag">F&B</span>
+          <span class="ptag">Typography</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 10 — BOWLS & BREWS -->
+  <a href="https://www.behance.net/gallery/229826879/Bowls-and-Brews-2" target="_blank"
+     class="pcard r" data-cat="digital brand print" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#1a0a00,#2a1500)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(232,148,26,.12) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><path d="M20 44 Q40 20 60 44" stroke="rgba(232,148,26,.45)" stroke-width="1.5" fill="none"/><rect x="28" y="44" width="24" height="4" rx="2" fill="rgba(232,148,26,.2)"/><text x="40" y="66" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="rgba(232,148,26,.3)" letter-spacing="2">B&B</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Ongoing Client</span>
+      <div class="pcard-num">10</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">F&B Branding · Ongoing Client — Bengaluru</div>
+        <div class="pcard-name">BOWLS & BREWS</div>
+        <div class="pcard-desc">Ongoing social media and print design for a Bengaluru health-food restaurant — monthly content including festive posts, subscription plan graphics, product photography direction, and menu design.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Social Media</span>
+          <span class="ptag">Menu Design</span>
+          <span class="ptag">F&B</span>
+          <span class="ptag">Ongoing</span>
+          <span class="ptag">Brand Content</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 11 — VMS VILLAGE MILK -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r1" data-cat="brand print digital" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#1a0010,#2a0018)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(255,100,180,.12) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="20" stroke="rgba(255,120,200,.4)" stroke-width="1.5"/><text x="40" y="45" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="rgba(255,120,200,.35)" letter-spacing="2">VMS</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Freelance</span>
+      <div class="pcard-num">11</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Brand & Menu Design · Freelance — F&B</div>
+        <div class="pcard-name">VMS VILLAGE MILK</div>
+        <div class="pcard-desc">Brand identity and menu system for a Chennai milkshake and café brand — playful, colour-forward visual language with menu boards, social media assets, and packaging. Published with client permission.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Brand Identity</span>
+          <span class="ptag">Menu Design</span>
+          <span class="ptag">Social Media</span>
+          <span class="ptag">Packaging</span>
+          <span class="ptag">F&B</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 12 — PRODUCT CATALOGUE -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r2" data-cat="print" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#0d0d1a,#1a1a30)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(120,120,255,.14) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="16" y="20" width="48" height="40" rx="3" stroke="rgba(160,160,255,.45)" stroke-width="1.5"/><line x1="40" y1="20" x2="40" y2="60" stroke="rgba(160,160,255,.2)" stroke-width="1"/><text x="28" y="44" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="9" fill="rgba(160,160,255,.3)" letter-spacing="1">VR</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Self-Directed</span>
+      <div class="pcard-num">12</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Product Catalogue · Print Design</div>
+        <div class="pcard-name">VR HEADSET CATALOGUE</div>
+        <div class="pcard-desc">Dark editorial product catalogue for a VR headset and gaming controller — 2025 Edition. High-contrast layout, product visualisation, and premium editorial typography. Self-directed concept project.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Product Catalogue</span>
+          <span class="ptag">Editorial Layout</span>
+          <span class="ptag">Print Design</span>
+          <span class="ptag">Technology</span>
+          <span class="ptag">VR</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 13 — MOTION REEL -->
+  <a href="https://www.behance.net/gallery/217094187/Motion-Graphics" target="_blank"
+     class="pcard r" data-cat="motion" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#060010,#0c0020)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(140,114,255,.16) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="26" stroke="#8C72FF" stroke-width="1.5" opacity=".5"/><path d="M32 30 L56 40 L32 50 Z" fill="rgba(140,114,255,.4)"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Personal</span>
+      <div class="pcard-num">13</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat c-purple">Motion Graphics · After Effects</div>
+        <div class="pcard-name">MOTION REEL</div>
+        <div class="pcard-desc">Motion graphics explorations — kinetic typography, logo animation, visual storytelling, and dynamic brand reveals. Demonstrates timing, easing, and the full After Effects animation pipeline.</div>
+        <div class="pcard-tags">
+          <span class="ptag">After Effects</span>
+          <span class="ptag">Kinetic Typography</span>
+          <span class="ptag">Logo Animation</span>
+          <span class="ptag">Motion Design</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr" style="border-color:rgba(140,114,255,.3);color:#8C72FF">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 14 — BLENDER 3D RENDERS -->
+  <a href="https://www.behance.net/gallery/222606443/Blender-3D" target="_blank"
+     class="pcard r r1" data-cat="motion" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#0d0a00,#1a1400)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(232,148,26,.14) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><path d="M18 62 L40 22 L62 62 Z" stroke="rgba(232,148,26,.45)" stroke-width="1.5" fill="rgba(232,148,26,.05)"/><circle cx="40" cy="46" r="10" stroke="rgba(232,148,26,.35)" stroke-width="1"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Personal</span>
+      <div class="pcard-num">14</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">3D Modelling & Renders · Blender</div>
+        <div class="pcard-name">BLENDER 3D RENDERS</div>
+        <div class="pcard-desc">3D product modelling and CGI renders in Blender — demonstrating geometry, PBR materials, HDRI lighting environments, and Cycles / EEVEE rendering workflows. Technical depth beyond 2D.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Blender 3D</span>
+          <span class="ptag">CGI Renders</span>
+          <span class="ptag">Product Visualisation</span>
+          <span class="ptag">Cycles / EEVEE</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 15 — BAAKU -->
+  <a href="https://drive.google.com/drive/folders/1xFBeYTSqAO70mSASdC3O8LxCuQ6fxCnE?usp=sharing" target="_blank"
+     class="pcard r r2" data-cat="brand competition" data-tier="pro">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#120028,#1a003a)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(200,100,255,.13) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="rgba(200,120,255,.45)" stroke-width="1.5"/><text x="40" y="45" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="rgba(200,120,255,.35)" letter-spacing="2">UIDAI</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-win">National Competition</span>
+      <div class="pcard-num">15</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat">Mascot Design · UIDAI / Aadhaar</div>
+        <div class="pcard-name">BAAKU — NATIONAL MASCOT</div>
+        <div class="pcard-desc">National mascot competition submission for UIDAI's Aadhaar digital identity programme. Designed to represent security and inclusivity for India's national digital identity infrastructure — submitted to a government-level brief.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Mascot Design</span>
+          <span class="ptag">Character Design</span>
+          <span class="ptag">National Competition</span>
+          <span class="ptag">UIDAI</span>
+          <span class="ptag">Government</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View Submission</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- ── COLLEGE & EARLY WORK DIVIDER ── -->
+  <div class="proj-divider" id="div-college" style="margin-top:20px">
+    <span class="proj-divider-label" style="color:var(--gray)">College & Early Work</span>
+    <div class="proj-divider-line"></div>
+    <span class="proj-divider-note">Proof I was already designing before formal employment</span>
+  </div>
+
+  <!-- 16 — READERS FEST -->
+  <a href="https://www.behance.net/gallery/217091735/READERS-FEST" target="_blank"
+     class="pcard r" data-cat="print brand college" data-tier="college">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#080818,#0d0d28)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(100,100,255,.12) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><rect x="22" y="18" width="36" height="44" rx="3" stroke="rgba(100,120,255,.4)" stroke-width="1.5"/><line x1="30" y1="30" x2="50" y2="30" stroke="rgba(100,120,255,.3)" stroke-width="1"/><line x1="30" y1="37" x2="50" y2="37" stroke="rgba(100,120,255,.2)" stroke-width="1"/><line x1="30" y1="44" x2="42" y2="44" stroke="rgba(100,120,255,.2)" stroke-width="1"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">College Event — 2023/24/25</span>
+      <div class="pcard-num">C-01</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat" style="color:var(--gray)">Event Branding · G.V.N. College · Reached State Level</div>
+        <div class="pcard-name">READERS FEST</div>
+        <div class="pcard-desc">Full print collateral for the annual inter-collegiate literary festival — branding, brochures, badges, and certificates. Designed across three consecutive years (2023, 2024, 2025). The event reached state level competition.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Event Branding</span>
+          <span class="ptag">Brochure</span>
+          <span class="ptag">Certificate</span>
+          <span class="ptag">Print</span>
+          <span class="ptag">State Level</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 17 — MATH TALENTO -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r1" data-cat="print college" data-tier="college">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#140a00,#201400)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(232,148,26,.10) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><text x="40" y="48" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="28" fill="rgba(232,148,26,.25)" letter-spacing="-1">∑πx</text></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">College Event · Mathematics Dept</span>
+      <div class="pcard-num">C-02</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat" style="color:var(--gray)">Event Print Design · G.V.N. College</div>
+        <div class="pcard-name">MATH TALENTO</div>
+        <div class="pcard-desc">Tri-fold brochure and event stationery for the Mathematics Department's annual inter-college competition. Designed while still a B.Sc. Mathematics student — creating for my own department.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Brochure Design</span>
+          <span class="ptag">Print</span>
+          <span class="ptag">Event</span>
+          <span class="ptag">College</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- 18 — FIRST CONTACT -->
+  <a href="https://www.behance.net/Jeeva-portfolio" target="_blank"
+     class="pcard r r2" data-cat="digital college" data-tier="college">
+    <div class="pcard-vis">
+      <div class="pcard-vis-inner">
+        <div class="pcard-glow" style="background:linear-gradient(145deg,#140014,#220022)"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 55% 30%,rgba(200,80,200,.12) 0%,transparent 55%)"></div>
+        <div class="pcard-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="32" r="12" stroke="rgba(200,100,220,.4)" stroke-width="1.5"/><path d="M20 64 Q20 48 40 48 Q60 48 60 64" stroke="rgba(200,100,220,.35)" stroke-width="1.5" fill="none"/></svg>
+        </div>
+      </div>
+      <span class="pbadge pb-gray">Internship · Oct–Nov 2024</span>
+      <div class="pcard-num">C-03</div>
+    </div>
+    <div class="pcard-info">
+      <div class="pcard-top">
+        <div class="pcard-cat" style="color:var(--gray)">Internship · First Contact</div>
+        <div class="pcard-name">FIRST CONTACT</div>
+        <div class="pcard-desc">Social awareness posters and event promotion graphics during a 2-month internship at First Contact (Oct–Nov 2024). Designed inclusive messaging across digital platforms. Selected works featured in professional portfolio.</div>
+        <div class="pcard-tags">
+          <span class="ptag">Social Awareness</span>
+          <span class="ptag">Social Media</span>
+          <span class="ptag">Poster Design</span>
+          <span class="ptag">Internship</span>
+        </div>
+      </div>
+      <div class="pcard-foot">
+        <span class="pcard-link-lbl">View on Behance</span>
+        <div class="pcard-arr">↗</div>
+      </div>
+    </div>
+  </a>
+
+</div><!-- /proj-section -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">JEEVA <span class="dim">DESIGNERR</span></div>
+  <div class="fcopy">© 2026 — Senior Visual &amp; Motion Designer, Bengaluru</div>
+  <div class="flinks">
+    <a href="https://www.behance.net/Jeeva-portfolio" target="_blank">Behance</a>
+    <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank">LinkedIn</a>
+    <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank">YouTube</a>
+    <a href="mailto:designsbyjeeva@gmail.com">Email</a>
+    <a href="journal.html">Journal</a>
+  </div>
+</footer>
+
+<script>
+/* cursor */
+const cur=document.getElementById('cur'),cring=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-5}px,${my-5}px)`});
+(function tick(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cring.style.transform=`translate(${rx-17}px,${ry-17}px)`;requestAnimationFrame(tick)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cring.style.width='52px';cring.style.height='52px';cring.style.opacity='.75'});
+  el.addEventListener('mouseleave',()=>{cring.style.width='34px';cring.style.height='34px';cring.style.opacity='.45'});
+});
+
+/* reveal on scroll */
+const reveal=()=>document.querySelectorAll('.r:not(.on)').forEach(el=>{
+  if(el.getBoundingClientRect().top<window.innerHeight-50)el.classList.add('on');
+});
+window.addEventListener('scroll',reveal,{passive:true});reveal();
+
+/* FILTER */
+const cards=document.querySelectorAll('.pcard');
+const divPro=document.getElementById('div-pro');
+const divCollege=document.getElementById('div-college');
+
+document.querySelectorAll('.ftab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    const cat=btn.dataset.cat;
+
+    let proVisible=0, collegeVisible=0;
+    cards.forEach(card=>{
+      const show=cat==='all'||cat==='college'
+        ? (cat==='college' ? card.dataset.tier==='college' : true)
+        : card.dataset.cat.includes(cat);
+      card.classList.toggle('hide',!show);
+      if(show){
+        if(card.dataset.tier==='pro')proVisible++;
+        else collegeVisible++;
+      }
+    });
+
+    // hide dividers if section is empty
+    if(divPro)  divPro.style.display  = proVisible>0     ? '' : 'none';
+    if(divCollege)divCollege.style.display = collegeVisible>0 ? '' : 'none';
+    // hide college section entirely for non-college tabs except 'all'
+    if(cat!=='all'&&cat!=='college'){
+      if(divCollege)divCollege.style.display='none';
+    }
+
+    reveal();
+  });
+});
+</script>
+</body>
+</html>
