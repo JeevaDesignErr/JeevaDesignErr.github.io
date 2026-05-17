@@ -50,6 +50,10 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .intro-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .intro-photo-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .intro-photo-ph svg{opacity:.2}
+  transition: transform 0.4s ease;
+  .intro-photo img:hover{
+  transform: scale(1.15) rotate(-8deg);
+}
 /* status dot on photo */
 .intro-photo::after{content:'●';position:absolute;bottom:10px;right:10px;font-size:8px;color:var(--gold);animation:pip 2s ease-in-out infinite;line-height:1}
 @keyframes pip{0%,100%{opacity:1}50%{opacity:.2}}
@@ -269,6 +273,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
   <div class="intro-photo">
     <img src="https://media.licdn.com/dms/image/v2/D5603AQF62vmL1gTp5g/profile-displayphoto-scale_200_200/B56ZyVtddnI0Ac-/0/1772038255453?e=1780531200&v=beta&t=qbGmcR1KXiAWdVx9KEaf4660ai8yTujOh0rQit29qfk" alt="Jeeva A" onerror="this.style.display='none'">
   </div>
+  
 
   <!-- bottom content -->
   <div class="intro-bottom">
