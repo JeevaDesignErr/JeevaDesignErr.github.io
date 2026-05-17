@@ -39,6 +39,16 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .form-title span{color:var(--gold)}
 .form-sub{font-family:var(--fb);font-size:13px;color:var(--gray);margin-bottom:44px;line-height:1.75}
 .form-group{margin-bottom:22px}
+  .form-note{
+  margin:-18px 0 34px;
+  padding:14px 16px;
+  border:1px solid var(--gline);
+  background:var(--gdim);
+  color:var(--gray);
+  font-family:var(--fb);
+  font-size:12px;
+  line-height:1.7;
+  border-left:2px solid var(--gold);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px}
 label{font-family:var(--fb);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:9px}
 .opt{opacity:.5;font-size:7px;letter-spacing:0;text-transform:lowercase;margin-left:5px}
@@ -123,6 +133,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
     <div id="formContent">
       <h2 class="form-title">SEND A<br><span>MESSAGE</span></h2>
       <p class="form-sub">Share your brief or just say hello — I reply to everything.</p>
+      <p class="form-note">The backend integration for this contact form is currently in progress — messaging functionality will be fully available soon.</p>
 
       <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
         <input type="hidden" name="_subject" value="New project enquiry — Jeeva DesignErr">
