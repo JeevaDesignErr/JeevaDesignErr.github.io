@@ -285,6 +285,28 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .contact-thanks{font-family:var(--ff);font-size:22px;letter-spacing:.12em;color:var(--gray);margin-top:44px;padding-top:24px;border-top:1px solid var(--dim);text-align:center;grid-column:1/-1}
 .contact-thanks span{color:var(--gold)}
 
+.about-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+  padding:14px 28px;
+  border:1px solid var(--dim);
+  background:var(--bg2);
+  color:var(--white);
+  text-decoration:none;
+  font-family:var(--fb);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  transition:all .25s ease;
+}
+
+.about-btn:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+  transform:translateY(-2px);
+}  
 /* ═══ FOOTER ══════════════════════════════════════════════ */
 footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-content:space-between;align-items:center}
 .flogo{font-family:var(--ff);font-size:17px;letter-spacing:.16em;color:var(--gold)}
@@ -738,6 +760,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
       </h2>
       <p class="about-p">Likewise mathematics — I've studied design by making <strong>mistakes (errors)</strong> myself. So I wouldn't mind calling myself <strong>"DesignErr"</strong> — because every human learns through errors, not around them.</p>
       <p class="about-p">My B.Sc. Mathematics background gives me a <strong>systematic, logic-driven approach</strong> — grids are geometry, colour is psychology mapped with precision.</p>
+      <a href="about.html" class="about-btn">More About Me ↗</a>
       <div class="exp-lbl">Experience</div>
       <div class="ci">
         <div><div class="ci-role">Senior Visual Designer &amp; Project Lead</div><div class="ci-org">Flatworld Solutions</div><div class="ci-sub">QC leadership · 10,000+ assets · Adobe scripting &amp; automation. Awarded Top Performer for cross-team impact.</div></div>
