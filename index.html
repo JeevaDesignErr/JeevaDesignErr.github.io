@@ -45,7 +45,23 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 64px 80px;position:relative;overflow:hidden;gap:56px}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 78% 32%,rgba(232,148,26,.08) 0%,transparent 60%),radial-gradient(ellipse 38% 48% at 12% 80%,rgba(232,148,26,.04) 0%,transparent 55%),var(--bg);pointer-events:none}
 .hero-vl{position:absolute;top:0;left:50%;width:1px;height:100%;background:linear-gradient(to bottom,transparent 5%,var(--dim) 28%,var(--dim) 72%,transparent 95%);opacity:.6}
+.hero-scroll-wrap{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
 
+.hero-note{
+  max-width:420px;
+  font-family:var(--fb);
+  font-size:11px;
+  line-height:1.7;
+  color:var(--gray);
+  opacity:.82;
+  padding-left:14px;
+  border-left:1px solid var(--gline);
+}
 /* LEFT */
 .hero-left{display:flex;flex-direction:column;position:relative;z-index:2}
 .hero-title-wrap{opacity:0;animation:fadeUp .9s .3s forwards}
@@ -406,6 +422,9 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
   </div>
 
   <div class="scroll-hint"><span>Scroll</span><div class="sline"></div></div>
+  <div class="hero-note">
+    The portfolio is still in progress — some sections and links may not work yet. Everything will be refined, updated, and fully completed soon.
+  </div>
 </section>
 
 <!-- ════════════════════ MARQUEE — SERVICES ════════════════════ -->
