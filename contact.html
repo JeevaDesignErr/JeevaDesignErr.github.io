@@ -135,9 +135,8 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
       <p class="form-sub">Share your brief or just say hello — I reply to everything.</p>
       <p class="form-note">The backend integration for this contact form is currently in progress — messaging functionality will be fully available soon.</p>
 
-      <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+      <form id="contactForm" action="https://formspree.io/f/mbdbllly" method="POST">
         <input type="hidden" name="_subject" value="New project enquiry — Jeeva DesignErr">
-        <input type="hidden" name="_replyto" id="replyTo" value="">
 
         <div class="form-row">
           <div>
@@ -288,7 +287,6 @@ document.querySelectorAll('a,button,input,select,textarea').forEach(el=>{
 });
 const reveal=()=>document.querySelectorAll('.r:not(.on)').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight-50)el.classList.add('on')});
 window.addEventListener('scroll',reveal,{passive:true});reveal();
-document.getElementById('femail').addEventListener('input',function(){document.getElementById('replyTo').value=this.value});
 const form=document.getElementById('contactForm');
 form.addEventListener('submit',async e=>{
   e.preventDefault();
