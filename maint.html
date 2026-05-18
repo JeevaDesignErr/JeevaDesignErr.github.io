@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Under Maintenance...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ═══ TOKENS ════════════════════════════════════════════════ */
+:root {
+  --bg: #050505; 
+  --bg2: #0b0b0b; 
+  --bg3: #101010;
+  --gold: #E8941A; 
+  --gold2: #F5AE3E;
+  --gdim: rgba(232,148,26,.04); 
+  --gline: rgba(232,148,26,.12);
+  --white: #EAE7DF; 
+  --gray: #6E6A62; 
+  --dim: #1c1c1c;
+  --ff: 'Bebas Neue', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+}
+
+/* ═══ RESET & SITE STYLES ═══════════════════════════════════ */
+*, *::before, *::after {
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box;
+}
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--fb);
+  font-weight: 100; /* Ultra clean, light typography weight */
+  overflow: hidden;
+  cursor: none;
+  line-height: 1;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* Enables elegant 3D tilt interaction */
+}
+
+/* Texture Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9997;
+  opacity: .35;
+  mix-blend-mode: overlay;
+}
+
+/* Interactive Grid Backdrop Lines */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(232,148,26, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(232,148,26, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ═══ DUAL CUSTOM CURSOR ════════════════════════════════════ */
+.cur {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s;
+}
+.cring {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: .3;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+/* ═══ INTERACTIVE PARALLAX CARD PANEL ══════════════════════ */
+.panel-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 24px;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.processing-panel {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--dim);
+  padding: 64px 48px;
+  text-align: center;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) .2s forwards;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.8);
+}
+
+/* Dynamic follow-light ambient glow element inside container */
+.panel-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(232,148,26,.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ═══ INTERACTIVE VECTOR ART BLOCK ═════════════════════════ */
+.graphics-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 40px;
+  height: 140px;
+  position: relative;
+  z-index: 2;
+  transform: translateZ(40px); /* Pushes elements out in 3D space */
+}
+
+.cone-wrap {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Reactive interactive background ripples */
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  border: 1px solid var(--gline);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Typography styles with strictly reduced structural boldness */
+.sec-label {
+  font-family: var(--fb);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gray);
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  transform: translateZ(20px);
+}
+.sec-label::before, .sec-label::after {
+  content: '';
+  width: 12px;
+  height: 1px;
+  background: var(--dim);
+}
+
+.title-h1 {
+  font-family: var(--ff);
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.05;
+  font-weight: 100; /* Crisp thin modern weight style */
+  letter-spacing: 0px;
+  color: var(--white);
+  margin-bottom: 24px;
+  transform: translateZ(30px);
+}
+.title-h1 span {
+  color: var(--gold);
+  font-weight: 100;
+}
+
+.message-desc {
+  font-family: var(--fb);
+  font-size: 13px;
+  font-weight: 300; /* Non-bold clean editorial text formatting */
+  line-height: 1.8;
+  color: var(--gray);
+  max-width: 420px;
+  margin: 0 auto;
+  transform: translateZ(15px);
+}
+
+/* Modular Interactive Track Line Indicator */
+.loader-track {
+  width: 120px;
+  height: 1px;
+  background: var(--dim);
+  margin: 40px auto 0;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(10px);
+}
+.loader-bar {
+  position: absolute;
+  left: -45px;
+  height: 100%;
+  width: 45px;
+  background: var(--gold);
+}
+
+/* ═══ ANIMATIONS ══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ═══ RESPONSIVE OVERRIDES ════════════════════════════════ */
+@media (max-width: 600px) {
+  .processing-panel { padding: 48px 24px; }
+  body { cursor: auto; }
+  .cur, .cring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="cur" id="cur"></div>
+<div class="cring" id="cring"></div>
+
+<div class="panel-container" id="interactivePanel">
+  <div class="processing-panel">
+    <div class="panel-glow" id="panelGlow"></div>
+    
+    <div class="sec-label">System Architecture</div>
+    
+    <div class="graphics-container">
+      <div class="cone-wrap" id="interactiveCone">
+        <div class="pulse-ring" style="animation: none;"></div>
+        
+        <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition: transform 0.2s ease-out;">
+          <ellipse cx="50" cy="88" rx="34" ry="4.5" fill="#000000" opacity="0.6"/>
+          
+          <path d="M14 84 L86 84 L80 91 L20 91 Z" fill="#121212" stroke="var(--dim)" stroke-width="1"/>
+          <path d="M16 81 L84 81 L86 84 L14 84 Z" fill="#1c1c1c" />
+          
+          <path d="M27 68 L73 68 L81 81 L19 81 Z" fill="var(--gold)" opacity="0.95" />
+          
+          <path d="M32 56 L68 56 L73 68 L27 68 Z" fill="#DCD9D0" />
+          <path d="M32 56 L68 56 L70 60 L30 60 Z" fill="#000000" opacity="0.15" />
+
+          <path d="M36 42 L64 42 L68 56 L32 56 Z" fill="var(--gold)" opacity="0.95" />
+          <path d="M40 28 L60 28 L64 42 L36 42 Z" fill="#DCD9D0" />
+
+          <path d="M45 13 L55 13 L59 28 L41 28 Z" fill="var(--gold)" />
+          <ellipse cx="50" cy="13" rx="4.5" ry="1.2" fill="var(--gold2)" />
+
+          <path d="M45 13 L41 28 L36 42 L32 56 L27 68 L19 81" stroke="#FFFFFF" stroke-width="1" opacity="0.12" />
+        </svg>
+      </div>
+    </div>
+
+    <h1 class="title-h1">The website is currently undergoing <span>maintenance</span> and programming updates.</h1>
+    <p class="message-desc">We are actively refining the platform behind the scenes. Please be patient and return to visit the page shortly.</p>
+
+    <div class="loader-track">
+      <div class="loader-bar" id="progressBar"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cur = document.getElementById('cur');
+const cring = document.getElementById('cring');
+const panel = document.getElementById('interactivePanel');
+const glow = document.getElementById('panelGlow');
+const cone = document.querySelector('#interactiveCone svg');
+const progressBar = document.getElementById('progressBar');
+
+let targetX = 0, targetY = 0;
+let currentX = 0, currentY = 0;
+
+// Continuous modern requestAnimationFrame loop for interactive elements
+function updateLoop() {
+  // Smoothly interpolate cursor ring paths
+  currentX += (targetX - currentX) * 0.15;
+  currentY += (targetY - currentY) * 0.15;
+  
+  cring.style.left = `${currentX}px`;
+  cring.style.top = `${currentY}px`;
+  
+  // Interactive progress indicator syncing loop position
+  const time = Date.now() * 0.002;
+  const progressPos = ((Math.sin(time) + 1) / 2) * 165 - 45;
+  progressBar.style.left = `${progressPos}px`;
+  
+  // Clean constant micro-float movement coordinate mechanics for vector art
+  const coneFloat = Math.sin(Date.now() * 0.0015) * 4;
+  cone.style.transform = `translateY(${coneFloat}px)`;
+
+  requestAnimationFrame(updateLoop);
+}
+requestAnimationFrame(updateLoop);
+
+document.addEventListener('mousemove', (e) => {
+  targetX = e.clientX;
+  targetY = e.clientY;
+  
+  cur.style.left = `${targetX}px`;
+  cur.style.top = `${targetY}px`;
+
+  // Calculate coordinates relative to screen dimensions
+  const halfWidth = window.innerWidth / 2;
+  const halfHeight = window.innerHeight / 2;
+  
+  // Generate subtle perspective tilt vectors based on distance from center
+  const rotateX = -((e.clientY - halfHeight) / halfHeight) * 6; 
+  const rotateY = ((e.clientX - halfWidth) / halfWidth) * 8;   
+
+  panel.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  // Maps the interactive radial spot shadow position properties inside the panel bounding box
+  const rect = panel.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  
+  glow.style.setProperty('--mouse-x', `${x}%`);
+  glow.style.setProperty('--mouse-y', `${y}%`);
+});
+
+// Cursor animation feedback adjustments on hover interactive zone ticks
+document.querySelectorAll('.title-h1 span, .loader-track').forEach(element => {
+  element.addEventListener('mouseenter', () => {
+    cur.style.width = '24px';
+    cur.style.height = '24px';
+    cring.style.opacity = '0.15';
+  });
+  element.addEventListener('mouseleave', () => {
+    cur.style.width = '8px';
+    cur.style.height = '8px';
+    cring.style.opacity = '.3';
+  });
+});
+
+// Trigger localized ripple animations outwards upon mouse click context actions
+document.addEventListener('click', (e) => {
+  const ring = document.createElement('div');
+  ring.className = 'pulse-ring';
+  ring.style.width = '90px';
+  ring.style.height = '90px';
+  ring.style.top = '50%';
+  ring.style.left = '50%';
+  ring.style.position = 'absolute';
+  ring.style.border = '1px solid var(--gold)';
+  ring.style.borderRadius = '50%';
+  document.getElementById('interactiveCone').appendChild(ring);
+
+  ring.animate([
+    { transform: 'translate(-50%, -50%) scale(0.6)', opacity: 0.6 },
+    { transform: 'translate(-50%, -50%) scale(1.8)', opacity: 0 }
+  ], {
+    duration: 800,
+    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+  });
+
+  setTimeout(() => ring.remove(), 800);
+});
+</script>
+
+</body>
+</html>
