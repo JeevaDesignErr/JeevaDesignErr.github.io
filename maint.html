@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Under Maintenance...</title>
+<title>Page Under Construction...</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
 <style>
@@ -33,7 +33,7 @@ body {
   background: var(--bg);
   color: var(--white);
   font-family: var(--fb);
-  font-weight: 100; /* Ultra clean, light typography weight */
+  font-weight: 100;
   overflow: hidden;
   cursor: none;
   line-height: 1;
@@ -41,7 +41,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px; /* Enables elegant 3D tilt interaction */
+  perspective: 1000px;
 }
 
 /* Texture Overlay */
@@ -121,7 +121,6 @@ body::before {
   box-shadow: 0 30px 70px rgba(0,0,0,0.8);
 }
 
-/* Dynamic follow-light ambient glow element inside container */
 .panel-glow {
   position: absolute;
   inset: 0;
@@ -139,7 +138,7 @@ body::before {
   height: 140px;
   position: relative;
   z-index: 2;
-  transform: translateZ(40px); /* Pushes elements out in 3D space */
+  transform: translateZ(40px);
 }
 
 .cone-wrap {
@@ -149,7 +148,6 @@ body::before {
   transform-style: preserve-3d;
 }
 
-/* Reactive interactive background ripples */
 .pulse-ring {
   position: absolute;
   top: 50%;
@@ -188,7 +186,7 @@ body::before {
   font-family: var(--ff);
   font-size: clamp(32px, 5vw, 52px);
   line-height: 1.05;
-  font-weight: 100; /* Crisp thin modern weight style */
+  font-weight: 100;
   letter-spacing: 0px;
   color: var(--white);
   margin-bottom: 24px;
@@ -202,7 +200,7 @@ body::before {
 .message-desc {
   font-family: var(--fb);
   font-size: 13px;
-  font-weight: 300; /* Non-bold clean editorial text formatting */
+  font-weight: 300;
   line-height: 1.8;
   color: var(--gray);
   max-width: 420px;
@@ -253,7 +251,7 @@ body::before {
   <div class="processing-panel">
     <div class="panel-glow" id="panelGlow"></div>
     
-    <div class="sec-label">System Architecture</div>
+    <div class="sec-label">Interface Build</div>
     
     <div class="graphics-container">
       <div class="cone-wrap" id="interactiveCone">
@@ -281,8 +279,8 @@ body::before {
       </div>
     </div>
 
-    <h1 class="title-h1">The website is currently undergoing <span>maintenance</span> and programming updates.</h1>
-    <p class="message-desc">We are actively refining the platform behind the scenes. Please be patient and return to visit the page shortly.</p>
+    <h1 class="title-h1">This page is currently undergoing <span>maintenance</span> and programming updates.</h1>
+    <p class="message-desc">We are actively refining this dynamic interface behind the scenes. Please be patient and return to visit the page shortly.</p>
 
     <div class="loader-track">
       <div class="loader-bar" id="progressBar"></div>
@@ -301,21 +299,17 @@ const progressBar = document.getElementById('progressBar');
 let targetX = 0, targetY = 0;
 let currentX = 0, currentY = 0;
 
-// Continuous modern requestAnimationFrame loop for interactive elements
 function updateLoop() {
-  // Smoothly interpolate cursor ring paths
   currentX += (targetX - currentX) * 0.15;
   currentY += (targetY - currentY) * 0.15;
   
   cring.style.left = `${currentX}px`;
   cring.style.top = `${currentY}px`;
   
-  // Interactive progress indicator syncing loop position
   const time = Date.now() * 0.002;
   const progressPos = ((Math.sin(time) + 1) / 2) * 165 - 45;
   progressBar.style.left = `${progressPos}px`;
   
-  // Clean constant micro-float movement coordinate mechanics for vector art
   const coneFloat = Math.sin(Date.now() * 0.0015) * 4;
   cone.style.transform = `translateY(${coneFloat}px)`;
 
@@ -330,17 +324,14 @@ document.addEventListener('mousemove', (e) => {
   cur.style.left = `${targetX}px`;
   cur.style.top = `${targetY}px`;
 
-  // Calculate coordinates relative to screen dimensions
   const halfWidth = window.innerWidth / 2;
   const halfHeight = window.innerHeight / 2;
   
-  // Generate subtle perspective tilt vectors based on distance from center
   const rotateX = -((e.clientY - halfHeight) / halfHeight) * 6; 
   const rotateY = ((e.clientX - halfWidth) / halfWidth) * 8;   
 
   panel.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-  // Maps the interactive radial spot shadow position properties inside the panel bounding box
   const rect = panel.getBoundingClientRect();
   const x = ((e.clientX - rect.left) / rect.width) * 100;
   const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -349,7 +340,6 @@ document.addEventListener('mousemove', (e) => {
   glow.style.setProperty('--mouse-y', `${y}%`);
 });
 
-// Cursor animation feedback adjustments on hover interactive zone ticks
 document.querySelectorAll('.title-h1 span, .loader-track').forEach(element => {
   element.addEventListener('mouseenter', () => {
     cur.style.width = '24px';
@@ -363,7 +353,6 @@ document.querySelectorAll('.title-h1 span, .loader-track').forEach(element => {
   });
 });
 
-// Trigger localized ripple animations outwards upon mouse click context actions
 document.addEventListener('click', (e) => {
   const ring = document.createElement('div');
   ring.className = 'pulse-ring';
