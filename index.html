@@ -947,7 +947,6 @@ document.querySelectorAll('.wtab').forEach(btn=>{
     document.querySelectorAll('.pc').forEach(c=>c.classList.toggle('hide',cat!=='all'&&!c.dataset.cat.includes(cat)));
   });
 });
-  <script>
 // Sync settings linked directly to your active response sheet
 const GOOGLE_SHEET_ID = '1G3lLHv_hMxTaaB2HUFPwyOp90g1JiTVWkY9ivCE4nU0'; 
 const FEEDBACK_STREAM_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/pub?output=csv`;
@@ -1024,7 +1023,6 @@ async function renderLiveFeedback() {
 
 // Fire the setup immediately when page content is loaded
 document.addEventListener('DOMContentLoaded', renderLiveFeedback);
-</script>
 </script>
 </body>
 </html>
