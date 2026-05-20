@@ -947,7 +947,10 @@ document.querySelectorAll('.wtab').forEach(btn=>{
     document.querySelectorAll('.pc').forEach(c=>c.classList.toggle('hide',cat!=='all'&&!c.dataset.cat.includes(cat)));
   });
 });
-// Sync settings linked directly to your active response sheet
+
+
+// 📥 PASTE THE NEW DYNAMIC FEEDBACK CODE DIRECTLY HERE:
+
 const GOOGLE_SHEET_ID = '1G3lLHv_hMxTaaB2HUFPwyOp90g1JiTVWkY9ivCE4nU0'; 
 const FEEDBACK_STREAM_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/pub?output=csv`;
 
@@ -955,11 +958,9 @@ function parseTestimonials(csvText) {
     const lines = csvText.split('\n').map(l => l.trim()).filter(l => l);
     if (lines.length === 0) return [];
     
-    // Reads row 1 headers perfectly
     const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
     
     return lines.slice(1).map(line => {
-        // Splitting logic that handles client paragraphs even if they contain commas
         const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
         const cleanValues = values.map(v => v.replace(/^"|"$/g, '').trim());
         
@@ -987,7 +988,7 @@ async function renderLiveFeedback() {
         const rawCSVText = await response.text();
         const feedbackRows = parseTestimonials(rawCSVText);
         
-        // Filter: Since you used Checkboxes, verified items evaluate as the string "true"
+        // Filter: Looks for checked rows ('true')
         const checkedReviews = feedbackRows.filter(row => row['Approved']?.toLowerCase() === 'true');
         
         if (checkedReviews.length === 0) {
@@ -997,7 +998,7 @@ async function renderLiveFeedback() {
         
         tickerContainer.innerHTML = '';
         
-        // We duplicate the array list once so that your infinite scroll transition loop runs seamlessly without blank spaces
+        // Duplicate array so your CSS animation track loop stays endless without gaps
         const layoutLoopList = [...checkedReviews, ...checkedReviews];
         
         layoutLoopList.forEach(item => {
@@ -1021,8 +1022,8 @@ async function renderLiveFeedback() {
     }
 }
 
-// Fire the setup immediately when page content is loaded
 document.addEventListener('DOMContentLoaded', renderLiveFeedback);
+
 </script>
 </body>
 </html>
