@@ -947,6 +947,84 @@ document.querySelectorAll('.wtab').forEach(btn=>{
     document.querySelectorAll('.pc').forEach(c=>c.classList.toggle('hide',cat!=='all'&&!c.dataset.cat.includes(cat)));
   });
 });
+  <script>
+// Sync settings linked directly to your active response sheet
+const GOOGLE_SHEET_ID = '1G3lLHv_hMxTaaB2HUFPwyOp90g1JiTVWkY9ivCE4nU0'; 
+const FEEDBACK_STREAM_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/pub?output=csv`;
+
+function parseTestimonials(csvText) {
+    const lines = csvText.split('\n').map(l => l.trim()).filter(l => l);
+    if (lines.length === 0) return [];
+    
+    // Reads row 1 headers perfectly
+    const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
+    
+    return lines.slice(1).map(line => {
+        // Splitting logic that handles client paragraphs even if they contain commas
+        const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+        const cleanValues = values.map(v => v.replace(/^"|"$/g, '').trim());
+        
+        let rowObj = {};
+        headers.forEach((header, index) => {
+            rowObj[header] = cleanValues[index] || '';
+        });
+        return rowObj;
+    });
+}
+
+function displayStars(ratingValue) {
+    const starsCount = parseInt(ratingValue) || 5;
+    return '★ '.repeat(Math.max(1, Math.min(5, starsCount))).trim();
+}
+
+async function renderLiveFeedback() {
+    const tickerContainer = document.getElementById('live-feedback-ticker');
+    if (!tickerContainer) return;
+    
+    try {
+        const response = await fetch(FEEDBACK_STREAM_URL);
+        if (!response.ok) throw new Error('Failed to download sheet stream');
+        
+        const rawCSVText = await response.text();
+        const feedbackRows = parseTestimonials(rawCSVText);
+        
+        // Filter: Since you used Checkboxes, verified items evaluate as the string "true"
+        const checkedReviews = feedbackRows.filter(row => row['Approved']?.toLowerCase() === 'true');
+        
+        if (checkedReviews.length === 0) {
+            tickerContainer.innerHTML = '<p class="tcard-text" style="opacity:0.3; padding:20px 40px; font-family: var(--fb); font-size: 0.95rem; width:100%; text-align:center;">Awaiting your checked approval in the spreadsheet data pool.</p>';
+            return;
+        }
+        
+        tickerContainer.innerHTML = '';
+        
+        // We duplicate the array list once so that your infinite scroll transition loop runs seamlessly without blank spaces
+        const layoutLoopList = [...checkedReviews, ...checkedReviews];
+        
+        layoutLoopList.forEach(item => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'tcard';
+            
+            cardElement.innerHTML = `
+                <div class="tcard-quote">“</div>
+                <p class="tcard-text">${item['Description']}</p>
+                <div class="tcard-name">${item['Name']}</div>
+                <div class="tcard-brand">${item['Brand Name']} • ${item['Service Provided']}</div>
+                <div class="tcard-stars">${displayStars(item['Rating'])}</div>
+            `;
+            
+            tickerContainer.appendChild(cardElement);
+        });
+        
+    } catch (error) {
+        console.error('Ticker Error Handler:', error);
+        tickerContainer.innerHTML = '<p class="tcard-text" style="color:var(--gold); padding:20px 40px; font-family: var(--fb); font-size: 0.95rem; width:100%; text-align:center;">Unable to refresh real-time client feedback track.</p>';
+    }
+}
+
+// Fire the setup immediately when page content is loaded
+document.addEventListener('DOMContentLoaded', renderLiveFeedback);
+</script>
 </script>
 </body>
 </html>
