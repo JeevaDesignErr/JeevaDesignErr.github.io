@@ -50,10 +50,6 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .intro-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .intro-photo-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .intro-photo-ph svg{opacity:.2}
-  transition: transform 0.4s ease;
-  .intro-photo img:hover{
-  transform: scale(1.15) rotate(-8deg);
-}
 /* status dot on photo */
 .intro-photo::after{content:'●';position:absolute;bottom:10px;right:10px;font-size:8px;color:var(--gold);animation:pip 2s ease-in-out infinite;line-height:1}
 @keyframes pip{0%,100%{opacity:1}50%{opacity:.2}}
@@ -249,7 +245,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
-    <span class="jde-slot"><span class="fb">JDE</span></span>
+    <span class="profile.png"><span class="fb">JDE</span></span>
     JEEVA <span class="dim">DESIGNERR</span>
   </a>
   <ul class="nav-links">
@@ -271,9 +267,14 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
 
   <!-- small floating photo — top right -->
   <div class="intro-photo">
-    <img src="profile.png" alt="Jeeva A" onerror="this.style.display='none'">
+    <img src="profile.jpg" alt="Jeeva A" onerror="this.style.display='none'">
+    <div class="intro-photo-ph">
+      <svg width="44" height="54" viewBox="0 0 44 54" fill="none">
+        <circle cx="22" cy="16" r="11" stroke="rgba(232,146,26,.8)" stroke-width="1.2"/>
+        <path d="M2 53c0-11.046 8.954-20 20-20s20 8.954 20 20" stroke="rgba(232,146,26,.8)" stroke-width="1.2" fill="none"/>
+      </svg>
+    </div>
   </div>
-  
 
   <!-- bottom content -->
   <div class="intro-bottom">
@@ -327,7 +328,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
 <section class="stats-section">
   <div class="stats-inner">
     <div class="stat-item r">
-      <span class="stat-num" data-target="10" data-suffix="K+">0</span>
+      <span class="stat-num" data-target="12" data-suffix="K+">0</span>
       <span class="stat-lbl">Assets Delivered</span>
       <div class="stat-sub">Production-grade assets across materials</div>
     </div>
@@ -358,32 +359,32 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
   <div class="manifesto-block r">
     <div class="m-num">01</div>
     <div class="m-content">
-      <div class="m-title">THE DESIGNERR NAME</div>
-      <div class="m-body">Not a typo. Not a brand trick. A <strong>philosophy</strong>. Likewise mathematics — I didn't learn calculus by reading it, I learned it by doing it wrong first. Every error in design is a data point, not a failure. That's why I build my identity around the mistakes — and call myself a DesignErr.</div>
+      <div class="m-title">WHY I CALL MYSELF<br>A DESIGNERR</div>
+      <div class="m-body">It's not a typo — it's who I am. I didn't go to a design school. I learned by opening Adobe, making something terrible, figuring out why it was terrible, and trying again. <strong>Every error taught me something a classroom never could.</strong> That's the honest truth behind the name DesignErr.</div>
     </div>
   </div>
 
   <div class="manifesto-block r r1">
     <div class="m-num">02</div>
     <div class="m-content">
-      <div class="m-title">MATHS MAKES<br>BETTER DESIGN</div>
-      <div class="m-body">My B.Sc. Mathematics background is not a detour — it's the <strong>foundation</strong>. Grid systems are geometry. Type scales are logarithmic progressions. Colour ratios are applied psychology. Most designers feel these things intuitively. I can explain exactly why they work.</div>
+      <div class="m-title">I STUDIED MATHS<br>NOT DESIGN</div>
+      <div class="m-body">Funny thing — I actually wanted Computer Science, but financial constraints pushed me into Mathematics. Turned out to be the best accident of my life. <strong>Grids, proportions, type scales — they're all just geometry.</strong> While most designers feel this intuitively, I can tell you exactly why it works. Maths gave me the precision; errors gave me the instinct.</div>
     </div>
   </div>
 
   <div class="manifesto-block r r2">
     <div class="m-num">03</div>
     <div class="m-content">
-      <div class="m-title">SYSTEMS OVER<br>AESTHETICS</div>
-      <div class="m-body">A logo is not a brand. A post is not a campaign. I build <strong>systems</strong> — visual identities that scale, motion languages that communicate, and print collateral that maintains consistency without a designer in the room. The goal is always the system, not the single deliverable.</div>
+      <div class="m-title">I BUILD SYSTEMS,<br>NOT JUST VISUALS</div>
+      <div class="m-body">When I take on a brand project, I'm not just making a logo. I'm thinking about how it looks on a jersey label, an Instagram post, a packaging box, and a business card — all at once. <strong>If the system doesn't hold together across every touchpoint, the job isn't done.</strong> That obsession with consistency is what separates a logo from a brand.</div>
     </div>
   </div>
 
   <div class="manifesto-block r">
     <div class="m-num">04</div>
     <div class="m-content">
-      <div class="m-title">STORYTELLING<br>IS THE SKILL</div>
-      <div class="m-body">Brand design, motion graphics, a 3D animated feature film — these are all the same discipline: <strong>visual storytelling</strong>. The medium changes. The goal doesn't. Make someone feel something before they've read a single word.</div>
+      <div class="m-title">EVERYTHING I DO<br>IS STORYTELLING</div>
+      <div class="m-body">Whether I'm designing a mascot, animating a 3D scene, or laying out a restaurant menu — I'm always asking the same question: <strong>what does this make you feel before you read a single word?</strong> That's the skill. The software is just the tool. The story is always the work.</div>
     </div>
   </div>
 </section>
@@ -475,6 +476,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
           <li>Contributed to initial brand concepts and digital marketing assets during a remote internship.</li>
           <li>Iterated on visual designs ensuring brand consistency across social media and digital platforms.</li>
           <li>Created visual layouts and typography-focused designs for communication materials.</li>
+          <li>Made designs for a new and niche audience — gave a different taste of design thinking and exposed me to a world beyond mainstream commercial work.</li>
         </ul>
         <div>
           <div class="tl-loc">Remote</div>
@@ -653,90 +655,215 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
   <div class="j-sup">Career Journey</div>
   <div class="j-hint">← Drag to scroll through milestones →</div>
   <div class="j-scroll" id="jScroll">
+
     <div class="j-milestone">
       <div class="j-yr">2021</div>
       <div class="j-dot"></div>
       <div class="j-label">Education</div>
-      <div class="j-title">B.Sc. Mathematics</div>
-      <div class="j-sub">G.V.N. College, Kovilpatti. Started self-learning design on the side.</div>
+      <div class="j-title">Maths, Not CS</div>
+      <div class="j-sub">Wanted Computer Science. Financial constraints meant choosing Mathematics — lower fees, regular college. Best accident of my life.</div>
     </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2022</div>
+      <div class="j-dot"></div>
+      <div class="j-label">First Failure</div>
+      <div class="j-title">Book Cover Competition</div>
+      <div class="j-sub">Entered an intercollegiate book cover design competition. Made it in PowerPoint. Lost. But it was the first time I made something for a brief — and I was hooked.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2022</div>
+      <div class="j-dot"></div>
+      <div class="j-label">College Design</div>
+      <div class="j-title">Invitations & Certificates</div>
+      <div class="j-sub">Making welcome/farewell invitations, cultural event certificates using PPT → Picsart/Pixellab → eventually Illustrator & Photoshop. Self-teaching, one tool at a time.</div>
+    </div>
+
     <div class="j-milestone">
       <div class="j-yr">2023</div>
       <div class="j-dot"></div>
-      <div class="j-label">First Client</div>
-      <div class="j-title">Freelance Begins</div>
-      <div class="j-sub">Doodlenaut Design Co. — first real clients, first real briefs, first real errors.</div>
+      <div class="j-label">First Real Software</div>
+      <div class="j-title">Adobe via DNDC</div>
+      <div class="j-sub">Through Doodlenaut Design Co., finally got access to proper Adobe software. First real client projects — Jill Vilas branding, VMS Village Milk social media. Everything changed.</div>
     </div>
-    <div class="j-milestone">
-      <div class="j-yr">2023</div>
-      <div class="j-dot"></div>
-      <div class="j-label">Event Design</div>
-      <div class="j-title">Readers Fest</div>
-      <div class="j-sub">Designed event branding for college literary fest — reached state level competition.</div>
-    </div>
+
     <div class="j-milestone">
       <div class="j-yr">2024</div>
       <div class="j-dot"></div>
-      <div class="j-label">Brand Work</div>
-      <div class="j-title">HoppIt Activewear</div>
-      <div class="j-sub">Named the brand. Designed the mascot. Built the full identity system from zero.</div>
+      <div class="j-label">May–Jun</div>
+      <div class="j-title">Finishing College</div>
+      <div class="j-sub">Graduation + job hunt + self-learning all at once. Submitting resumes everywhere. No responses. Kept building skills in parallel.</div>
     </div>
+
     <div class="j-milestone">
       <div class="j-yr">2024</div>
       <div class="j-dot"></div>
-      <div class="j-label">Mentorship</div>
-      <div class="j-title">250+ Students</div>
-      <div class="j-sub">Tamil Nadu Govt scheme. Trained students in design fundamentals as a career path.</div>
+      <div class="j-label">July</div>
+      <div class="j-title">Design Trainer · AMD</div>
+      <div class="j-sub">Selected as trainer under Tamil Nadu Govt Naan Mudhalvan scheme. Taught 250+ students design fundamentals. Contract ended September.</div>
     </div>
+
     <div class="j-milestone">
       <div class="j-yr">2024</div>
       <div class="j-dot"></div>
-      <div class="j-label">Internship</div>
-      <div class="j-title">First Contact</div>
-      <div class="j-sub">Remote internship — social awareness campaigns, digital design assets.</div>
+      <div class="j-label">Oct–Nov</div>
+      <div class="j-title">Fake Interviews & Exploitation</div>
+      <div class="j-sub">Multiple interviews and internships that took my work without pay or offer. RTT News tests, CityTech, First Contact internship, Orvionar, Corizo. Got my designs, then went silent. Real industry betrayal.</div>
     </div>
+
     <div class="j-milestone">
       <div class="j-yr">2024</div>
       <div class="j-dot"></div>
-      <div class="j-label">Graduation</div>
-      <div class="j-title">B.Sc. Mathematics</div>
-      <div class="j-sub">Completed degree. Design career was already running in parallel.</div>
+      <div class="j-label">Oct</div>
+      <div class="j-title">Real Freelance Work</div>
+      <div class="j-sub">Sea Food Festival branding, restaurant menus, Grace Super Market (interview assessment), DeScale — all while job hunting. Kept delivering regardless.</div>
     </div>
+
     <div class="j-milestone">
       <div class="j-yr">2024</div>
       <div class="j-dot"></div>
-      <div class="j-label">Full-Time</div>
+      <div class="j-label">Nov</div>
+      <div class="j-title">Packaging & Video Editing</div>
+      <div class="j-sub">No Broker Hood Christmas gift packaging and video editing for Bengaluru and foreign clients through DNDC. First packaging project. First international brief.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2024</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Dec</div>
       <div class="j-title">Flatworld Solutions</div>
-      <div class="j-sub">Graphic & Motion Designer. 10,000+ assets. Adobe automation. Lottie pipeline.</div>
+      <div class="j-sub">Finally selected as Junior Designer at FWS, Bengaluru. After months of exploitation and rejections — a real job, a real salary, real clients worldwide.</div>
     </div>
+
     <div class="j-milestone">
       <div class="j-yr">2025</div>
       <div class="j-dot"></div>
-      <div class="j-label">Award</div>
-      <div class="j-title">Top Performer</div>
-      <div class="j-sub">Recognised at Flatworld Solutions for consistency and cross-team impact.</div>
+      <div class="j-label">Jan</div>
+      <div class="j-title">Full-Time + HoppIt</div>
+      <div class="j-sub">Training done — full-time designer at FWS. Simultaneously designed HoppIt Activewear brand identity through DNDC. Named the brand. Built the mascot. Full system from zero.</div>
     </div>
+
     <div class="j-milestone">
       <div class="j-yr">2025</div>
       <div class="j-dot"></div>
-      <div class="j-label">Animation</div>
-      <div class="j-title">Sony Cert</div>
-      <div class="j-sub">This is Animation — Yellow Brick Program by Sony Pictures Animation (SPAI).</div>
+      <div class="j-label">Feb</div>
+      <div class="j-title">Catalogue Design · FWS</div>
+      <div class="j-sub">Product catalogue design as a trial file for a client at Flatworld Solutions. Learning how international clients review and demand precision.</div>
     </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Mar</div>
+      <div class="j-title">Bowls & Brews</div>
+      <div class="j-sub">Through Brandverse × DNDC connection. 30 social media creatives per month — posts, stories, reels — with only raw photos and videos. No assets. Pure design work.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Apr</div>
+      <div class="j-title">Rejected by Brandverse</div>
+      <div class="j-sub">B&B opening ceremony + Stanley Sofas branding work rejected by Brandverse QC — people who didn't understand design making design decisions. First major creative conflict.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">May–Jun</div>
+      <div class="j-title">Bangalore Times Fashion Week</div>
+      <div class="j-sub">Worked as free designer for the event affiliated with Brandverse. Miscommunications, endless revisions, impossible timelines while working full-time at FWS. Eventually parted ways with Brandverse.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Jun</div>
+      <div class="j-title">Promoted · Senior Designer</div>
+      <div class="j-sub">Promoted to Senior Designer at Flatworld Solutions within 6 months of joining. The work spoke for itself.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Jul</div>
+      <div class="j-title">B&B Direct Partnership</div>
+      <div class="j-sub">Bowls & Brews came back directly — said our designs gave them profits even when other agencies couldn't match the quality. Started working with them and their partner brands directly.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Aug</div>
+      <div class="j-title">BAAKU · National Competition</div>
+      <div class="j-sub">Designed BAAKU — a national mascot submission for UIDAI's Aadhaar identity programme. A government-level brief asking one designer to represent a billion people.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Oct</div>
+      <div class="j-title">Ghama Ghama · Rejected</div>
+      <div class="j-sub">Designed a restaurant entrance board illustration for Ghama Ghama. Client rejected it. Added it to the list of errors that teach more than approvals ever do.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Nov</div>
+      <div class="j-title">Top Performer Award</div>
+      <div class="j-sub">Awarded Top Performer at Flatworld Solutions for consistency, workflow innovation, and cross-team impact. One year in — already leading by example.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2025</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Dec</div>
+      <div class="j-title">UX Design · Muscle Up India</div>
+      <div class="j-sub">Environmental UX report and glass door sticker design for MUI fitness brand. Applied Golden Ratio composition to real-world storefront design.</div>
+    </div>
+
     <div class="j-milestone">
       <div class="j-yr">2026</div>
       <div class="j-dot"></div>
-      <div class="j-label">Competition</div>
-      <div class="j-title">1st Prize · Gre-O</div>
-      <div class="j-sub">Designer Tomorrow! by DOT School. 1st Prize in Communication Design.</div>
+      <div class="j-label">Jan</div>
+      <div class="j-title">Project Lead · FWS</div>
+      <div class="j-sub">Promoted to Project Lead at FWS. Managing a team of 3 — 1 senior + 2 juniors. 10K+ assets delivered. QC, client communication, automated scripts, project tracking.</div>
     </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2026</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Feb</div>
+      <div class="j-title">Gre-O · Created</div>
+      <div class="j-sub">Designed the full Gre-O brand identity and communication system for Designer Tomorrow! — AI-driven agri-gaming interface bridging digital screens and physical soil.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2026</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Mar</div>
+      <div class="j-title">3D · SaaS · Photography</div>
+      <div class="j-sub">3D product explorations, SaaS animations in Blender + After Effects, photography learning. New brand projects — FindO, Srivari brand guidelines.</div>
+    </div>
+
+    <div class="j-milestone">
+      <div class="j-yr">2026</div>
+      <div class="j-dot"></div>
+      <div class="j-label">Apr</div>
+      <div class="j-title">Gre-O Wins 1st Prize</div>
+      <div class="j-sub">Designer Tomorrow! by DOT School of Design. 1st Prize — Communication Design. The judges called out the identity system and visual language as the strongest in the cohort.</div>
+    </div>
+
     <div class="j-milestone" style="border-right:none">
-      <div class="j-yr" style="color:var(--gray)">→</div>
-      <div class="j-dot" style="background:var(--dim)"></div>
-      <div class="j-label" style="color:var(--gray)">Next Chapter</div>
-      <div class="j-title" style="color:var(--gray)">Still Writing</div>
-      <div class="j-sub">Feature film in production. YouTube launching. More work coming.</div>
+      <div class="j-yr" style="color:var(--gold)">Now</div>
+      <div class="j-dot"></div>
+      <div class="j-label">May 2026</div>
+      <div class="j-title">Still Building</div>
+      <div class="j-sub">Animation film assets. B&B store entrance illustration. Gre-O app prototype. Web motion exports as JSON at FWS. The work never stops.</div>
     </div>
+
   </div>
 </section>
 
@@ -746,7 +873,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
 <section class="about-cta r">
   <h2 class="cta-h">LET'S<br><span>WORK</span><br>TOGETHER.</h2>
   <div class="cta-right">
-    <div class="avail-dot">Open to Opportunities</div>
+    <div class="avail-dot">Let's Work Together</div>
     <a href="contact.html" class="btn-gold">Start a Project →</a>
     <a href="Jeeva_Resume_2026.pdf" download class="btn-line" style="margin-top:4px">Download Resume ↓</a>
   </div>
@@ -758,9 +885,9 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
   <div class="flinks">
     <a href="https://www.behance.net/Jeeva-portfolio" target="_blank">Behance</a>
     <a href="https://linkedin.com/in/jeevadesignerr" target="_blank">LinkedIn</a>
-    <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank">YouTube</a>
+    <a href="https://www.youtube.com/@jeevadesignerr" target="_blank">YouTube</a>
     <a href="mailto:designsbyjeeva@gmail.com">Email</a>
-    <a href="journal.html">Journal</a>
+    <a href="maint.html">Journal</a>
   </div>
 </footer>
 
