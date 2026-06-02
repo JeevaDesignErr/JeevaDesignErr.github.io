@@ -200,8 +200,8 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .wip-count strong{color:var(--gold);font-weight:400}
 
 /* ═══ WORKS ═══════════════════════════════════════════════ */
-.work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px}
-.work-h{font-family:var(--ff);font-size:clamp(50px,8vw,108px);line-height:.9}
+.work-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.work-h{font-family:var(--ff);font-size:clamp(28px,3.5vw,48px);line-height:1;letter-spacing:.04em}
 .work-h span{color:var(--gold)}
 .work-sub{font-family:var(--fb);font-size:13px;color:var(--gray);line-height:1.7;max-width:240px;text-align:right}
 .wtabs{display:flex;border-bottom:1px solid var(--dim);margin-bottom:26px;overflow-x:auto;scrollbar-width:none}
@@ -265,6 +265,7 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .fb-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px}
 .fb-h{font-family:var(--ff);font-size:clamp(42px,6.5vw,74px);line-height:.93}
 .fb-h span{color:var(--gold)}
+.fb-live-badge{align-self:flex-start;margin-top:8px}
 /* Ticker */
 .fb-ticker-wrap{overflow:hidden;position:relative;padding:2px 0}
 .fb-ticker-wrap::before,.fb-ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
@@ -281,6 +282,10 @@ nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bo
 .tcard-name{font-family:var(--fb);font-size:11px;color:var(--gold);font-weight:400}
 .tcard-brand{font-family:var(--fb);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--gray);margin-top:2px}
 .tcard-stars{font-size:11px;color:var(--gold);letter-spacing:3px;margin-top:6px}
+/* shimmer loading */
+.tcard-loading{min-height:160px}
+.tcard-shimmer{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg2) 25%,var(--dim) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.6s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* ═══ CONTACT ═════════════════════════════════════════════ */
 .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:end}
@@ -689,7 +694,7 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
   <div class="work-head r">
     <div>
       <div class="sec-label">Highlight Works</div>
-      <h2 class="work-h">BRAND<br><span>MOTION</span><br>PRINT</h2>
+      <h2 class="work-h">BRAND · <span>MOTION</span> · PRINT</h2>
     </div>
     <p class="work-sub" style="display:none">Selected projects — each one a system, not just a deliverable.</p>
   </div>
@@ -841,25 +846,16 @@ footer{border-top:1px solid var(--dim);padding:24px 64px;display:flex;justify-co
     <div>
       <div class="sec-label">Feedback</div>
       <h2 class="fb-h">WHAT PEOPLE<br><span>SAY</span></h2>
-      <p class="fb-note">
-      This section is currently a work in progress — more client feedback and testimonials will be updated soon.
-      </p>
     </div>
+    <div class="fb-live-badge"><span class="live-pip">Live from clients</span></div>
   </div>
 
-  <div class="fb-ticker-wrap r">
-    <div class="fb-ticker">
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva delivered our entire brand system in one week — mascot, type, palette, and guidelines. The precision and speed were unreal. HoppIt looks like a funded brand now.</div><div class="tcard-name">Client — HoppIt Activewear</div><div class="tcard-brand">Brand Identity · Tirupur</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Gre-O presentation won 1st prize. The judges specifically called out the identity system and visual language as the strongest in the cohort.</div><div class="tcard-name">DOT School — Designer Tomorrow!</div><div class="tcard-brand">Communication Design · 2026</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva mentored 250+ students with clarity and patience. They came away able to actually produce work — not just understand theory.</div><div class="tcard-name">Academy of Media and Design</div><div class="tcard-brand">Design Mentorship · Tamil Nadu</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Sea Food Festival branding was everything we wanted — bold, fresh, and on-brand. We got so many compliments on the menu design at the event.</div><div class="tcard-name">Client — Sea Food Festival</div><div class="tcard-brand">Event Branding · Freelance</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Awarded Best Employee certificate for consistency, workflow innovation, and positive impact on the entire design team's output quality.</div><div class="tcard-name">Flatworld Solutions</div><div class="tcard-brand">Senior Visual Designer · Bengaluru</div><div class="tcard-stars">★★★★★</div></div>
-      <!-- Duplicate for seamless loop -->
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva delivered our entire brand system in one week — mascot, type, palette, and guidelines. The precision and speed were unreal. HoppIt looks like a funded brand now.</div><div class="tcard-name">Client — HoppIt Activewear</div><div class="tcard-brand">Brand Identity · Tirupur</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Gre-O presentation won 1st prize. The judges specifically called out the identity system and visual language as the strongest in the cohort.</div><div class="tcard-name">DOT School — Designer Tomorrow!</div><div class="tcard-brand">Communication Design · 2026</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Jeeva mentored 250+ students with clarity and patience. They came away able to actually produce work — not just understand theory.</div><div class="tcard-name">Academy of Media and Design</div><div class="tcard-brand">Design Mentorship · Tamil Nadu</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">The Sea Food Festival branding was everything we wanted — bold, fresh, and on-brand. We got so many compliments on the menu design at the event.</div><div class="tcard-name">Client — Sea Food Festival</div><div class="tcard-brand">Event Branding · Freelance</div><div class="tcard-stars">★★★★★</div></div>
-      <div class="tcard"><div class="tcard-quote">&ldquo;</div><div class="tcard-text">Awarded Best Employee certificate for consistency, workflow innovation, and positive impact on the entire design team's output quality.</div><div class="tcard-name">Flatworld Solutions</div><div class="tcard-brand">Senior Visual Designer · Bengaluru</div><div class="tcard-stars">★★★★★</div></div>
+  <div class="fb-ticker-wrap r" id="fbTickerWrap">
+    <div class="fb-ticker" id="fbTicker">
+      <!-- JS will inject cards here; fallbacks shown while loading -->
+      <div class="tcard tcard-loading"><div class="tcard-shimmer"></div></div>
+      <div class="tcard tcard-loading"><div class="tcard-shimmer"></div></div>
+      <div class="tcard tcard-loading"><div class="tcard-shimmer"></div></div>
     </div>
   </div>
 </section>
@@ -938,7 +934,79 @@ outer.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if
 outer.addEventListener('mousedown',e=>{mdx=e.clientX;drag=true;e.preventDefault()});
 document.addEventListener('mouseup',e=>{if(!drag)return;drag=false;const dx=e.clientX-mdx;if(Math.abs(dx)>56)goWip(dx<0?idx+1:idx-1)});
 
-/* Work filter */
+/* ── Live Feedback from Google Sheets ── */
+(async function loadFeedback(){
+  const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgK5NwyqTLgYkMiod970haLGOQ4JyGagDqEST5WHRjkdl7BmbbM2uQLe3s--BOwIup-MR5ThwVmA4A/pub?gid=314303712&single=true&output=csv';
+  
+  // Fallback testimonials (used if sheet unavailable)
+  const FALLBACK = [
+    {text:"Jeeva delivered our entire brand system in one week — mascot, type, palette, and guidelines. The precision and speed were unreal. HoppIt looks like a funded brand now.",name:"Client — HoppIt Activewear",brand:"Brand Identity · Tirupur",stars:5},
+    {text:"The Gre-O presentation won 1st prize. The judges specifically called out the identity system and visual language as the strongest in the cohort.",name:"DOT School — Designer Tomorrow!",brand:"Communication Design · 2026",stars:5},
+    {text:"Jeeva mentored 250+ students with clarity and patience. They came away able to actually produce work — not just understand theory.",name:"Academy of Media and Design",brand:"Design Mentorship · Tamil Nadu",stars:5},
+    {text:"The Sea Food Festival branding was everything we wanted — bold, fresh, and on-brand. We got so many compliments on the menu design at the event.",name:"Client — Sea Food Festival",brand:"Event Branding · Freelance",stars:5},
+    {text:"Awarded Best Employee certificate for consistency, workflow innovation, and positive impact on the entire design team's output quality.",name:"Flatworld Solutions",brand:"Senior Visual Designer · Bengaluru",stars:5},
+  ];
+
+  function parseCSV(raw){
+    const lines = raw.trim().split('\n');
+    if(lines.length < 2) return [];
+    const headers = lines[0].split(',').map(h=>h.replace(/^"|"$/g,'').trim().toLowerCase());
+    // Try to map columns by header names (flexible)
+    // Expected: Timestamp, Name/Client, Project/Brand, Feedback/Message, Rating/Stars
+    const findCol = (...keys) => {
+      for(const k of keys){
+        const i = headers.findIndex(h=>h.includes(k));
+        if(i>-1) return i;
+      }
+      return -1;
+    };
+    const iName   = findCol('name','client','who');
+    const iBrand  = findCol('project','brand','type','work','service');
+    const iText   = findCol('feedback','message','review','testimonial','comment','say','tell');
+    const iStars  = findCol('rating','stars','score');
+    
+    const entries = [];
+    for(let i=1;i<lines.length;i++){
+      // Handle quoted CSV fields
+      const cols = lines[i].match(/(".*?"|[^,]+|(?<=,)(?=,)|(?<=,)$|^(?=,))/g) || [];
+      const clean = c => (c||'').replace(/^"|"$/g,'').trim();
+      const text  = clean(cols[iText > -1 ? iText : cols.length-1]);
+      const name  = clean(cols[iName  > -1 ? iName  : 1]);
+      const brand = clean(cols[iBrand > -1 ? iBrand : 2]);
+      const stars = parseInt(clean(cols[iStars > -1 ? iStars : -1])) || 5;
+      if(text && text.length > 8) entries.push({text, name, brand, stars: Math.min(5,Math.max(1,stars))});
+    }
+    return entries;
+  }
+
+  function buildCards(entries){
+    const ticker = document.getElementById('fbTicker');
+    if(!ticker) return;
+    // Double entries for seamless loop
+    const doubled = [...entries, ...entries];
+    ticker.innerHTML = doubled.map(e=>`
+      <div class="tcard">
+        <div class="tcard-quote">&ldquo;</div>
+        <div class="tcard-text">${e.text}</div>
+        <div class="tcard-name">${e.name||''}</div>
+        <div class="tcard-brand">${e.brand||''}</div>
+        <div class="tcard-stars">${'★'.repeat(e.stars||5)}</div>
+      </div>`).join('');
+    // Adjust animation speed based on count
+    const speed = Math.max(28, entries.length * 7);
+    ticker.style.animationDuration = speed + 's';
+  }
+
+  try {
+    const res = await fetch(SHEET_CSV);
+    if(!res.ok) throw new Error('fetch failed');
+    const csv = await res.text();
+    const entries = parseCSV(csv);
+    buildCards(entries.length > 0 ? entries : FALLBACK);
+  } catch(e) {
+    buildCards(FALLBACK);
+  }
+})();
 document.querySelectorAll('.wtab').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.wtab').forEach(b=>b.classList.remove('on'));
