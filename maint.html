@@ -3,379 +3,782 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Under Construction...</title>
+<title>System Maintenance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet">
 <style>
-/* ═══ TOKENS ════════════════════════════════════════════════ */
 :root {
-  --bg: #050505; 
-  --bg2: #0b0b0b; 
-  --bg3: #101010;
-  --gold: #E8941A; 
+  --bg:    #050505;
+  --bg2:   #0b0b0b;
+  --bg3:   #111;
+  --gold:  #E8941A;
   --gold2: #F5AE3E;
-  --gdim: rgba(232,148,26,.04); 
-  --gline: rgba(232,148,26,.12);
-  --white: #EAE7DF; 
-  --gray: #6E6A62; 
-  --dim: #1c1c1c;
-  --ff: 'Bebas Neue', sans-serif;
-  --fb: 'DM Sans', sans-serif;
+  --gold3: #ffc95a;
+  --gline: rgba(232,148,26,.15);
+  --gdim:  rgba(232,148,26,.06);
+  --white: #EAE7DF;
+  --gray:  #5a5750;
+  --dim:   #1c1c1c;
+  --ff:    'Bebas Neue', sans-serif;
+  --fb:    'DM Sans', sans-serif;
+  --fm:    'Space Mono', monospace;
 }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-/* ═══ RESET & SITE STYLES ═══════════════════════════════════ */
-*, *::before, *::after {
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box;
-}
 body {
   background: var(--bg);
   color: var(--white);
   font-family: var(--fb);
-  font-weight: 100;
   overflow: hidden;
   cursor: none;
-  line-height: 1;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
+  perspective: 1200px;
 }
 
-/* Texture Overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9997;
-  opacity: .35;
-  mix-blend-mode: overlay;
+/* ── CANVAS LAYERS ─────────────────────────────────────── */
+#bgCanvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+#particleCanvas { position:fixed; inset:0; z-index:1; pointer-events:none; }
+
+/* ── SCAN LINES ──────────────────────────────────────────*/
+.scanlines {
+  position:fixed; inset:0; z-index:9996; pointer-events:none;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px
+  );
 }
 
-/* Interactive Grid Backdrop Lines */
-.bg-grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(232,148,26, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(232,148,26, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  background-position: center center;
-  z-index: 0;
-  pointer-events: none;
+/* ── VIGNETTE ────────────────────────────────────────────*/
+.vignette {
+  position:fixed; inset:0; z-index:9995; pointer-events:none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.7) 100%);
 }
 
-/* ═══ DUAL CUSTOM CURSOR ════════════════════════════════════ */
+/* ── CURSORS ──────────────────────────────────────────────*/
 .cur {
-  position: fixed;
-  width: 8px;
-  height: 8px;
+  position:fixed; pointer-events:none; z-index:9999;
+  width:6px; height:6px;
   background: var(--gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
   mix-blend-mode: difference;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s;
+  transition: width .15s, height .15s, opacity .15s;
 }
 .cring {
+  position:fixed; pointer-events:none; z-index:9998;
+  width:36px; height:36px;
+  border:1px solid rgba(232,148,26,.5);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition: width .3s, height .3s, opacity .2s, border-color .2s;
+}
+.cring.expanded { width:60px; height:60px; opacity:.15; }
+
+/* ── DATA STREAM SIDEBAR ─────────────────────────────────*/
+.data-stream {
   position: fixed;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
+  top: 0; left: 24px;
+  height: 100%;
+  width: 160px;
+  z-index: 2;
   pointer-events: none;
-  z-index: 9998;
-  opacity: .3;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -50%);
+  overflow: hidden;
+  opacity: .25;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+.data-stream-right {
+  left: auto; right: 24px;
+}
+.data-line {
+  font-family: var(--fm);
+  font-size: 9px;
+  color: var(--gold);
+  line-height: 1.6;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  animation: streamFall linear infinite;
 }
 
-/* ═══ INTERACTIVE PARALLAX CARD PANEL ══════════════════════ */
+/* ── CORNER BRACKETS ──────────────────────────────────────*/
+.corner {
+  position:fixed; z-index:10; width:24px; height:24px;
+  pointer-events:none;
+}
+.corner svg { width:100%; height:100%; }
+.c-tl { top:20px; left:20px; }
+.c-tr { top:20px; right:20px; transform:scaleX(-1); }
+.c-bl { bottom:20px; left:20px; transform:scaleY(-1); }
+.c-br { bottom:20px; right:20px; transform:scale(-1,-1); }
+
+/* ── PANEL ────────────────────────────────────────────────*/
 .panel-container {
   position: relative;
-  z-index: 2;
+  z-index: 100;
   width: 100%;
-  max-width: 540px;
-  margin: 0 24px;
+  max-width: 580px;
+  margin: 0 28px;
   transform-style: preserve-3d;
-  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
-.processing-panel {
+.panel {
   width: 100%;
   background: var(--bg2);
   border: 1px solid var(--dim);
-  padding: 64px 48px;
-  text-align: center;
   position: relative;
   opacity: 0;
-  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) .2s forwards;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.8);
+  animation: fadeUp 1.4s cubic-bezier(0.16,1,0.3,1) .4s forwards;
+  overflow: hidden;
 }
 
-.panel-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(232,148,26,.06) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 1;
+/* Glitch border effect */
+.panel::before, .panel::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+.panel::before {
+  border:1px solid var(--gold);
+  opacity:0;
+  animation: borderPulse 4s ease-in-out infinite 2s;
 }
 
-/* ═══ INTERACTIVE VECTOR ART BLOCK ═════════════════════════ */
-.graphics-container {
+/* Top status bar */
+.status-bar {
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--dim);
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto 40px;
-  height: 140px;
+  justify-content: space-between;
   position: relative;
   z-index: 2;
-  transform: translateZ(40px);
+  background: var(--bg3);
+}
+.status-dot {
+  width:6px; height:6px; border-radius:50%;
+  background: var(--gold);
+  animation: dotBlink 2s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--gold);
+}
+.status-text {
+  font-family: var(--fm); font-size:9px; letter-spacing:.2em;
+  color: var(--gray); text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+}
+.status-code {
+  font-family:var(--fm); font-size:9px; color:var(--gold); letter-spacing:.1em;
 }
 
-.cone-wrap {
-  width: 110px;
-  height: 110px;
+/* Main content */
+.panel-body {
+  padding: 52px 52px 44px;
   position: relative;
-  transform-style: preserve-3d;
+  z-index: 2;
+  text-align: center;
 }
 
-.pulse-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  border: 1px solid var(--gline);
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+/* Panel mouse glow */
+.panel-glow {
+  position:absolute; inset:0; pointer-events:none; z-index:1;
+  background: radial-gradient(
+    circle at var(--mx,50%) var(--my,40%),
+    rgba(232,148,26,.07) 0%, transparent 55%
+  );
+  transition: background .1s;
+}
+
+/* ─── CONE SVG ICON ────────────────────────────────────────*/
+.icon-wrap {
+  display:flex; justify-content:center; align-items:center;
+  height:130px; margin-bottom:36px;
+  transform: translateZ(50px);
+  position:relative;
+}
+.icon-wrap svg { overflow:visible; }
+
+/* ─── GLITCH TEXT ──────────────────────────────────────────*/
+.glitch-wrap {
+  position:relative;
+  transform: translateZ(35px);
+  margin-bottom: 6px;
+}
+.title-main {
+  font-family: var(--ff);
+  font-size: clamp(36px, 5.5vw, 58px);
+  line-height: 1;
+  letter-spacing: .5px;
+  color: var(--white);
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+.title-main .accent { color: var(--gold); }
+
+/* Glitch layers */
+.title-main::before, .title-main::after {
+  content: attr(data-text);
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  overflow:hidden;
   opacity: 0;
 }
+.title-main::before {
+  color: #ff5252;
+  text-shadow: -2px 0 #ff5252;
+  clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+  animation: glitch1 6s infinite 3s;
+}
+.title-main::after {
+  color: #00d4ff;
+  text-shadow: 2px 0 #00d4ff;
+  clip-path: polygon(0 55%, 100% 55%, 100% 75%, 0 75%);
+  animation: glitch2 6s infinite 3.1s;
+}
 
-/* Typography styles with strictly reduced structural boldness */
-.sec-label {
-  font-family: var(--fb);
-  font-size: 9px;
-  font-weight: 300;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  color: var(--gray);
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 28px;
+.subtitle-row {
+  display:flex; align-items:center; justify-content:center;
+  gap:14px; margin-bottom:28px;
+  transform: translateZ(25px);
+}
+.subtitle-line { width:28px; height:1px; background:var(--dim); }
+.subtitle-text {
+  font-family:var(--fm); font-size:9px; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--gray);
+}
+
+/* ─── DESCRIPTION ──────────────────────────────────────────*/
+.desc {
+  font-size:13px; font-weight:300; line-height:1.85;
+  color: var(--gray); max-width:400px; margin:0 auto 36px;
   transform: translateZ(20px);
 }
-.sec-label::before, .sec-label::after {
-  content: '';
-  width: 12px;
-  height: 1px;
-  background: var(--dim);
-}
 
-.title-h1 {
-  font-family: var(--ff);
-  font-size: clamp(32px, 5vw, 52px);
-  line-height: 1.05;
-  font-weight: 100;
-  letter-spacing: 0px;
-  color: var(--white);
-  margin-bottom: 24px;
-  transform: translateZ(30px);
-}
-.title-h1 span {
-  color: var(--gold);
-  font-weight: 100;
-}
-
-.message-desc {
-  font-family: var(--fb);
-  font-size: 13px;
-  font-weight: 300;
-  line-height: 1.8;
-  color: var(--gray);
-  max-width: 420px;
-  margin: 0 auto;
+/* ─── PROGRESS SYSTEM ──────────────────────────────────────*/
+.progress-wrap {
   transform: translateZ(15px);
+  margin: 0 auto;
+  max-width: 340px;
 }
-
-/* Modular Interactive Track Line Indicator */
-.loader-track {
-  width: 120px;
-  height: 1px;
-  background: var(--dim);
-  margin: 40px auto 0;
+.progress-labels {
+  display:flex; justify-content:space-between; margin-bottom:8px;
+}
+.progress-label {
+  font-family:var(--fm); font-size:8px; color:var(--gray); letter-spacing:.15em;
+}
+.progress-pct {
+  font-family:var(--fm); font-size:8px; color:var(--gold); letter-spacing:.1em;
+}
+.progress-track {
+  height:2px; background:var(--dim); position:relative; overflow:hidden;
+  margin-bottom:20px;
+}
+.progress-fill {
+  height:100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold3));
+  width:0%;
+  transition: width .4s ease;
   position: relative;
-  overflow: hidden;
-  transform: translateZ(10px);
 }
-.loader-bar {
-  position: absolute;
-  left: -45px;
-  height: 100%;
-  width: 45px;
+.progress-fill::after {
+  content:'';
+  position:absolute; right:0; top:-3px;
+  width:6px; height:8px;
+  background: var(--gold3);
+  box-shadow: 0 0 8px var(--gold3);
+}
+
+/* ─── MODULE STATUS CHECKLIST ──────────────────────────────*/
+.module-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:6px; margin-top:24px;
+}
+.module-item {
+  display:flex; align-items:center; gap:8px;
+  padding: 7px 12px;
+  border: 1px solid var(--dim);
+  background: var(--bg3);
+  font-family:var(--fm); font-size:8px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--gray);
+  cursor:default;
+  transition: border-color .2s, color .2s, background .2s;
+  text-align: left;
+}
+.module-item:hover {
+  border-color: var(--gline); color: var(--white); background: var(--bg2);
+}
+.module-dot {
+  width:5px; height:5px; border-radius:50%;
+  background: var(--dim); flex-shrink:0;
+  transition: background .3s, box-shadow .3s;
+}
+.module-dot.active {
   background: var(--gold);
+  box-shadow: 0 0 5px var(--gold);
+  animation: dotBlink 1.5s ease-in-out infinite;
+}
+.module-dot.done {
+  background: #3ddc84;
+  box-shadow: 0 0 5px #3ddc84;
+  animation: none;
+}
+.module-dot.error {
+  background: #ff5252;
+  box-shadow: 0 0 5px #ff5252;
+  animation: dotBlink .8s ease-in-out infinite;
 }
 
-/* ═══ ANIMATIONS ══════════════════════════════════════════ */
+/* ─── BOTTOM BAR ────────────────────────────────────────── */
+.bottom-bar {
+  padding: 12px 20px;
+  border-top: 1px solid var(--dim);
+  display:flex; align-items:center; justify-content:space-between;
+  background: var(--bg3);
+  position:relative; z-index:2;
+}
+.eta-text {
+  font-family:var(--fm); font-size:8px; color:var(--gray); letter-spacing:.15em;
+}
+.eta-val { color:var(--gold); margin-left:8px; }
+.wave-wrap {
+  display:flex; align-items:center; gap:3px;
+}
+.wave-bar {
+  width:2px; background:var(--gold); border-radius:1px;
+  animation: waveAnim 1.2s ease-in-out infinite;
+  opacity:.6;
+}
+
+/* ─── ANIMATIONS ────────────────────────────────────────── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: none; }
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:none; }
+}
+@keyframes dotBlink {
+  0%,100% { opacity:1; }
+  50%      { opacity:.3; }
+}
+@keyframes borderPulse {
+  0%,100% { opacity:0; }
+  50%      { opacity:.4; }
+}
+@keyframes glitch1 {
+  0%,92%,100% { opacity:0; transform:none; }
+  93%  { opacity:.8; transform:translate(-2px,0); }
+  95%  { opacity:.8; transform:translate(2px,0); }
+  97%  { opacity:0; }
+}
+@keyframes glitch2 {
+  0%,92%,100% { opacity:0; transform:none; }
+  94%  { opacity:.6; transform:translate(2px,0); }
+  96%  { opacity:.6; transform:translate(-1px,0); }
+  98%  { opacity:0; }
+}
+@keyframes waveAnim {
+  0%,100% { transform:scaleY(.4); }
+  50%      { transform:scaleY(1.5); }
+}
+@keyframes streamFall {
+  from { transform:translateY(-100%); }
+  to   { transform:translateY(100vh); }
+}
+@keyframes coneFloat {
+  0%,100% { transform:translateY(0px); }
+  50%      { transform:translateY(-7px); }
 }
 
-/* ═══ RESPONSIVE OVERRIDES ════════════════════════════════ */
-@media (max-width: 600px) {
-  .processing-panel { padding: 48px 24px; }
-  body { cursor: auto; }
-  .cur, .cring { display: none; }
+@media (max-width:600px) {
+  .panel-body { padding:36px 24px 28px; }
+  body { cursor:auto; }
+  .cur,.cring,.data-stream { display:none; }
+  .module-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
+<canvas id="bgCanvas"></canvas>
+<canvas id="particleCanvas"></canvas>
+
+<div class="scanlines"></div>
+<div class="vignette"></div>
 
 <div class="cur" id="cur"></div>
 <div class="cring" id="cring"></div>
 
-<div class="panel-container" id="interactivePanel">
-  <div class="processing-panel">
+<div class="data-stream" id="streamLeft"></div>
+<div class="data-stream data-stream-right" id="streamRight"></div>
+
+<div class="corner c-tl"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12V1H12" stroke="rgba(232,148,26,.3)" stroke-width="1"/></svg></div>
+<div class="corner c-tr"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12V1H12" stroke="rgba(232,148,26,.3)" stroke-width="1"/></svg></div>
+<div class="corner c-bl"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12V1H12" stroke="rgba(232,148,26,.3)" stroke-width="1"/></svg></div>
+<div class="corner c-br"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12V1H12" stroke="rgba(232,148,26,.3)" stroke-width="1"/></svg></div>
+
+<div class="panel-container" id="panelContainer">
+  <div class="panel" id="panel">
     <div class="panel-glow" id="panelGlow"></div>
-    
-    <div class="sec-label">Interface Build</div>
-    
-    <div class="graphics-container">
-      <div class="cone-wrap" id="interactiveCone">
-        <div class="pulse-ring" style="animation: none;"></div>
-        
-        <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition: transform 0.2s ease-out;">
-          <ellipse cx="50" cy="88" rx="34" ry="4.5" fill="#000000" opacity="0.6"/>
-          
-          <path d="M14 84 L86 84 L80 91 L20 91 Z" fill="#121212" stroke="var(--dim)" stroke-width="1"/>
-          <path d="M16 81 L84 81 L86 84 L14 84 Z" fill="#1c1c1c" />
-          
-          <path d="M27 68 L73 68 L81 81 L19 81 Z" fill="var(--gold)" opacity="0.95" />
-          
-          <path d="M32 56 L68 56 L73 68 L27 68 Z" fill="#DCD9D0" />
-          <path d="M32 56 L68 56 L70 60 L30 60 Z" fill="#000000" opacity="0.15" />
 
-          <path d="M36 42 L64 42 L68 56 L32 56 Z" fill="var(--gold)" opacity="0.95" />
-          <path d="M40 28 L60 28 L64 42 L36 42 Z" fill="#DCD9D0" />
-
-          <path d="M45 13 L55 13 L59 28 L41 28 Z" fill="var(--gold)" />
-          <ellipse cx="50" cy="13" rx="4.5" ry="1.2" fill="var(--gold2)" />
-
-          <path d="M45 13 L41 28 L36 42 L32 56 L27 68 L19 81" stroke="#FFFFFF" stroke-width="1" opacity="0.12" />
-        </svg>
+    <div class="status-bar">
+      <div class="status-text">
+        <div class="status-dot"></div>
+        <span>SYSTEM OFFLINE</span>
+      </div>
+      <div class="status-code" id="statusCode">ERR_503_MAINTENANCE</div>
+      <div class="status-text" style="gap:6px;">
+        <span id="liveTime">—</span>
       </div>
     </div>
 
-    <h1 class="title-h1">This page is currently undergoing <span>maintenance</span> and programming updates.</h1>
-    <p class="message-desc">We are actively refining this dynamic interface behind the scenes. Please be patient and return to visit the page shortly.</p>
+    <div class="panel-body">
 
-    <div class="loader-track">
-      <div class="loader-bar" id="progressBar"></div>
+      <div class="icon-wrap" id="iconWrap">
+        <svg id="coneSVG" width="104" height="124" viewBox="0 0 104 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="52" cy="118" rx="32" ry="4" fill="#000" opacity=".5"/>
+          <path d="M14 100 L90 100 L84 108 L20 108 Z" fill="#0e0e0e" stroke="#1c1c1c" stroke-width="1"/>
+          <path d="M17 96 L87 96 L90 100 L14 100 Z" fill="#181818"/>
+          <path d="M24 80 L80 80 L87 96 L17 96 Z" fill="var(--gold)" opacity=".92"/>
+          <path d="M30 64 L74 64 L80 80 L24 80 Z" fill="#D8D5CC"/>
+          <path d="M30 64 L74 64 L76 69 L28 69 Z" fill="#000" opacity=".12"/>
+          <path d="M36 48 L68 48 L74 64 L30 64 Z" fill="var(--gold)" opacity=".92"/>
+          <path d="M40 32 L64 32 L68 48 L36 48 Z" fill="#D8D5CC"/>
+          <path d="M46 15 L58 15 L64 32 L40 32 Z" fill="var(--gold)"/>
+          <ellipse cx="52" cy="15" rx="5" ry="1.4" fill="var(--gold2)"/>
+          <circle cx="52" cy="14" r="3" fill="var(--gold3)" opacity=".9"/>
+          <path d="M46 15 L40 32 L36 48 L30 64 L24 80 L17 96" stroke="#fff" stroke-width="1" opacity=".1"/>
+          <path d="M32 68 L72 68" stroke="#fff" stroke-width=".5" opacity=".2"/>
+          <path d="M38 52 L66 52" stroke="#fff" stroke-width=".5" opacity=".2"/>
+        </svg>
+
+        <svg id="orbitRing" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotateX(70deg);" width="140" height="140" viewBox="0 0 140 140" fill="none">
+          <circle cx="70" cy="70" r="60" stroke="var(--gline)" stroke-width="1" stroke-dasharray="4 8"/>
+          <circle id="orbitDot" cx="130" cy="70" r="3" fill="var(--gold)" opacity=".8"/>
+        </svg>
+      </div>
+
+      <div class="subtitle-row">
+        <div class="subtitle-line"></div>
+        <div class="subtitle-text">Interface Build · v2.4.1</div>
+        <div class="subtitle-line"></div>
+      </div>
+
+      <div class="glitch-wrap">
+        <div class="title-main" data-text="Page Under Maintenance" id="glitchTitle">
+          Page Under <span class="accent">Maintenance</span>
+        </div>
+      </div>
+
+      <p class="desc">I am programming and preparing files to update on my portfolio. Please be patient. All services will be restored momentarily.</p>
+
+      <div class="progress-wrap">
+        <div class="progress-labels">
+          <div class="progress-label">DEPLOYMENT PROGRESS</div>
+          <div class="progress-pct" id="pctLabel">0%</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="module-grid" id="moduleGrid">
+          <div class="module-item"><div class="module-dot" id="mod0"></div>Doc Presentation</div>
+          <div class="module-item"><div class="module-dot" id="mod1"></div>Behind Details</div>
+          <div class="module-item"><div class="module-dot" id="mod2"></div>Web Assets</div>
+          <div class="module-item"><div class="module-dot" id="mod3"></div>Programming</div>
+          <div class="module-item"><div class="module-dot" id="mod4"></div>Web Drivers</div>
+          <div class="module-item"><div class="module-dot" id="mod5"></div>Server Connect</div>
+        </div>
+      </div>
     </div>
+
+    <div class="bottom-bar">
+      <div class="eta-text">ETA<span class="eta-val" id="etaDisplay">Calculating…</span></div>
+      <div class="wave-wrap" id="waveWrap">
+        <div class="wave-bar" style="height:8px;animation-delay:0s;"></div>
+        <div class="wave-bar" style="height:14px;animation-delay:.15s;"></div>
+        <div class="wave-bar" style="height:10px;animation-delay:.3s;"></div>
+        <div class="wave-bar" style="height:16px;animation-delay:.45s;"></div>
+        <div class="wave-bar" style="height:8px;animation-delay:.6s;"></div>
+        <div class="wave-bar" style="height:12px;animation-delay:.75s;"></div>
+      </div>
+      <div class="eta-text" id="buildID">BUILD #<span style="color:var(--gold)">7824</span></div>
+    </div>
+
   </div>
 </div>
 
 <script>
-const cur = document.getElementById('cur');
-const cring = document.getElementById('cring');
-const panel = document.getElementById('interactivePanel');
-const glow = document.getElementById('panelGlow');
-const cone = document.querySelector('#interactiveCone svg');
-const progressBar = document.getElementById('progressBar');
-
-let targetX = 0, targetY = 0;
-let currentX = 0, currentY = 0;
-
-function updateLoop() {
-  currentX += (targetX - currentX) * 0.15;
-  currentY += (targetY - currentY) * 0.15;
-  
-  cring.style.left = `${currentX}px`;
-  cring.style.top = `${currentY}px`;
-  
-  const time = Date.now() * 0.002;
-  const progressPos = ((Math.sin(time) + 1) / 2) * 165 - 45;
-  progressBar.style.left = `${progressPos}px`;
-  
-  const coneFloat = Math.sin(Date.now() * 0.0015) * 4;
-  cone.style.transform = `translateY(${coneFloat}px)`;
-
-  requestAnimationFrame(updateLoop);
+/* ─── LIVE CLOCK ───────────────────────────────────────── */
+function tick() {
+  const t = new Date();
+  document.getElementById('liveTime').textContent =
+    t.getUTCHours().toString().padStart(2,'0')+':'+
+    t.getUTCMinutes().toString().padStart(2,'0')+':'+
+    t.getUTCSeconds().toString().padStart(2,'0')+' UTC';
 }
-requestAnimationFrame(updateLoop);
+setInterval(tick,1000); tick();
 
-document.addEventListener('mousemove', (e) => {
-  targetX = e.clientX;
-  targetY = e.clientY;
-  
-  cur.style.left = `${targetX}px`;
-  cur.style.top = `${targetY}px`;
+/* ─── BG CANVAS: grid + animated dots ─────────────────── */
+const bgC  = document.getElementById('bgCanvas');
+const bgX  = bgC.getContext('2d');
 
-  const halfWidth = window.innerWidth / 2;
-  const halfHeight = window.innerHeight / 2;
-  
-  const rotateX = -((e.clientY - halfHeight) / halfHeight) * 6; 
-  const rotateY = ((e.clientX - halfWidth) / halfWidth) * 8;   
+function resizeBg() {
+  bgC.width  = window.innerWidth;
+  bgC.height = window.innerHeight;
+}
+resizeBg();
+window.addEventListener('resize', resizeBg);
 
-  panel.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+function drawBg() {
+  bgX.clearRect(0,0,bgC.width,bgC.height);
+  const G = 60;
+  bgX.strokeStyle = 'rgba(232,148,26,0.025)';
+  bgX.lineWidth = 1;
+  for(let x=0; x<bgC.width; x+=G){ bgX.beginPath(); bgX.moveTo(x,0); bgX.lineTo(x,bgC.height); bgX.stroke(); }
+  for(let y=0; y<bgC.height; y+=G){ bgX.beginPath(); bgX.moveTo(0,y); bgX.lineTo(bgC.width,y); bgX.stroke(); }
+  // intersection dots
+  bgX.fillStyle = 'rgba(232,148,26,0.07)';
+  for(let x=0; x<bgC.width; x+=G)
+    for(let y=0; y<bgC.height; y+=G) {
+      bgX.beginPath(); bgX.arc(x,y,1,0,Math.PI*2); bgX.fill();
+    }
+}
+drawBg();
 
-  const rect = panel.getBoundingClientRect();
-  const x = ((e.clientX - rect.left) / rect.width) * 100;
-  const y = ((e.clientY - rect.top) / rect.height) * 100;
-  
-  glow.style.setProperty('--mouse-x', `${x}%`);
-  glow.style.setProperty('--mouse-y', `${y}%`);
+/* ─── PARTICLE CANVAS ──────────────────────────────────── */
+const pC  = document.getElementById('particleCanvas');
+const pX  = pC.getContext('2d');
+let W, H, particles = [], mouseX=0, mouseY=0;
+
+function resizeP() { W=pC.width=window.innerWidth; H=pC.height=window.innerHeight; }
+resizeP(); window.addEventListener('resize',resizeP);
+
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init=false) {
+    this.x = Math.random()*W;
+    this.y = init ? Math.random()*H : H+10;
+    this.vy = -(Math.random()*.6+.2);
+    this.vx = (Math.random()-.5)*.3;
+    this.r  = Math.random()*1.5+.3;
+    this.a  = Math.random()*.4+.1;
+    this.life = Math.random()*200+100;
+    this.age  = init ? Math.random()*this.life : 0;
+  }
+  update() {
+    this.x  += this.vx;
+    this.y  += this.vy;
+    this.age++;
+    // subtle mouse repel
+    const dx=this.x-mouseX, dy=this.y-mouseY, d=Math.sqrt(dx*dx+dy*dy);
+    if(d<80){ this.vx+=dx/d*.02; this.vy+=dy/d*.02; }
+    if(this.age>this.life||this.y<-10) this.reset();
+  }
+  draw() {
+    const frac=this.age/this.life;
+    const alpha=this.a*(1-Math.pow(frac,2));
+    pX.beginPath(); pX.arc(this.x,this.y,this.r,0,Math.PI*2);
+    pX.fillStyle=`rgba(232,148,26,${alpha})`;
+    pX.fill();
+  }
+}
+
+for(let i=0;i<80;i++) particles.push(new Particle());
+
+function animP() {
+  pX.clearRect(0,0,W,H);
+  particles.forEach(p=>{ p.update(); p.draw(); });
+  requestAnimationFrame(animP);
+}
+animP();
+
+/* ─── CONE FLOAT + ORBIT ───────────────────────────────── */
+const coneSVG   = document.getElementById('coneSVG');
+const orbitDot  = document.getElementById('orbitDot');
+let orbitAngle  = 0;
+
+function animCone() {
+  const t = Date.now()*.0015;
+  coneSVG.style.transform = `translateY(${Math.sin(t)*6}px)`;
+  orbitAngle += .012;
+  const ox = 70 + 60*Math.cos(orbitAngle);
+  const oy = 70 + 60*Math.sin(orbitAngle);
+  orbitDot.setAttribute('cx', ox);
+  orbitDot.setAttribute('cy', oy);
+  requestAnimationFrame(animCone);
+}
+animCone();
+
+/* ─── CURSOR ───────────────────────────────────────────── */
+const curEl   = document.getElementById('cur');
+const cringEl = document.getElementById('cring');
+let tx=0,ty=0,cx=0,cy=0;
+
+document.addEventListener('mousemove',e=>{
+  tx=e.clientX; ty=e.clientY;
+  mouseX=e.clientX; mouseY=e.clientY;
+  curEl.style.left=tx+'px'; curEl.style.top=ty+'px';
+  // panel tilt
+  const halfW=window.innerWidth/2, halfH=window.innerHeight/2;
+  const rX=-((e.clientY-halfH)/halfH)*5;
+  const rY= ((e.clientX-halfW)/halfW)*7;
+  document.getElementById('panelContainer').style.transform=`rotateX(${rX}deg) rotateY(${rY}deg)`;
+  // panel glow
+  const panel=document.getElementById('panel');
+  const rect=panel.getBoundingClientRect();
+  const mx=((e.clientX-rect.left)/rect.width*100).toFixed(1);
+  const my=((e.clientY-rect.top)/rect.height*100).toFixed(1);
+  document.getElementById('panelGlow').style.setProperty('--mx',mx+'%');
+  document.getElementById('panelGlow').style.setProperty('--my',my+'%');
 });
 
-document.querySelectorAll('.title-h1 span, .loader-track').forEach(element => {
-  element.addEventListener('mouseenter', () => {
-    cur.style.width = '24px';
-    cur.style.height = '24px';
-    cring.style.opacity = '0.15';
-  });
-  element.addEventListener('mouseleave', () => {
-    cur.style.width = '8px';
-    cur.style.height = '8px';
-    cring.style.opacity = '.3';
-  });
+(function ringLoop(){
+  cx+=(tx-cx)*.12; cy+=(ty-cy)*.12;
+  cringEl.style.left=cx+'px'; cringEl.style.top=cy+'px';
+  requestAnimationFrame(ringLoop);
+})();
+
+// hover expansion
+document.querySelectorAll('.module-item, .status-code, .title-main').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cringEl.classList.add('expanded'); curEl.style.opacity='.5'; });
+  el.addEventListener('mouseleave',()=>{ cringEl.classList.remove('expanded'); curEl.style.opacity='1'; });
 });
 
-document.addEventListener('click', (e) => {
-  const ring = document.createElement('div');
-  ring.className = 'pulse-ring';
-  ring.style.width = '90px';
-  ring.style.height = '90px';
-  ring.style.top = '50%';
-  ring.style.left = '50%';
-  ring.style.position = 'absolute';
-  ring.style.border = '1px solid var(--gold)';
-  ring.style.borderRadius = '50%';
-  document.getElementById('interactiveCone').appendChild(ring);
+/* ─── CLICK RIPPLE ─────────────────────────────────────── */
+document.addEventListener('click',e=>{
+  const div=document.createElement('div');
+  div.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:0;height:0;
+  border:1px solid rgba(232,148,26,.6);border-radius:50%;transform:translate(-50%,-50%);
+  pointer-events:none;z-index:9999;`;
+  document.body.appendChild(div);
+  div.animate([
+    {width:'0px',height:'0px',opacity:.8},
+    {width:'80px',height:'80px',opacity:0}
+  ],{duration:700,easing:'cubic-bezier(0.1,0.8,0.3,1)'});
+  setTimeout(()=>div.remove(),700);
+  // also pulse orbit ring color
+  orbitDot.style.fill='#fff';
+  setTimeout(()=>orbitDot.style.fill='',300);
+});
 
-  ring.animate([
-    { transform: 'translate(-50%, -50%) scale(0.6)', opacity: 0.6 },
-    { transform: 'translate(-50%, -50%) scale(1.8)', opacity: 0 }
-  ], {
-    duration: 800,
-    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+/* ─── DATA STREAMS ─────────────────────────────────────── */
+const DATA_CHARS='0123456789ABCDEF';
+const DATA_WORDS=['INIT','PATCH','SYNC','BUILD','LOAD','PUSH','LINK','AUTH','HASH','EXEC','BOOT','CALL','NODE','EDGE','NET','API','CSS','JS','DB','KEY'];
+
+function makeStreamContent() {
+  let html='';
+  for(let i=0;i<40;i++){
+    let line='';
+    if(Math.random()>.5){
+      line+='0x';
+      for(let j=0;j<6;j++) line+=DATA_CHARS[Math.floor(Math.random()*16)];
+    } else {
+      line+=DATA_WORDS[Math.floor(Math.random()*DATA_WORDS.length)];
+      line+=' ';
+      for(let j=0;j<4;j++) line+=DATA_CHARS[Math.floor(Math.random()*16)];
+    }
+    html+=`<div class="data-line" style="animation-duration:${(8+Math.random()*12).toFixed(1)}s;animation-delay:${(-Math.random()*10).toFixed(1)}s;opacity:${(.5+Math.random()*.5).toFixed(2)}">${line}</div>`;
+  }
+  return html;
+}
+document.getElementById('streamLeft').innerHTML  = makeStreamContent();
+document.getElementById('streamRight').innerHTML = makeStreamContent();
+
+/* ─── PROGRESS + MODULES SIMULATION (REPEATING LOOP) ───── */
+const modules = [
+  {id:'mod0', delay:800},
+  {id:'mod1', delay:2200},
+  {id:'mod2', delay:3800},
+  {id:'mod3', delay:5600},
+  {id:'mod4', delay:7200},
+  {id:'mod5', delay:9000},
+];
+let fillPct=0, targetPct=0;
+const pFill=document.getElementById('progressFill');
+const pctLabel=document.getElementById('pctLabel');
+let progressAnimationId;
+
+function updateBar(){
+  if(fillPct<targetPct){ 
+    fillPct=Math.min(fillPct+.5,targetPct); 
+  }
+  pFill.style.width=fillPct+'%';
+  pctLabel.textContent=Math.round(fillPct)+'%';
+  progressAnimationId = requestAnimationFrame(updateBar);
+}
+
+function resetAndRunSimulation() {
+  if(progressAnimationId) cancelAnimationFrame(progressAnimationId);
+  
+  fillPct = 0;
+  targetPct = 0;
+  pFill.style.width = '0%';
+  pctLabel.textContent = '0%';
+  
+  modules.forEach(m => {
+    const el = document.getElementById(m.id);
+    if(el) el.classList.remove('active', 'done');
   });
 
-  setTimeout(() => ring.remove(), 800);
+  updateBar();
+
+  modules.forEach((m,i)=>{
+    setTimeout(()=>{ 
+      const el = document.getElementById(m.id);
+      if(el) el.classList.add('active'); 
+      targetPct=Math.round((i+1)/modules.length*100); 
+    }, m.delay);
+    
+    setTimeout(()=>{ 
+      const el=document.getElementById(m.id); 
+      if(el) {
+        el.classList.remove('active'); 
+        el.classList.add('done');
+      }
+    }, m.delay+1800);
+  });
+
+  setTimeout(resetAndRunSimulation, 12000);
+}
+
+resetAndRunSimulation();
+
+// ETA countdown loop
+let eta=180;
+const etaEl=document.getElementById('etaDisplay');
+setInterval(()=>{
+  if(eta>0) {
+    eta--;
+  } else {
+    eta = 180;
+  }
+  const m=Math.floor(eta/60), s=eta%60;
+  etaEl.textContent=` ${m}m ${s.toString().padStart(2,'0')}s`;
+},1000);
+
+/* ─── STATUS CODE ROTATE ───────────────────────────────── */
+const codes=['ERR_503_MAINTENANCE','SYS_DEPLOY_ACTIVE','DB_MIGRATION_RUN','BUILD_PIPELINE_GO','CDN_PURGE_PENDING'];
+let ci=0;
+setInterval(()=>{
+  ci=(ci+1)%codes.length;
+  const el=document.getElementById('statusCode');
+  el.style.opacity='0';
+  setTimeout(()=>{ el.textContent=codes[ci]; el.style.opacity='1'; el.style.transition='opacity .3s'; },200);
+},3000);
+
+/* ─── KEYBOARD: press Space for glitch burst ───────────── */
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){
+    e.preventDefault();
+    const t=document.getElementById('glitchTitle');
+    t.style.animation='none';
+    t.style.filter='blur(1px) brightness(1.5)';
+    setTimeout(()=>{ t.style.filter=''; },120);
+  }
 });
 </script>
-
 </body>
 </html>
